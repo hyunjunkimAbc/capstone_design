@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/meeting_room_nav_graph"
+    app:startDestination="@id/meetingRoomInfoFragment"
+    app:popUpToInclusive="true">
+
+    <fragment
+        android:id="@+id/meetingRoomChattingFragment"
+        android:name="com.example.capstone_android.MeetingRoomChattingFragment"
+        android:label="fragment_meeting_room_chatting"
+        tools:layout="@layout/fragment_meeting_room_chatting" />
+    <fragment
+        android:id="@+id/meetingRoomInfoFragment"
+        android:name="com.example.capstone_android.MeetingRoomInfoFragment"
+        android:label="fragment_meeting_room_info"
+        tools:layout="@layout/fragment_meeting_room_info" />
+    <fragment
+        android:id="@+id/meetingRoomPostingsFragment"
+        android:name="com.example.capstone_android.MeetingRoomPostingsFragment"
+        android:label="fragment_meeting_room_postings"
+        tools:layout="@layout/fragment_meeting_room_postings" />
+</navigation>
