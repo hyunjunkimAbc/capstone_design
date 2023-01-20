@@ -12,7 +12,8 @@ class MeetingRoomInfoAdapter (private val viewModel: MeetingRoomInfoViewModel):R
     inner class ViewHolder(private val binding: MeetingRoomInfoItemLayoutBinding):RecyclerView.ViewHolder(binding.root){
         fun setContents(pos : Int){
             with(viewModel.items[pos]){
-                //binding.profileImage.setImageBitmap(this.icon)
+                if(this.icon!=null)
+                    binding.profileImage.setImageBitmap(this.icon)
                 //null들어가면 작동 안함 주의
                 binding.nickname.text = this.nickname
                 binding.profileMessage.text = this.profileMessage

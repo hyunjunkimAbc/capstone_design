@@ -2,12 +2,13 @@ package com.example.capstone_android
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-data class Member(val icon: Bitmap?, val nickname: String, val profileMessage:String);
+data class Member(val icon: Bitmap?, val nickname: String, val profileMessage:String,val uid:String);
 
 class MeetingRoomInfoViewModel : ViewModel() {
     val itemsListData = MutableLiveData<ArrayList<Member>>()
     val items = ArrayList<Member>()
-    var meetingRoomId =""
+
+    var memberListArrStr =""
 
     val itemClickEvent = MutableLiveData<Int>()
     var itemLongClick = -1

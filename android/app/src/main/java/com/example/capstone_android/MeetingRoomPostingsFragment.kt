@@ -37,6 +37,11 @@ class MeetingRoomPostingsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_meeting_room_postings, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //비동기 처리시 기다리게 하는 등의 방법을 사용해서 게시판은 업로드한 순으로 보여준다.
+    }
+
     companion object {
         /**
          * Use this factory method to create a new instance of

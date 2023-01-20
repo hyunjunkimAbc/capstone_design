@@ -18,14 +18,10 @@ class MeetingRoomActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMeetingRoomBinding.inflate(layoutInflater)
     }
-    private val viewModel : MeetingRoomInfoViewModel by viewModels<MeetingRoomInfoViewModel>()
-
     private val meetingRoomInfoViewModel : MeetingRoomInfoViewModel by viewModels<MeetingRoomInfoViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        meetingRoomInfoViewModel.meetingRoomId = intent?.getStringExtra("meeting_room_id") ?: ""
         //만약 문제 생기면 super.onCreate(savedInstanceState)보다 먼저 작성해야 될수도 있음
         val meetingFragment =
             supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
