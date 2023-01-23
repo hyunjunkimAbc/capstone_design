@@ -10,6 +10,7 @@ class MeetingRoomInfoViewModel : ViewModel() {
 
     var memberListArrStr =""
 
+
     val itemClickEvent = MutableLiveData<Int>()
     var itemLongClick = -1
     var loginUserName="star1"

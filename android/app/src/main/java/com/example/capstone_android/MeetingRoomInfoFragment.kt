@@ -17,6 +17,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.internal.synchronized
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,6 +51,11 @@ class MeetingRoomInfoFragment : Fragment() {
     val userCollection = db.collection("user")
     //val friendCommit = db.collection("friendCommit")
     //val userProfiles = db.collection("userProfils")
+    var meetingRoomId = ""
+    var memCurruntCnt =0
+    var memCntOfFirebase =0
+    class DataForUI(val infoText:Any?,val max:Any?,val memberList:Any?,
+                    val title:Any?,val upload_time:Any?,val category:Any?)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,92 +102,82 @@ class MeetingRoomInfoFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        println("------ondestroyView")
         _binding = null//메모리 누수 방지
+
     }
     @SuppressLint("SetTextI18n")
     private fun initDataAndUI(){
-        //val meetingRoomId = viewModel.meetingRoomId
-        val meetingRoomId = activity?.intent?.getStringExtra("meeting_room_id") ?: ""
-        var meetingInfoImage = rootRef.child("meeting_info/${meetingRoomId}.jpg")
-        meetingInfoImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
-            if(it.isSuccessful){
-                val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
-                binding.meetingInfoImage.setImageBitmap(bmp)
-            }else{
-                var ref = rootRef.child("meeting_info/default.jpg")
-                ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
-                    if(it.isSuccessful){
-                        val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
-                        binding.meetingInfoImage.setImageBitmap(bmp)
-                    }else{
-                        println("undefined err")
-                    }
-                }
-            }
-        }
+        //val meetingRoomId = viewModel.meetingRoomId 모임 설명 이미지 얻어오기
+        meetingRoomId = activity?.intent?.getStringExtra("meeting_room_id").toString()
         //미팅룸 정보 얻어오기
         meetingRoomCollection.document(meetingRoomId).get().addOnSuccessListener {
 
-            var infoText = it.data?.get("info_text")
-            var max =it.data?.get("max")
-            var memberList = it.data?.get("member_list")//String ArrayList로 viewmodel에 저장
-            var numOfMember = it.data?.get("num_of_member")
+            println("-------- meetingRoomCollection addOnSuccessListener")
+            println("----- num ${viewModel.items.size}")
+            val infoText = it.data?.get("info_text")
+            val max =it.data?.get("max")
+            val memberList = it.data?.get("member_list")
+            val friendUidArr :List<String> = memberList as List<String>
+            //println("----------${friendUidArr}")
+            //var numOfMember = it.data?.get("num_of_member")
+            //memCntOfFirebase = friendUidArr.size
+
             //var postingIdList ="" //String ArrayList로 MeetingRoomPostingsFragment에서 사용할 데이터 이기 때문에 보류
-            var title =it.data?.get("title")
-            var upload_time =it.data?.get("upload_time")
-            var category = it.data?.get("category")
-            viewModel.memberListArrStr = "$memberList"
-            println("${viewModel.memberListArrStr} -------")
-            binding.meetingRoomText.text = infoText.toString()
-            binding.numOfPeople.text = "${numOfMember.toString()}(현재 인원) / ${max.toString()}(최대 인원)"
-            binding.uploadTime.text = "작성 시간: ${upload_time.toString()}"
-            binding.meetingRoomTitle.text = "모임 명: ${title.toString()}"
-            binding.category.text = "카테고리: ${category.toString()}"
+            val title =it.data?.get("title")
+            val upload_time =it.data?.get("upload_time")
+            val category = it.data?.get("category")
+
+            val dataForUI = DataForUI(infoText,max,memberList,title,upload_time,category)
+            updateInfoUI(dataForUI)
 
 
-            isInitAboutInfo = true
-            //memberList를 확실히 viewModel에 저장한 후에 recyclerview를 불러와야 함
-        }
+            if(viewModel.items.size>0){//초기화 할때 0이상이면 예전에 저장했던 정보가 있는 것임
+                return@addOnSuccessListener
+            }
+            for(friendUid in friendUidArr){
+                userCollection.document(friendUid.trim()).get().addOnSuccessListener {
+                    var profileMessage = ""
+                    var nickname = ""
+                    var uid = ""
 
-        //미팅룸의 정보가 변했을때
-        meetingRoomCollection.addSnapshotListener { value, error ->
-            if (value ==null) return@addSnapshotListener
-            for(d in value!!.documentChanges){
-                if ("${d.type}" =="REMOVED"){
-                    //미팅룸 삭제 시에 작동 다른 미팅룸이 삭제 되었을때는 신경쓸 필요 없고
-                    // 현재 미팅룸이 삭제 되었을때는 아직 정의 되지 않음
-
-                }else if("${d.type}" =="MODIFIED"){
-                    //미팅룸 정보 수정시에 작동
-
-                }else if("${d.type}" =="ADDED"){
-                    //다른 미팅룸이 추가 되었을때 현재 미팅룸에서 뭔가 작동할 이유가 아직 없음
-                    if(isInitAboutInfo){//처음에 초기화 할때는 작동안되게 함
-
+                    uid = "${it["uid"]}"
+                    profileMessage = "프로필 메시지: ${it["profile_message"]}"
+                    nickname = "이름: ${it["nickname"]}"
+                    addUserToRecyclerView(uid,nickname,profileMessage)
+                    memCurruntCnt++
+                    if(memCntOfFirebase==memCurruntCnt){
+                        println("------ all success ${memCurruntCnt}/${memCntOfFirebase}")
+                        isInitAboutMember = true
                     }
                 }
             }
+
         }
-
-        //맴버 정보 불러오기
-        userCollection.get().addOnSuccessListener {
-            if(viewModel.items.size >0){//만약 이 값이 0 이상이면 이미 받아온 데이터가 있는 상황
-                println("이미 있음---------")
-                return@addOnSuccessListener
+        //미팅룸의 정보가 변했을때
+        meetingRoomCollection.document( meetingRoomId ).addSnapshotListener { snapshot, error ->
+            println("${snapshot?.id} ${snapshot?.data?.get("info_text")}")
+            //이미지는 이미지를 수정하는 쪽에서 upload_time을 수정해줘야 업데이트 될 것임
+            //ce5vmU58GHfPTNhDtmfR {upload_time=2023년1월1일, max=5, info_text=info_text_test_asdfas, member_list=[uid1, uid2], title=test_title, category=운동, num_of_member=3, posting_id_list=[]}
+            if(isInitAboutInfo==false || isInitAboutMember==false){
+                return@addSnapshotListener
             }
-            for(user in it) {// 게시글 문서들을 다 받아와서 문서마다 추가한다.
-                // 맴버를 가입한 순서대로 불러오는 것이 의미가 있을지는 잘 모르겠음
-                var profileMessage = ""
-                var nickname = ""
-                var uid = ""
+            println("-------- meetingRoomCollection addSnapshotListener")
+            val infoText = snapshot?.data?.get("info_text")
+            val max =snapshot?.data?.get("max")
+            val memberList = snapshot?.data?.get("member_list")
 
-                uid = "${user["uid"]}"
-                profileMessage = "프로필 메시지: ${user["profile_message"]}"
-                nickname = "이름: ${user["nickname"]}"
-                addUserToRecyclerView(uid,nickname,profileMessage)
-            }
-            //println("${post.id}  ${post["title"]} ${post["nickName"]}");
-            isInitAboutMember = true
+            //var postingIdList ="" //String ArrayList로 MeetingRoomPostingsFragment에서 사용할 데이터 이기 때문에 보류
+            val title =snapshot?.data?.get("title")
+            val upload_time =snapshot?.data?.get("upload_time")
+            val category = snapshot?.data?.get("category")
+            val dataForUI = DataForUI(infoText,max,memberList,title,upload_time,category)
+
+            //viewmodel 기존에 있는거 삭제 해야 함
+            updateInfoUI(dataForUI)
+
+            //맴버 업데이트
+
         }
 
         //미팅룸의 회원들의 정보가 변했을때
@@ -233,9 +229,43 @@ class MeetingRoomInfoFragment : Fragment() {
                 }
             }
         }
-
-
     }
+    fun updateInfoUI(dataForUI: DataForUI){
+
+        val friendUidArr :List<String> = dataForUI.memberList as List<String>
+        //println("----------${friendUidArr}")
+        //var numOfMember = it.data?.get("num_of_member")
+        memCntOfFirebase = friendUidArr.size
+        meetingRoomId = activity?.intent?.getStringExtra("meeting_room_id") ?: ""
+        var meetingInfoImage = rootRef.child("meeting_info/${meetingRoomId}.jpg")
+        meetingInfoImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
+            if(it.isSuccessful){
+                val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+                binding.meetingInfoImage.setImageBitmap(bmp)
+            }else{
+                var ref = rootRef.child("meeting_info/default.jpg")
+                ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
+                    if(it.isSuccessful){
+                        val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+                        binding.meetingInfoImage.setImageBitmap(bmp)
+                    }else{
+                        println("undefined err")
+                    }
+                }
+            }
+        }
+
+        binding.meetingRoomText.text = dataForUI.infoText.toString()
+        binding.numOfPeople.text = "${memCntOfFirebase}(현재 인원) / ${dataForUI.max.toString()}(최대 인원)"
+        binding.uploadTime.text = "최종 업로드: ${dataForUI.upload_time.toString()}"
+        binding.meetingRoomTitle.text = "모임 명: ${dataForUI.title.toString()}"
+        binding.category.text = "카테고리: ${dataForUI.category.toString()}"
+
+        isInitAboutInfo = true
+        //memberList를 확실히 viewModel에 저장한 후에 recyclerview를 불러와야 함
+    }
+
+
     fun addUserToRecyclerView(uid:String,nickname:String, profileMessage:String){
         var userProfileImage = rootRef.child("user_profile_image/${uid}.jpg")
         userProfileImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
@@ -277,3 +307,5 @@ class MeetingRoomInfoFragment : Fragment() {
             }
     }
 }
+
+
