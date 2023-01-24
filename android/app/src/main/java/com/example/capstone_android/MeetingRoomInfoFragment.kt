@@ -14,10 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.databinding.FragmentMeetingRoomInfoBinding
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.MetadataChanges
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.*
 import kotlinx.coroutines.internal.synchronized
+import kotlinx.coroutines.tasks.await
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -103,7 +106,7 @@ class MeetingRoomInfoFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         println("------ondestroyView")
-        _binding = null//메모리 누수 방지
+        //_binding = null//메모리 누수 방지
 
     }
     @SuppressLint("SetTextI18n")
@@ -131,7 +134,6 @@ class MeetingRoomInfoFragment : Fragment() {
             val dataForUI = DataForUI(infoText,max,memberList,title,upload_time,category)
             updateInfoUI(dataForUI)
 
-
             if(viewModel.items.size>0){//초기화 할때 0이상이면 예전에 저장했던 정보가 있는 것임
                 return@addOnSuccessListener
             }
@@ -150,6 +152,26 @@ class MeetingRoomInfoFragment : Fragment() {
                         println("------ all success ${memCurruntCnt}/${memCntOfFirebase}")
                         isInitAboutMember = true
                     }
+
+                }
+                //미팅룸의 회원들의 정보가 변했을때
+                userCollection.document(friendUid.trim()).addSnapshotListener { snapshot, error ->
+                    if(isInitAboutMember==false){
+                        return@addSnapshotListener
+                    }
+                    val nickname = snapshot?.data?.get("nickname")
+                    val profileMessage =snapshot?.data?.get("profile_message")
+                    var i=0
+                    for(member in viewModel.items){
+                        if(friendUid.trim() == member.uid.trim()){
+                            updateUserToRecyclerview(i,friendUid.trim(),
+                                nickname as String, profileMessage as String
+                            )
+                            break
+                        }
+                        i++
+                    }
+
                 }
             }
 
@@ -157,15 +179,15 @@ class MeetingRoomInfoFragment : Fragment() {
         //미팅룸의 정보가 변했을때
         meetingRoomCollection.document( meetingRoomId ).addSnapshotListener { snapshot, error ->
             println("${snapshot?.id} ${snapshot?.data?.get("info_text")}")
-            //이미지는 이미지를 수정하는 쪽에서 upload_time을 수정해줘야 업데이트 될 것임
-            //ce5vmU58GHfPTNhDtmfR {upload_time=2023년1월1일, max=5, info_text=info_text_test_asdfas, member_list=[uid1, uid2], title=test_title, category=운동, num_of_member=3, posting_id_list=[]}
             if(isInitAboutInfo==false || isInitAboutMember==false){
+                println("wait------------")
                 return@addSnapshotListener
             }
             println("-------- meetingRoomCollection addSnapshotListener")
-            val infoText = snapshot?.data?.get("info_text")
+            val infoText =snapshot?.data?.get("info_text")
             val max =snapshot?.data?.get("max")
             val memberList = snapshot?.data?.get("member_list")
+            val friendUidArr :List<String> = memberList as List<String>
 
             //var postingIdList ="" //String ArrayList로 MeetingRoomPostingsFragment에서 사용할 데이터 이기 때문에 보류
             val title =snapshot?.data?.get("title")
@@ -175,60 +197,11 @@ class MeetingRoomInfoFragment : Fragment() {
 
             //viewmodel 기존에 있는거 삭제 해야 함
             updateInfoUI(dataForUI)
+            updateMember(friendUidArr)
 
-            //맴버 업데이트
 
         }
 
-        //미팅룸의 회원들의 정보가 변했을때
-        userCollection.addSnapshotListener { value, error ->
-            if (value ==null) return@addSnapshotListener
-            for(d in value!!.documentChanges){
-                if ("${d.type}" =="REMOVED"){
-                    /*
-                    for(k in viewModel.items){
-                        if(k.nickName == "${d.document.id}"){//ㅕuser id == 문서 id
-                            viewModel.deleteItem(k)
-                        }
-                    }*/
-                    //해당 회원이 탈퇴 할 경우에 대해서 정의 하지 않았음
-                }else if("${d.type}" =="MODIFIED"){
-                    //친구 관계 수정 되었을때(아직 하지 않음), 신규 맴버 추가 되었을때
-                    var i =0;
-                    for(k in viewModel.items) {
-                        System.out.println("k.nickname "+k.nickname+"docu id"  +"${d.document.id}" );
-                        System.out.println("ok");
-                        if ( k.uid == "${d.document["uid"]}" ) {//데이터 변경자의 게시물일때와 로그인 사용자의 데이터가 변경될때만 변경하면됨
-                            //updatePostingData(k.postId,k.title,k.nickName,i) //글 작성자와 본인과의 관계와 데이터 변경자의 관계를 고려 해야 함
-                        }else{// 나머지 모든 경우는 패스
-                        }
-                        i++
-                        /*
-                        if ( k.nickName == "${d.document["nickName"]}" || "${d.document["nickName"]}" ==myNickName) {//데이터 변경자의 게시물일때와 로그인 사용자의 데이터가 변경될때만 변경하면됨
-                            updatePostingData(k.postId,k.title,k.nickName,i) //글 작성자와 본인과의 관계와 데이터 변경자의 관계를 고려 해야 함
-                            System.out.println("stat "+k.statCode) //윗 줄은 friendCommit의 nickName이 회원정보 수정으로 변동 될수 있어서 그렇게 처리함
-                        }else{// 나머지 모든 경우는 패스
-                        }
-                        i++ //모든 게시물을 다 조회한다.*/
-
-                    }
-                }else if("${d.type}" =="ADDED"){
-                    if(viewModel.items.size ==0){
-                        return@addSnapshotListener
-                    }
-                    /*
-                    if(isInit){//새로운 회원이 추가되어서 friendCommit 에 목록이 추가 되는 경우 게시글 을 쓴 것이 아니라 추가 할 필요 없다.
-                        var title =""
-                        var nickname=""
-                        var id = ""
-                        id ="${d.document.id}"
-                        title = "${d.document.data["title"]}"
-                        nickname ="${d.document.data["nickName"]}"
-                        addPostingData(id, title, nickname)
-                    }*/
-                }
-            }
-        }
     }
     fun updateInfoUI(dataForUI: DataForUI){
 
@@ -265,6 +238,47 @@ class MeetingRoomInfoFragment : Fragment() {
         //memberList를 확실히 viewModel에 저장한 후에 recyclerview를 불러와야 함
     }
 
+    @Synchronized
+    fun updateMember(friendUidArr: List<String>){
+        if(viewModel.items.size == friendUidArr.size){//개수 변화 없으면 아무것도 하지 않음
+            println("탈출----")
+        }else if(viewModel.items.size <friendUidArr.size){//맴버가 추가 되면(개수 증가) 새로 받아오기
+            //맨뒤에 있는 것이 새로운 맴버일때 정상 동작함 but 2번 추가된다.
+            userCollection.document(friendUidArr[friendUidArr.size-1]).get().addOnSuccessListener {
+                if(isInitAboutInfo==false || isInitAboutMember==false){
+                    return@addOnSuccessListener
+                }
+                println("---userCollection addOnSuccessListener in addSnapshotListener")
+                var profileMessage = ""
+                var nickname = ""
+                var uid = ""
+
+                uid = "${it["uid"]}"
+                profileMessage = "프로필 메시지: ${it["profile_message"]}"
+                nickname = "이름: ${it["nickname"]}"
+
+                addUserToRecyclerView(uid,nickname,profileMessage)
+            }
+
+        }else if(viewModel.items.size > friendUidArr.size){//맴버가 사라지면 그 맴버는 리사이클러에서 지우기
+            println("삭제 ------")
+            var isInFirebase =false
+            for(member in viewModel.items){
+                isInFirebase =false
+                for (friendUid in friendUidArr){
+                    if(member.uid == friendUid){
+                        isInFirebase = true
+                    }
+                }
+                if(isInFirebase){
+                    continue
+                }else{//firebase에 viewmodel의 맴버가 없는 상황 그 맴버는 지워주면 된다
+                    viewModel.deleteItem(member)
+                    break
+                }
+            }
+        }
+    }
 
     fun addUserToRecyclerView(uid:String,nickname:String, profileMessage:String){
         var userProfileImage = rootRef.child("user_profile_image/${uid}.jpg")
@@ -278,6 +292,25 @@ class MeetingRoomInfoFragment : Fragment() {
                     if(it.isSuccessful){
                         val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
                         viewModel.addItem(Member(bmp,nickname,profileMessage,uid))
+                    }else{
+                        println("undefined err")
+                    }
+                }
+            }
+        }
+    }
+    fun updateUserToRecyclerview(i:Int,uid:String,nickname:String, profileMessage:String){
+        var userProfileImage = rootRef.child("user_profile_image/${uid}.jpg")
+        userProfileImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
+            if(it.isSuccessful){
+                val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+                viewModel.updateItem(i,Member(bmp,nickname,profileMessage,uid))
+            }else{
+                var ref = rootRef.child("user_profile_image/default.jpg")
+                ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
+                    if(it.isSuccessful){
+                        val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+                        viewModel.updateItem(i,Member(bmp,nickname,profileMessage,uid))
                     }else{
                         println("undefined err")
                     }

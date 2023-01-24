@@ -28,7 +28,9 @@ class MeetingRoomActivity : AppCompatActivity() {
         val meetingNavController = meetingFragment.navController
         val meetingNavigationView = binding.bottomNav
         meetingNavigationView.setupWithNavController(meetingNavController)
+    }
 
-
+    override fun onBackPressed() {//백버튼 누르면 즉시 이전 액티비티로 감
+        this.finish()
     }
 }
