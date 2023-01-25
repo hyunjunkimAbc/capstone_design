@@ -52,8 +52,6 @@ class MeetingRoomInfoFragment : Fragment() {
 
     val meetingRoomCollection = db.collection("meeting_room")
     val userCollection = db.collection("user")
-    //val friendCommit = db.collection("friendCommit")
-    //val userProfiles = db.collection("userProfils")
     var meetingRoomId = ""
     var memCurruntCnt =0
     var memCntOfFirebase =0
@@ -144,8 +142,8 @@ class MeetingRoomInfoFragment : Fragment() {
                     var uid = ""
 
                     uid = "${it["uid"]}"
-                    profileMessage = "프로필 메시지: ${it["profile_message"]}"
-                    nickname = "이름: ${it["nickname"]}"
+                    profileMessage = "${it["profile_message"]}"
+                    nickname = "${it["nickname"]}"
                     addUserToRecyclerView(uid,nickname,profileMessage)
                     memCurruntCnt++
                     if(memCntOfFirebase==memCurruntCnt){
@@ -179,10 +177,6 @@ class MeetingRoomInfoFragment : Fragment() {
         //미팅룸의 정보가 변했을때
         meetingRoomCollection.document( meetingRoomId ).addSnapshotListener { snapshot, error ->
             println("${snapshot?.id} ${snapshot?.data?.get("info_text")}")
-            if(isInitAboutInfo==false || isInitAboutMember==false){
-                println("wait------------")
-                return@addSnapshotListener
-            }
             println("-------- meetingRoomCollection addSnapshotListener")
             val infoText =snapshot?.data?.get("info_text")
             val max =snapshot?.data?.get("max")
@@ -245,17 +239,14 @@ class MeetingRoomInfoFragment : Fragment() {
         }else if(viewModel.items.size <friendUidArr.size){//맴버가 추가 되면(개수 증가) 새로 받아오기
             //맨뒤에 있는 것이 새로운 맴버일때 정상 동작함 but 2번 추가된다.
             userCollection.document(friendUidArr[friendUidArr.size-1]).get().addOnSuccessListener {
-                if(isInitAboutInfo==false || isInitAboutMember==false){
-                    return@addOnSuccessListener
-                }
                 println("---userCollection addOnSuccessListener in addSnapshotListener")
                 var profileMessage = ""
                 var nickname = ""
                 var uid = ""
 
                 uid = "${it["uid"]}"
-                profileMessage = "프로필 메시지: ${it["profile_message"]}"
-                nickname = "이름: ${it["nickname"]}"
+                profileMessage = "${it["profile_message"]}"
+                nickname = "${it["nickname"]}"
 
                 addUserToRecyclerView(uid,nickname,profileMessage)
             }
@@ -272,7 +263,7 @@ class MeetingRoomInfoFragment : Fragment() {
                 }
                 if(isInFirebase){
                     continue
-                }else{//firebase에 viewmodel의 맴버가 없는 상황 그 맴버는 지워주면 된다
+                }else{//firebase에는 없는데 viewmodel에는 맴버가 있는 상황 그 맴버는 지워주면 된다
                     viewModel.deleteItem(member)
                     break
                 }
@@ -285,12 +276,22 @@ class MeetingRoomInfoFragment : Fragment() {
         userProfileImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
             if(it.isSuccessful){
                 val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+                for(member in viewModel.items){//중복 검사 이미 그 맴버가 있는 데 또 추가 할 수 없다.
+                    if (member.uid == uid){
+                        return@addOnCompleteListener
+                    }
+                }
                 viewModel.addItem(Member(bmp,nickname,profileMessage,uid))
             }else{
                 var ref = rootRef.child("user_profile_image/default.jpg")
                 ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                     if(it.isSuccessful){
                         val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+                        for(member in viewModel.items){//중복 검사
+                            if (member.uid == uid){
+                                return@addOnCompleteListener
+                            }
+                        }
                         viewModel.addItem(Member(bmp,nickname,profileMessage,uid))
                     }else{
                         println("undefined err")
