@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone_android.databinding.FragmentMeetingRoomInfoBinding
 import com.example.capstone_android.databinding.FragmentMeetingRoomPostingsBinding
@@ -58,6 +60,7 @@ class MeetingRoomPostingsFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
@@ -90,6 +93,8 @@ class MeetingRoomPostingsFragment : Fragment() {
         viewModel.itemClickEvent.observe(viewLifecycleOwner){
             //ItemDialog(it).show
             val i =viewModel.itemClickEvent.value
+            val bundle = bundleOf("document_id" to viewModel.items[i!!].document_id)
+            findNavController().navigate(R.id.action_meetingRoomPostingsFragment_to_showPostingFragment,bundle)
         }
 
         registerForContextMenu(meetingMembersRecyclerView)

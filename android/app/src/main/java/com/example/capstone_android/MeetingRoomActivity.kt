@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +31,14 @@ class MeetingRoomActivity : AppCompatActivity() {
         meetingNavigationView.setupWithNavController(meetingNavController)
     }
 
-    override fun onBackPressed() {//백버튼 누르면 즉시 이전 액티비티로 감
-        this.finish()
+    override fun onBackPressed() {
+        val meetingFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+        val meetingNavController = meetingFragment.navController
+        if(meetingNavController.currentDestination?.id == R.id.showPostingFragment){
+            findNavController(R.id.fragment).navigate(R.id.meetingRoomPostingsFragment)
+        }else{
+            this.finish()
+        }
     }
 }

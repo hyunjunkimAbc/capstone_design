@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/meeting_room_nav_graph"
     app:startDestination="@id/meetingRoomInfoFragment"
-    app:popUpToInclusive="true">
+    app:popUpToInclusive="true"
+    >
 
     <fragment
         android:id="@+id/meetingRoomChattingFragment"
@@ -20,5 +21,15 @@
         android:id="@+id/meetingRoomPostingsFragment"
         android:name="com.example.capstone_android.MeetingRoomPostingsFragment"
         android:label="fragment_meeting_room_postings"
-        tools:layout="@layout/fragment_meeting_room_postings" />
+        tools:layout="@layout/fragment_meeting_room_postings" >
+        <action
+            android:id="@+id/action_meetingRoomPostingsFragment_to_showPostingFragment"
+            app:destination="@id/showPostingFragment"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/showPostingFragment"
+        android:name="com.example.capstone_android.ShowPostingFragment"
+        android:label="fragment_show_posting"
+        tools:layout="@layout/fragment_show_posting" />
 </navigation>
