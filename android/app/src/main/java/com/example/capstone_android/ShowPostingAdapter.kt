@@ -11,7 +11,7 @@ import com.example.capstone_android.databinding.MeetingRoomPostingCommentItemRig
 import com.example.capstone_android.databinding.MeetingRoomPostingsItemLayoutBinding
 import java.text.SimpleDateFormat
 
-class ShowPostingAdapter (private val viewModel: ShowPostingViewModel): RecyclerView.Adapter<ShowPostingAdapter.ViewHolder>(){
+class ShowPostingAdapter (private val viewModel: ShowPostingViewModel): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class ViewHolder(private val binding: MeetingRoomPostingCommentItemLayoutBinding): RecyclerView.ViewHolder(binding.root){
         fun setContents(pos : Int){
             with(viewModel.items[pos]){
@@ -57,21 +57,38 @@ class ShowPostingAdapter (private val viewModel: ShowPostingViewModel): Recycler
     }
 
     override fun getItemViewType(position: Int): Int {
-        return super.getItemViewType(position)
+        if(position %2==0){
+            return 0
+        }else{
+            return 1
+        }
     }
 
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(viewGroup.context)
-        val binding = MeetingRoomPostingCommentItemLayoutBinding.inflate(layoutInflater,viewGroup,false)
-        return ViewHolder(binding)
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if(viewType ==0){
+            val layoutInflater = LayoutInflater.from(viewGroup.context)
+            val binding = MeetingRoomPostingCommentItemLayoutBinding.inflate(layoutInflater,viewGroup,false)
+            return ViewHolder(binding)
 
+        }else{
+            val layoutInflater = LayoutInflater.from(viewGroup.context)
+            val binding = MeetingRoomPostingCommentItemRightBinding.inflate(layoutInflater,viewGroup,false)
+            return ViewHolderRight(binding)
+        }
     }
-
+    /*
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.setContents(position)
-    }
+    }*/
 
     override fun getItemCount()=viewModel.items.size
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if(holder is ViewHolderRight){
+            holder.setContents(position)
+        }else if(holder is ViewHolder){
+            holder.setContents(position)
+        }
+    }
 
 }
