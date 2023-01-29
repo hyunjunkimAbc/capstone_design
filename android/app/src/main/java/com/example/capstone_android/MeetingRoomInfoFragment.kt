@@ -21,6 +21,7 @@ import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.*
 import kotlinx.coroutines.internal.synchronized
 import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -224,7 +225,7 @@ class MeetingRoomInfoFragment : Fragment() {
 
         binding.meetingRoomText.text = dataForUI.infoText.toString()
         binding.numOfPeople.text = "${memCntOfFirebase}(현재 인원) / ${dataForUI.max.toString()}(최대 인원)"
-        binding.uploadTime.text = "최종 업로드: ${dataForUI.upload_time.toString()}"
+        binding.uploadTime.text = "최종 업로드 ${SimpleDateFormat("yyyy-MM-dd").format(dataForUI.upload_time as Long)}"
         binding.meetingRoomTitle.text = "모임 명: ${dataForUI.title.toString()}"
         binding.category.text = "카테고리: ${dataForUI.category.toString()}"
 
