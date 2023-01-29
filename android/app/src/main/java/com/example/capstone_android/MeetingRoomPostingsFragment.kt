@@ -106,6 +106,10 @@ class MeetingRoomPostingsFragment : Fragment() {
     }
     private fun initDataAndUI(){
         meetingRoomId = activity?.intent?.getStringExtra("meeting_room_id").toString()
+        binding.floatingActionButtonAddPosting.setOnClickListener {
+            val bundle = bundleOf("meeting_room_document_id" to meetingRoomId)
+            findNavController().navigate(R.id.action_meetingRoomPostingsFragment_to_meetingRoomPostingAddFragment,bundle)
+        }
         meetingRoomCollection.document(meetingRoomId).get().addOnSuccessListener {
             val posting_id_list = it["posting_id_list"] as List<String>
             for (posting_id in posting_id_list){
@@ -116,6 +120,8 @@ class MeetingRoomPostingsFragment : Fragment() {
                     val document_id = it.id
 
                     addUserToRecyclerView(writer_uid as String, text as String, upload_time as Long,document_id)
+                }.addOnFailureListener {
+                    println("로드 실패")
                 }
             }
         }

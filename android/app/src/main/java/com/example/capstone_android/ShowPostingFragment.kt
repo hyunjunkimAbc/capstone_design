@@ -75,7 +75,7 @@ class ShowPostingFragment : Fragment() {
         viewModel.itemClickEvent.observe(viewLifecycleOwner){
             //ItemDialog(it).show
             val i =viewModel.itemClickEvent.value
-            findNavController().navigate(R.id.action_meetingRoomPostingsFragment_to_showPostingFragment)
+            //findNavController().navigate(R.id.action_meetingRoomPostingsFragment_to_showPostingFragment)
         }
 
         registerForContextMenu(recyclerViewCommentPosting)

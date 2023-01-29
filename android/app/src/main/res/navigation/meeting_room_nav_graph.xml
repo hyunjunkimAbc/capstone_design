@@ -26,10 +26,22 @@
             android:id="@+id/action_meetingRoomPostingsFragment_to_showPostingFragment"
             app:destination="@id/showPostingFragment"
             />
+        <action
+            android:id="@+id/action_meetingRoomPostingsFragment_to_meetingRoomPostingAddFragment"
+            app:destination="@id/meetingRoomPostingAddFragment" />
     </fragment>
     <fragment
         android:id="@+id/showPostingFragment"
         android:name="com.example.capstone_android.ShowPostingFragment"
         android:label="fragment_show_posting"
         tools:layout="@layout/fragment_show_posting" />
+    <fragment
+        android:id="@+id/meetingRoomPostingAddFragment"
+        android:name="com.example.capstone_android.MeetingRoomPostingAddFragment"
+        android:label="fragment_meeting_room_posting_add"
+        tools:layout="@layout/fragment_meeting_room_posting_add" >
+        <action
+            android:id="@+id/action_meetingRoomPostingAddFragment_to_meetingRoomPostingsFragment"
+            app:destination="@id/meetingRoomPostingsFragment" />
+    </fragment>
 </navigation>

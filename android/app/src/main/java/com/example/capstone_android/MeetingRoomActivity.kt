@@ -37,7 +37,10 @@ class MeetingRoomActivity : AppCompatActivity() {
         val meetingNavController = meetingFragment.navController
         if(meetingNavController.currentDestination?.id == R.id.showPostingFragment){
             findNavController(R.id.fragment).navigate(R.id.meetingRoomPostingsFragment)
-        }else{
+        }else if(meetingNavController.currentDestination?.id == R.id.meetingRoomPostingAddFragment){
+            findNavController(R.id.fragment).navigate(R.id.meetingRoomPostingsFragment)
+        }
+        else{
             this.finish()
         }
     }
