@@ -1,10 +1,21 @@
 package com.example.capstone_android
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone_android.databinding.FragmentMeetingRoomChattingBinding
+import com.example.capstone_android.databinding.FragmentShowPostingBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,7 +31,17 @@ class MeetingRoomChattingFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private val viewModel : MeetingRoomChattingViewModel by viewModels<MeetingRoomChattingViewModel>()
+    private var _binding: FragmentMeetingRoomChattingBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+    var document_id =""
+    val db = Firebase.firestore
+    var rootRef = Firebase.storage.reference
+    val userCollection = db.collection("user")
+    val commentCollection = db.collection("comment")
+    val meetingRoomCollection = db.collection("meeting_room")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,7 +55,164 @@ class MeetingRoomChattingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_meeting_room_chatting, container, false)
+        _binding = FragmentMeetingRoomChattingBinding.inflate(inflater,container,false)
+        return binding.root    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val adapter = MeetingRoomChattingAdapter(viewModel)
+        //val meetingMembersRecyclerView = v.findViewById<RecyclerView>(R.id.meetingMembersRecyclerView)
+        val recyclerViewCommentChatting = binding.chattingRecyclerView
+        recyclerViewCommentChatting.adapter = adapter
+        recyclerViewCommentChatting.layoutManager = LinearLayoutManager(activity)
+        recyclerViewCommentChatting.setHasFixedSize(true)
+        viewModel.itemsListData.observe(viewLifecycleOwner ){
+            adapter.notifyDataSetChanged()
+        }
+        viewModel.itemClickEvent.observe(viewLifecycleOwner){
+            //ItemDialog(it).show
+            val i =viewModel.itemClickEvent.value
+        }
+        registerForContextMenu(recyclerViewCommentChatting)
+        //데이터 얻어와서 ui에 반영
+        initDataAndUI()
+
+    }
+    private fun initDataAndUI(){
+        document_id = activity?.intent?.getStringExtra("meeting_room_id").toString()
+
+        println("document_id ----------- ${document_id}")
+        println("uid =-------- ${Firebase.auth.uid}")
+        binding.uploadChattingBtn.setOnClickListener {
+            //editText 에 있는 거 받아서 comment컬랙션에 add
+
+            val inputText = binding.chattingEditText.text
+            val time = System.currentTimeMillis()
+            val itemMap = hashMapOf(
+                "comment_text" to inputText.toString(),
+                "upload_time" to time,
+                "writer_uid" to Firebase.auth.uid
+            )
+            commentCollection.add(itemMap).addOnSuccessListener {
+                // posting 컬랙션에 배열 추가해서 적용 set사용
+
+                val document_id_comment = it.id
+                meetingRoomCollection.document(document_id).update("chatting_id_list" , FieldValue.arrayUnion(document_id_comment))
+            }
+
+        }
+        meetingRoomCollection.document(document_id).get().addOnSuccessListener {
+            val comment_id_list = it.data?.get("chatting_id_list")
+            //댓글 가져오기 리사이클러 뷰에 반영 ok
+            if(comment_id_list==null){
+                return@addOnSuccessListener
+            }
+            getCommentsToRecyclerView(comment_id_list!!)
+        }
+        meetingRoomCollection.document(document_id).addSnapshotListener { value, error ->
+            val comment_id_list = value?.data?.get("chatting_id_list")
+            if(comment_id_list==null){
+                return@addSnapshotListener
+            }
+            getCommentsToRecyclerView(comment_id_list!!)
+        }
+
+        //댓글에 있는 맴버들도 snapShot 추가 ok
+
+    }
+    private fun getCommentsToRecyclerView(comment_id_list:Any){
+        val commentIdListListString :List<String> = comment_id_list as List<String>
+        for(commentId in commentIdListListString){
+            commentCollection.document(commentId.trim()).get().addOnSuccessListener {
+                var writer_uid = ""
+                var upload_time :Long
+                var comment_text = ""
+
+                writer_uid = "${it["writer_uid"]}"
+                upload_time = it["upload_time"] as Long
+                comment_text = "${it["comment_text"]}"
+                userCollection.document(writer_uid).get().addOnSuccessListener {
+                    addUserToRecyclerView("${it["nickname"]}",writer_uid,upload_time,comment_text,commentId)
+                }
+
+                userCollection.document(writer_uid.trim()).addSnapshotListener { snapshot, error ->
+
+                    val nickname = snapshot?.data?.get("nickname")
+                    println("addSnapShot -------- getnickname ${nickname}")
+                    val uid = snapshot?.data?.get("uid") as String
+                    var i=0
+                    for(comment in viewModel.items){
+                        if(comment.writer_uid == uid){
+                            updateUserToRecyclerview(i,uid.trim(),
+                                nickname as String, comment
+                            )
+                        }
+                        i++
+                    }
+                }
+
+            }
+
+        }
+
+    }
+    fun addUserToRecyclerView(nickname: String,writer_uid:String,upload_time:Long, comment_text:String,commemt_id:String){
+        var userProfileImage = rootRef.child("user_profile_image/${writer_uid}.jpg")
+        userProfileImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
+            if(it.isSuccessful){
+                val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+                for(comment in viewModel.items){//중복 검사 이미 그 맴버가 있는 데 또 추가 할 수 없다.
+                    if (comment.document_id == commemt_id){
+                        return@addOnCompleteListener
+                    }
+                }
+                viewModel.addItem(ChattingData(bmp,nickname,comment_text,upload_time,writer_uid,commemt_id))
+                viewModel.items.sortBy{
+                    it.timePosting
+                }
+                viewModel.itemsListData.value = viewModel.items
+            }else{
+                var ref = rootRef.child("user_profile_image/default.jpg")
+                ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
+                    if(it.isSuccessful){
+                        val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+                        for(comment in viewModel.items){//중복 검사
+                            if (comment.document_id == commemt_id){
+                                return@addOnCompleteListener
+                            }
+                        }
+                        viewModel.addItem(ChattingData(bmp,nickname,comment_text,upload_time,writer_uid,commemt_id))
+                        viewModel.items.sortBy{
+                            it.timePosting
+                        }
+                        viewModel.itemsListData.value = viewModel.items
+                    }else{
+                        println("undefined err")
+                    }
+                }
+            }
+        }
+    }
+    fun updateUserToRecyclerview(i:Int,writer_uid:String,nickname:String, comment:ChattingData){
+        var userProfileImage = rootRef.child("user_profile_image/${writer_uid}.jpg")
+        userProfileImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
+            if(it.isSuccessful){
+                val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+                viewModel.updateItem(i, ChattingData(bmp,nickname,comment.commentText,comment.timePosting
+                    ,comment.writer_uid,comment.document_id))
+            }else{
+                var ref = rootRef.child("user_profile_image/default.jpg")
+                ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
+                    if(it.isSuccessful){
+                        val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+                        viewModel.updateItem(i, ChattingData(bmp,nickname,comment.commentText,comment.timePosting
+                            ,comment.writer_uid,comment.document_id))
+                    }else{
+                        println("undefined err")
+                    }
+                }
+            }
+        }
     }
 
     companion object {

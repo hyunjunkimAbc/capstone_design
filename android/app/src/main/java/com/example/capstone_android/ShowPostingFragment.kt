@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone_android.databinding.FragmentMeetingRoomPostingsBinding
 import com.example.capstone_android.databinding.FragmentShowPostingBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -40,6 +42,7 @@ class ShowPostingFragment : Fragment() {
     var rootRef = Firebase.storage.reference
     val postingCollection = db.collection("posting")
     val userCollection = db.collection("user")
+    val commentCollection = db.collection("comment")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,10 +79,10 @@ class ShowPostingFragment : Fragment() {
         }
 
         registerForContextMenu(recyclerViewCommentPosting)
-        viewModel.addItem(Comment(null,"asdf","asddfgdf",1000,"","adsf"))
-        viewModel.addItem(Comment(null,"asdf","fdsgfh",100002,"","asdf"))
-        viewModel.addItem(Comment(null,"asdf","asddfgdf",1000,"","adsf"))
-        viewModel.addItem(Comment(null,"asdf","fdsgfh",100002,"","asdf"))
+        //viewModel.addItem(Comment(null,"asdf","asddfgdf",1000,"","adsf"))
+        //viewModel.addItem(Comment(null,"asdf","fdsgfh",100002,"","asdf"))
+        //viewModel.addItem(Comment(null,"asdf","asddfgdf",1000,"jx2EKi4ed9hoy73X0LTI7TcZd8B2","adsf"))
+        //viewModel.addItem(Comment(null,"asdf","fdsgfh",100002,"","asdf"))
 
         //데이터 얻어와서 ui에 반영
         initDataAndUI()
@@ -88,13 +91,35 @@ class ShowPostingFragment : Fragment() {
     private fun initDataAndUI(){
         document_id = arguments?.getString("document_id").toString()
         println("document_id ----------- ${document_id}")
+        println("uid =-------- ${Firebase.auth.uid}")
+        binding.commentUploadBtn.setOnClickListener {
+            //editText 에 있는 거 받아서 comment컬랙션에 add
+
+            val inputText = binding.commentEditText.text
+            val time = System.currentTimeMillis()
+            val itemMap = hashMapOf(
+                "comment_text" to inputText.toString(),
+                "upload_time" to time,
+                "writer_uid" to Firebase.auth.uid
+            )
+            commentCollection.add(itemMap).addOnSuccessListener {
+                // posting 컬랙션에 배열 추가해서 적용 set사용
+
+                val document_id_comment = it.id
+                postingCollection.document(document_id).update("comment_id_list" , FieldValue.arrayUnion(document_id_comment))
+            }
+
+        }
         postingCollection.document(document_id).get().addOnSuccessListener {
             val writer_uid = it.data?.get("writer_uid").toString()
             val upload_time = it.data?.get("upload_time")
             val title = it.data?.get("title").toString()
             val text = it.data?.get("text").toString()
+            val comment_id_list = it.data?.get("comment_id_list")
             addWriterSnapShot(writer_uid)
             initPostingUI(writer_uid, upload_time as Long,title,text)
+            //댓글 가져오기 리사이클러 뷰에 반영 ok
+            getCommentsToRecyclerView(comment_id_list!!)
         }
         postingCollection.document(document_id).addSnapshotListener { value, error ->
             val writer_uid = value?.data?.get("writer_uid").toString()
@@ -102,7 +127,12 @@ class ShowPostingFragment : Fragment() {
             val title = value?.data?.get("title").toString()
             val text = value?.data?.get("text").toString()
             updatePostingUI(writer_uid, upload_time as Long,title,text)
+            //댓글 추가 혹은 삭제 되면 업데이트 수정기능은 아직 보류
+            val comment_id_list = value.data?.get("comment_id_list")
+            getCommentsToRecyclerView(comment_id_list!!)
         }
+
+        //댓글에 있는 맴버들도 snapShot 추가 ok
 
     }
     private fun addWriterSnapShot(writer_uid: String){
@@ -208,6 +238,100 @@ class ShowPostingFragment : Fragment() {
                     }
                 }
                 println("undefined err")
+            }
+        }
+    }
+    private fun getCommentsToRecyclerView(comment_id_list:Any){
+        val commentIdListListString :List<String> = comment_id_list as List<String>
+        for(commentId in commentIdListListString){
+            commentCollection.document(commentId.trim()).get().addOnSuccessListener {
+                var writer_uid = ""
+                var upload_time :Long
+                var comment_text = ""
+
+                writer_uid = "${it["writer_uid"]}"
+                upload_time = it["upload_time"] as Long
+                comment_text = "${it["comment_text"]}"
+                userCollection.document(writer_uid).get().addOnSuccessListener {
+                    addUserToRecyclerView("${it["nickname"]}",writer_uid,upload_time,comment_text,commentId)
+                }
+
+                userCollection.document(writer_uid.trim()).addSnapshotListener { snapshot, error ->
+
+                    val nickname = snapshot?.data?.get("nickname")
+                    println("addSnapShot -------- getnickname ${nickname}")
+                    val uid = snapshot?.data?.get("uid") as String
+                    var i=0
+                    for(comment in viewModel.items){
+                        if(comment.writer_uid == uid){
+                            updateUserToRecyclerview(i,uid.trim(),
+                                nickname as String, comment
+                            )
+                        }
+                        i++
+                    }
+                }
+
+            }
+
+        }
+
+    }
+    fun addUserToRecyclerView(nickname: String,writer_uid:String,upload_time:Long, comment_text:String,commemt_id:String){
+        var userProfileImage = rootRef.child("user_profile_image/${writer_uid}.jpg")
+        userProfileImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
+            if(it.isSuccessful){
+                val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+                for(comment in viewModel.items){//중복 검사 이미 그 맴버가 있는 데 또 추가 할 수 없다.
+                    if (comment.document_id == commemt_id){
+                        return@addOnCompleteListener
+                    }
+                }
+                viewModel.addItem(Comment(bmp,nickname,comment_text,upload_time,writer_uid,commemt_id))
+                viewModel.items.sortBy{
+                    it.timePosting
+                }
+                viewModel.itemsListData.value = viewModel.items
+            }else{
+                var ref = rootRef.child("user_profile_image/default.jpg")
+                ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
+                    if(it.isSuccessful){
+                        val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+                        for(comment in viewModel.items){//중복 검사
+                            if (comment.document_id == commemt_id){
+                                return@addOnCompleteListener
+                            }
+                        }
+                        viewModel.addItem(Comment(bmp,nickname,comment_text,upload_time,writer_uid,commemt_id))
+                        viewModel.items.sortBy{
+                            it.timePosting
+                        }
+                        viewModel.itemsListData.value = viewModel.items
+                    }else{
+                        println("undefined err")
+                    }
+                }
+            }
+        }
+    }
+    fun updateUserToRecyclerview(i:Int,writer_uid:String,nickname:String, comment:Comment){
+        var userProfileImage = rootRef.child("user_profile_image/${writer_uid}.jpg")
+        userProfileImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
+            if(it.isSuccessful){
+                val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+                viewModel.updateItem(i, Comment(bmp,nickname,comment.commentText,comment.timePosting
+                ,comment.writer_uid,comment.document_id))
+            }else{
+                var ref = rootRef.child("user_profile_image/default.jpg")
+                ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
+                    if(it.isSuccessful){
+                        val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+                        viewModel.updateItem(i, Comment(bmp,nickname,comment.commentText,comment.timePosting
+                            ,comment.writer_uid,comment.document_id))
+                    }else{
+                        println("undefined err")
+                    }
+                }
             }
         }
     }

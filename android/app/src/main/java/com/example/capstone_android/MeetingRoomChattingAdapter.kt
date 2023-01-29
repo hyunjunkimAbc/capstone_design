@@ -5,15 +5,13 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.capstone_android.databinding.MeetingRoomInfoItemLayoutBinding
 import com.example.capstone_android.databinding.MeetingRoomPostingCommentItemLayoutBinding
 import com.example.capstone_android.databinding.MeetingRoomPostingCommentItemRightBinding
-import com.example.capstone_android.databinding.MeetingRoomPostingsItemLayoutBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 
-class ShowPostingAdapter (private val viewModel: ShowPostingViewModel): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MeetingRoomChattingAdapter (private val viewModel: MeetingRoomChattingViewModel): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class ViewHolder(private val binding: MeetingRoomPostingCommentItemLayoutBinding): RecyclerView.ViewHolder(binding.root){
         fun setContents(pos : Int){
             with(viewModel.items[pos]){
@@ -65,8 +63,6 @@ class ShowPostingAdapter (private val viewModel: ShowPostingViewModel): Recycler
             return 1
         }
     }
-
-
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if(viewType ==0){
             val layoutInflater = LayoutInflater.from(viewGroup.context)
@@ -79,10 +75,6 @@ class ShowPostingAdapter (private val viewModel: ShowPostingViewModel): Recycler
             return ViewHolderRight(binding)
         }
     }
-    /*
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.setContents(position)
-    }*/
 
     override fun getItemCount()=viewModel.items.size
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
