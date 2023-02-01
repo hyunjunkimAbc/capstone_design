@@ -103,6 +103,8 @@ class MeetingRoomChattingFragment : Fragment() {
         }
         meetingRoomCollection.document(document_id).get().addOnSuccessListener {
             val comment_id_list = it.data?.get("chatting_id_list")
+            println("comment_id_list addOnSuccessListener ${comment_id_list}")
+
             //댓글 가져오기 리사이클러 뷰에 반영 ok
             if(comment_id_list==null){
                 return@addOnSuccessListener
@@ -111,14 +113,32 @@ class MeetingRoomChattingFragment : Fragment() {
         }
         meetingRoomCollection.document(document_id).addSnapshotListener { value, error ->
             val comment_id_list = value?.data?.get("chatting_id_list")
+            println("comment_id_list addSnapshotListener ${comment_id_list}")
             if(comment_id_list==null){
                 return@addSnapshotListener
             }
-            getCommentsToRecyclerView(comment_id_list!!)
+            val commentIdListListString :List<String> = comment_id_list as List<String>
+            updateRecyclerView(commentIdListListString[commentIdListListString.size-1])
+            //미팅룸의 댓글 리스트가 변하는 순간은 댓글이 추가되는 경우 밖에 없을때 정상 작동
+            //댓글 삭제 기능이 추가 되면 if문으로 분기 처리를 해주어야 함
         }
 
         //댓글에 있는 맴버들도 snapShot 추가 ok
 
+    }
+    private fun updateRecyclerView(comment_id: String){
+        commentCollection.document(comment_id.trim()).get().addOnSuccessListener {
+            var writer_uid = ""
+            var upload_time :Long
+            var comment_text = ""
+
+            writer_uid = "${it["writer_uid"]}"
+            upload_time = it["upload_time"] as Long
+            comment_text = "${it["comment_text"]}"
+            userCollection.document(writer_uid).get().addOnSuccessListener {
+                addUserToRecyclerView("${it["nickname"]}",writer_uid,upload_time,comment_text,comment_id)
+            }
+        }
     }
     private fun getCommentsToRecyclerView(comment_id_list:Any){
         val commentIdListListString :List<String> = comment_id_list as List<String>

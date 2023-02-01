@@ -127,13 +127,49 @@ class ShowPostingFragment : Fragment() {
             val title = value?.data?.get("title").toString()
             val text = value?.data?.get("text").toString()
             updatePostingUI(writer_uid, upload_time as Long,title,text)
-            //댓글 추가 혹은 삭제 되면 업데이트 수정기능은 아직 보류
-            val comment_id_list = value.data?.get("comment_id_list")
-            getCommentsToRecyclerView(comment_id_list!!)
+            //댓글 추가 혹은 삭제 되면 업데이트 수정기능은 아직 보류한다는 가정하에 추가 기능만 작동
+            // 만약 삭제 기능 추가 되면 코드도 바뀌어야 함
+            val comment_id_list = value.data?.get("comment_id_list") as List<String>
+            if(viewModel.items.size == comment_id_list.size){//개수 변화 없으면 아무것도 하지 않음
+                println("탈출----")
+            }else if(viewModel.items.size <comment_id_list.size){//맴버가 추가 되면(개수 증가) 새로 받아오기
+                //맨뒤에 있는 것이 새로운 맴버일때 정상 동작함
+                addPostingComment(comment_id_list[comment_id_list.size-1])
+            }else if(viewModel.items.size > comment_id_list.size){//맴버가 사라지면 그 맴버는 리사이클러에서 지우기
+                println("삭제 ------")
+                var isInFirebase =false
+                for(comment in viewModel.items){
+                    isInFirebase =false
+                    for (commentID in comment_id_list){
+                        if(comment.document_id == commentID){
+                            isInFirebase = true
+                        }
+                    }
+                    if(isInFirebase){
+                        continue
+                    }else{//firebase에는 없는데 viewmodel에는 맴버가 있는 상황 그 맴버는 지워주면 된다
+                        viewModel.deleteItem(comment)
+                        break
+                    }
+                }
+            }
+            //getCommentsToRecyclerView(comment_id_list!!)
         }
-
         //댓글에 있는 맴버들도 snapShot 추가 ok
+    }
+    private fun addPostingComment(commemt_id: String){
+        commentCollection.document(commemt_id.trim()).get().addOnSuccessListener {
+            var writer_uid = ""
+            var upload_time :Long
+            var comment_text = ""
 
+            writer_uid = "${it["writer_uid"]}"
+            upload_time = it["upload_time"] as Long
+            comment_text = "${it["comment_text"]}"
+            userCollection.document(writer_uid).get().addOnSuccessListener {
+                addUserToRecyclerView("${it["nickname"]}",writer_uid,upload_time,comment_text,commemt_id)
+            }
+        }
     }
     private fun addWriterSnapShot(writer_uid: String){
         userCollection.document(writer_uid).addSnapshotListener { value, error ->

@@ -157,7 +157,6 @@ class MeetingRoomPostingsFragment : Fragment() {
                     val document_id = d.document.id
 
                     addUserToRecyclerView(writer_uid as String, text as String, upload_time as Long,document_id)
-
                 }
             }
         }
@@ -184,7 +183,6 @@ class MeetingRoomPostingsFragment : Fragment() {
                     }
                     viewModel.itemsListData.value = viewModel.items
                     addUserSnapShot(writer_uid)
-
                 }else{
                     var ref = rootRef.child("user_profile_image/default.jpg")
                     ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
