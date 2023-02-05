@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.viewModels
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -19,6 +20,8 @@ class MeetingRoomActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMeetingRoomBinding.inflate(layoutInflater)
     }
+    private var postingDocumentId =""
+    private var meetingRoomId =""
     private val meetingRoomInfoViewModel : MeetingRoomInfoViewModel by viewModels<MeetingRoomInfoViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +42,22 @@ class MeetingRoomActivity : AppCompatActivity() {
             findNavController(R.id.fragment).navigate(R.id.meetingRoomPostingsFragment)
         }else if(meetingNavController.currentDestination?.id == R.id.meetingRoomPostingAddFragment){
             findNavController(R.id.fragment).navigate(R.id.meetingRoomPostingsFragment)
+        }else if(meetingNavController.currentDestination?.id == R.id.editPostingFragment){
+            val bundle = bundleOf("document_id" to postingDocumentId)
+            findNavController(R.id.fragment).navigate(R.id.showPostingFragment,bundle)
+        }else if(meetingNavController.currentDestination?.id == R.id.editMeetingInfoFragment){
+            //val bundle = bundleOf("document_id" to meetingRoomId)
+            //findNavController(R.id.fragment).navigate(R.id.showPostingFragment,bundle)
+            findNavController(R.id.fragment).navigate(R.id.meetingRoomInfoFragment)
         }
         else{
             this.finish()
         }
+    }
+    public fun setPostingDocumentId(id :String){
+        postingDocumentId = id
+    }
+    public fun setMeetingRoomId(id :String){
+        postingDocumentId = id
     }
 }
