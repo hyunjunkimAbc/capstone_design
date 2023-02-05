@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,6 +45,7 @@ class ShowPostingFragment : Fragment() {
     val postingCollection = db.collection("posting")
     val userCollection = db.collection("user")
     val commentCollection = db.collection("comment")
+    var postingWriterUid =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +92,8 @@ class ShowPostingFragment : Fragment() {
 
     }
     private fun initDataAndUI(){
-        document_id = arguments?.getString("document_id").toString()
+        document_id = arguments?.getString("document_id").toString() //posting id 얻어왔음
+
         println("document_id ----------- ${document_id}")
         println("uid =-------- ${Firebase.auth.uid}")
         binding.commentUploadBtn.setOnClickListener {
@@ -112,6 +116,15 @@ class ShowPostingFragment : Fragment() {
         }
         postingCollection.document(document_id).get().addOnSuccessListener {
             val writer_uid = it.data?.get("writer_uid").toString()
+            postingWriterUid = writer_uid
+            binding.editPostingButton.setOnClickListener {
+                if(Firebase.auth.uid == postingWriterUid){
+                    val bundle = bundleOf("document_id" to document_id)
+                    findNavController().navigate(R.id.action_showPostingFragment_to_editPostingFragment,bundle)
+                }else{
+                    Toast.makeText(activity?.applicationContext,"글 작성자가 아닙니다. 접근할 수 없습니다.",Toast.LENGTH_LONG).show()
+                }
+            }
             val upload_time = it.data?.get("upload_time")
             val title = it.data?.get("title").toString()
             val text = it.data?.get("text").toString()

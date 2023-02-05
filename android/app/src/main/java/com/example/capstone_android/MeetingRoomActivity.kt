@@ -1,22 +1,27 @@
 package com.example.capstone_android
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
+import android.view.LayoutInflater
 import androidx.activity.viewModels
+import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.databinding.ActivityMeetingRoomBinding
-
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MeetingRoomActivity : AppCompatActivity() {
+    //B4 C2 관련
     private val binding by lazy {
         ActivityMeetingRoomBinding.inflate(layoutInflater)
     }
+    private var postingDocumentId =""
+    private var meetingRoomId =""
     private val meetingRoomInfoViewModel : MeetingRoomInfoViewModel by viewModels<MeetingRoomInfoViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +30,10 @@ class MeetingRoomActivity : AppCompatActivity() {
         val meetingFragment =
             supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
         val meetingNavController = meetingFragment.navController
-        val meetingNavigationView =binding.bottomNav
+        val meetingNavigationView = binding.bottomNav
         meetingNavigationView.setupWithNavController(meetingNavController)
     }
+
     override fun onBackPressed() {
         val meetingFragment =
             supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
@@ -36,9 +42,22 @@ class MeetingRoomActivity : AppCompatActivity() {
             findNavController(R.id.fragment).navigate(R.id.meetingRoomPostingsFragment)
         }else if(meetingNavController.currentDestination?.id == R.id.meetingRoomPostingAddFragment){
             findNavController(R.id.fragment).navigate(R.id.meetingRoomPostingsFragment)
+        }else if(meetingNavController.currentDestination?.id == R.id.editPostingFragment){
+            val bundle = bundleOf("document_id" to postingDocumentId)
+            findNavController(R.id.fragment).navigate(R.id.showPostingFragment,bundle)
+        }else if(meetingNavController.currentDestination?.id == R.id.editMeetingInfoFragment){
+            //val bundle = bundleOf("document_id" to meetingRoomId)
+            //findNavController(R.id.fragment).navigate(R.id.showPostingFragment,bundle)
+            findNavController(R.id.fragment).navigate(R.id.meetingRoomInfoFragment)
         }
         else{
             this.finish()
         }
+    }
+    public fun setPostingDocumentId(id :String){
+        postingDocumentId = id
+    }
+    public fun setMeetingRoomId(id :String){
+        postingDocumentId = id
     }
 }

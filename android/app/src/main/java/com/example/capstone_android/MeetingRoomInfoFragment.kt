@@ -7,12 +7,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.databinding.FragmentMeetingRoomInfoBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.MetadataChanges
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.*
+import kotlinx.coroutines.internal.synchronized
+import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 
 // TODO: Rename parameter arguments, choose names that match
@@ -48,6 +58,7 @@ class MeetingRoomInfoFragment : Fragment() {
     var meetingRoomId = ""
     var memCurruntCnt =0
     var memCntOfFirebase =0
+    var writerUid =""
     class DataForUI(val infoText:Any?,val max:Any?,val memberList:Any?,
                     val title:Any?,val upload_time:Any?,val category:Any?)
 
@@ -121,6 +132,16 @@ class MeetingRoomInfoFragment : Fragment() {
             val title =it.data?.get("title")
             val upload_time =it.data?.get("upload_time")
             val category = it.data?.get("category")
+
+            writerUid = it.data?.get("writer_uid") as String
+            binding.editMeetingRoomInfoBtn.setOnClickListener {
+                if(Firebase.auth.uid == writerUid){
+                    val bundle = bundleOf("document_id" to meetingRoomId)
+                    findNavController().navigate(R.id.action_meetingRoomInfoFragment_to_editMeetingInfoFragment ,bundle)
+                }else{
+                    Toast.makeText(activity,"작성자가 아닙니다. 접근할 수 없습니다.", Toast.LENGTH_LONG).show()
+                }
+            }
 
             val dataForUI = DataForUI(infoText,max,memberList,title,upload_time,category)
             updateInfoUI(dataForUI)
@@ -334,3 +355,4 @@ class MeetingRoomInfoFragment : Fragment() {
             }
     }
 }
+
