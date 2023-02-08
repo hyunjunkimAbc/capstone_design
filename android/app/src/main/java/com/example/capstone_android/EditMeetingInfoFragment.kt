@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
@@ -57,6 +59,12 @@ class EditMeetingInfoFragment : Fragment() {
     var chatting_id_list :Any? =null
     var member_list :Any? =null
     var posting_id_list :Any? =null
+    val categoryItems =
+        arrayListOf<String>(
+            "운동", "여행", "음악", "사교/직업", "독서",
+            "요리", "사진", "게임", "댄스", "차/오토바이",
+            "반려동물", "공예", "봉사활동", "공부/자기개발"
+        )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +89,18 @@ class EditMeetingInfoFragment : Fragment() {
         initDataAndUI()
     }
     private fun initDataAndUI(){
+
+        val customAdaptper = activity?.let { ArrayAdapter<String>(it.applicationContext,android.R.layout.simple_spinner_dropdown_item, categoryItems) }
+        val spinnerMeetingRoomCategory = binding.spinnerMeetingRoomCategory
+        spinnerMeetingRoomCategory.adapter = customAdaptper
+        spinnerMeetingRoomCategory.setSelection(0)
+        spinnerMeetingRoomCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                category = categoryItems[position]
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
         meetingRoomCollection.document(document_id).get().addOnSuccessListener {
             binding.postingTitleEditTextMeetingInfoEdit.setText("${it["title"]}")
             binding.postingTextMultilineMeetingInfoEdit.setText("${it["info_text"]}")
