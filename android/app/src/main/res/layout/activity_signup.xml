@@ -182,7 +182,6 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/spinner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dpSpinner" />
 
@@ -199,117 +198,102 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/NicknameEditText" />
 
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="120dp"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dpSpinner" />
+                app:layout_constraintTop_toBottomOf="@+id/birthdayTextView">
 
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:checkedButton="@id/radioButton20"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner">
-
-                <RadioButton
-                    android:id="@+id/radioButton20"
+                <CheckBox
+                    android:id="@+id/sports_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="운동" />
 
-                <RadioButton
-                    android:id="@+id/radioButton19"
+                <CheckBox
+                    android:id="@+id/trip_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="여행" />
 
-                <RadioButton
-                    android:id="@+id/radioButton18"
+                <CheckBox
+                    android:id="@+id/music_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="음악" />
 
-                <RadioButton
-                    android:id="@+id/radioButton17"
+                <CheckBox
+                    android:id="@+id/society_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="사교/직업" />
 
-                <RadioButton
-                    android:id="@+id/radioButton16"
+                <CheckBox
+                    android:id="@+id/read_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="독서" />
 
-                <RadioButton
-                    android:id="@+id/radioButton15"
+                <CheckBox
+                    android:id="@+id/cook_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="요리" />
 
-                <RadioButton
-                    android:id="@+id/radioButton14"
+                <CheckBox
+                    android:id="@+id/photo_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="사진" />
 
-                <RadioButton
-                    android:id="@+id/radioButton13"
+                <CheckBox
+                    android:id="@+id/game_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="게임" />
 
-                <RadioButton
-                    android:id="@+id/radioButton12"
+                <CheckBox
+                    android:id="@+id/dance_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="댄스" />
 
-                <RadioButton
-                    android:id="@+id/radioButton11"
+                <CheckBox
+                    android:id="@+id/car_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="차/오토바이" />
 
-                <RadioButton
-                    android:id="@+id/radioButton10"
+                <CheckBox
+                    android:id="@+id/pet_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="반려동물" />
 
-                <RadioButton
-                    android:id="@+id/radioButton9"
+                <CheckBox
+                    android:id="@+id/art_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="공예" />
 
-                <RadioButton
-                    android:id="@+id/radioButton4"
+                <CheckBox
+                    android:id="@+id/volunteer_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="봉사활동" />
 
-                <RadioButton
-                    android:id="@+id/radioButton3"
+                <CheckBox
+                    android:id="@+id/study_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
-            </RadioGroup>
+                    android:text="공부/자기개발" />
 
-            <Button
-                android:id="@+id/interest_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/radioGroup" />
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

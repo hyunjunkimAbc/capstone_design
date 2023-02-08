@@ -20,11 +20,25 @@ class HomeActivity : AppCompatActivity() {
     val rootRef = Firebase.storage.reference
     val st = FirebaseStorage.getInstance()
 
+    var profile_image_existence = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         var user = FirebaseAuth.getInstance().currentUser
+
+        // DB에 있는 닉네임 띄우기
+        val user_data = db.collection("user")
+        user_data.get().addOnSuccessListener {
+            for(d in it){
+                if((user?.uid ?: String)==d["uid"]){
+                    binding.textView3.text = "${d["nickname"]}"
+                }
+            }
+        }
+
+
+        // 스토리지에 있는 profile image 이미지뷰에 띄우기
         val ref = rootRef.child("user_profile_image/"+"${(user?.uid ?: String)}") // 이미지 파일 이름 가져옴
         ref.getBytes(Long.MAX_VALUE).addOnCompleteListener {
             if (it.isSuccessful){
@@ -32,13 +46,7 @@ class HomeActivity : AppCompatActivity() {
                 binding.imageView.setImageBitmap(bmp)
             }
         }
-        val user_data = db.collection("user")
-        user_data.get().addOnSuccessListener {
-            for(d in it){
-                if((user?.uid ?: String)==d["uid"]){
-                    binding.textView3.text="${d["nickname"]}"
-                }
-            }
-        }
+
+
     }
 }

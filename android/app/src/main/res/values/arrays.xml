@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="select_interest">
+        <item>운동</item>
+        <item>여행</item>
+        <item>음악</item>
+        <item>사교/직업</item>
+        <item>독서</item>
+        <item>요리</item>
+        <item>사진</item>
+        <item>게임</item>
+        <item>댄스</item>
+        <item>차/오토바이</item>
+        <item>반려동물</item>
+        <item>공예</item>
+        <item>봉사활동</item>
+        <item>공부/자기개발</item>
+    </string-array>
+</resources>

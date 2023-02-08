@@ -2,6 +2,7 @@ package com.example.capstone_android
 
 import android.R
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -37,6 +38,9 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
 
     var selected_interest = ""
 
+    // 회원가입 중 선택된 관심사를 담는 배열 (DB 필드 이름: interest_array)
+    var interest_array = ArrayList<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -64,90 +68,12 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
         // 생년월일 선택 DatePicker
         val datePicker : DatePicker = binding.dpSpinner
 
-        // 회원가입 중 관심사 선택 항목들
-        val interest_items = listOf("운동", "여행", "음악", "사교/직업", "독서", "요리", "사진", "게임", "댄스",
-            "차/오토바이", "반려동물", "공예", "봉사활동", "공부/자기개발")
-//        val interest_items = resources.getStringArray(R.array.interest_items)
-        val myAdapter = ArrayAdapter<String>(this, R.layout.simple_list_item_1, interest_items)
 
-        val spinner = binding.spinner
-        spinner.adapter = myAdapter
-        spinner.setSelection(0)
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                // 관심사를 선택하면 position값으로 구별하여 selected_interest 변수의 값을 세팅
-                when(position) {
-                    0   ->  {
-                        println("운동 선택")
-                        selected_interest = "운동"
-                    }
-                    1   ->  {
-                        println("여행 선택")
-                        selected_interest = "여행"
-                    }
-                    2   ->  {
-                        println("음악 선택")
-                        selected_interest = "음악"
-                    }
-                    3   ->  {
-                        println("사교/직업 선택")
-                        selected_interest = "사교/직업"
-                    }
-                    4   ->  {
-                        println("독서 선택")
-                        selected_interest = "독서"
-                    }
-                    5   ->  {
-                        println("요리 선택")
-                        selected_interest = "요리"
-                    }
-                    6   ->  {
-                        println("사진 선택")
-                        selected_interest = "사진"
-                    }
-                    7   ->  {
-                        println("게임 선택")
-                        selected_interest = "게임"
-                    }
-                    8   ->  {
-                        println("댄스 선택")
-                        selected_interest = "댄스"
-                    }
-                    9   ->  {
-                        println("차/오토바이 선택")
-                        selected_interest = "차/오토바이"
-                    }
-                    10   ->  {
-                        println("반려동물 선택")
-                        selected_interest = "반려동물"
-                    }
-                    11   ->  {
-                        println("공예 선택")
-                        selected_interest = "공예"
-                    }
-                    12   ->  {
-                        println("봉사활동 선택")
-                        selected_interest = "봉사활동"
-                    }
-                    13   ->  {
-                        println("공부/자기개발 선택")
-                        selected_interest = "공부/자기개발"
-                    }
-                    else -> {
 
-                    }
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-        }
-
-        binding.interestButton.setOnClickListener(){
-            val intent = Intent(this, SelectInterestActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.interestButton.setOnClickListener(){
+//            val intent = Intent(this, SelectInterestActivity::class.java)
+//            startActivity(intent)
+//        }
 
         // 가입하기 버튼 클릭
         binding.SignUpButton.setOnClickListener(){
@@ -208,7 +134,11 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                     Toast.LENGTH_LONG
                 ).show()
             }
+//            else if (interest_array==null){
+//                //
+//            }
             else {
+                select_interest_CheckBox()
                 Firebase.auth.createUserWithEmailAndPassword(
                     binding.EmailEditText.getText().toString(),
                     binding.PWEditText.getText().toString()
@@ -229,12 +159,13 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                                 "birthday" to datePicker.year.toString()+datePicker.month.toString()+datePicker.dayOfMonth.toString(),
                                 "interest" to selected_interest,
                                 "edit_time" to System.currentTimeMillis(),
-                                "profile_message" to ""
+                                "profile_message" to "",
+                                "interest_array" to interest_array
                             )
                             col.add(itemMap)
 
                             // 프로필 이미지가 선택되었으면
-                            if (selected_profile_img==1) {
+                            if (selected_profile_img==1){
                                 // Firebase Storage로 이미지 전송
                                 imgName = "${user?.uid ?: String}"
                                 var storageReference =
@@ -287,6 +218,8 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                     }
             }
         }
+
+
     }
 
 /*    //액션버튼 메뉴 액션바에 집어 넣기
@@ -334,5 +267,48 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                 }
             }
         }
+    }
+
+    fun select_interest_CheckBox()/*:Array<String> */{
+        if(binding.sportsCheckBox.isChecked) {
+            interest_array.add("운동")
+        }
+        if(binding.tripCheckBox.isChecked) {
+            interest_array.add("여행")
+        }
+        if(binding.musicCheckBox.isChecked) {
+            interest_array.add("음악")
+        }
+        if(binding.societyCheckBox.isChecked) {
+            interest_array.add("사교/직업")
+        }
+        if(binding.readCheckBox.isChecked) {
+            interest_array.add("독서")
+        }
+        if(binding.cookCheckBox.isChecked) {
+            interest_array.add("요리")
+        }
+        if(binding.photoCheckBox.isChecked) {
+            interest_array.add("사진")
+        }
+        if(binding.gameCheckBox.isChecked) {
+            interest_array.add("게임")
+        }
+        if(binding.danceCheckBox.isChecked) {
+            interest_array.add("댄스")
+        }
+        if(binding.carCheckBox.isChecked) {
+            interest_array.add("차/오토바이")
+        }
+        if(binding.artCheckBox.isChecked) {
+            interest_array.add("공예")
+        }
+        if(binding.volunteerCheckBox.isChecked) {
+            interest_array.add("봉사활동")
+        }
+        if(binding.studyCheckBox.isChecked) {
+            interest_array.add("공부/자기개발")
+        }
+        println("선택한 관심사 카테고리"+ interest_array)
     }
 }
