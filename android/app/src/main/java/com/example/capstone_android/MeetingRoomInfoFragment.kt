@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.databinding.FragmentMeetingRoomInfoBinding
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.MetadataChanges
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -116,6 +117,26 @@ class MeetingRoomInfoFragment : Fragment() {
         //val meetingRoomId = viewModel.meetingRoomId 모임 설명 이미지 얻어오기
         meetingRoomId = activity?.intent?.getStringExtra("meeting_room_id").toString()
         //미팅룸 정보 얻어오기
+        binding.enterMeetingRoomBtn.setOnClickListener {
+            userCollection.document("${Firebase.auth.uid}").get().addOnSuccessListener {
+                val meeting_room_id_list = it["meeting_room_id_list"]
+                var isDuple = false
+                if(meeting_room_id_list !=null){
+                    for(meetingRoomUid in meeting_room_id_list as List<String>){
+                        if(meetingRoomId == meetingRoomUid){
+                            isDuple = true
+                        }
+                    }
+                }
+                if(isDuple){
+                    Toast.makeText(activity?.applicationContext,"이미 가입된 모임 입니다.",Toast.LENGTH_SHORT).show()
+                }else{//meeting_room_id_list가 널이거나 중복된 meeting room이 없는 경우
+                    userCollection.document("${Firebase.auth.uid}").update("meeting_room_id_list" , FieldValue.arrayUnion(meetingRoomId)).addOnSuccessListener {
+                        Toast.makeText(activity?.applicationContext,"가입 성공",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
         meetingRoomCollection.document(meetingRoomId).get().addOnSuccessListener {
 
             println("-------- meetingRoomCollection addOnSuccessListener")
@@ -355,5 +376,3 @@ class MeetingRoomInfoFragment : Fragment() {
             }
     }
 }
-
-
