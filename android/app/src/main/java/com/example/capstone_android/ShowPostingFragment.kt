@@ -47,6 +47,9 @@ class ShowPostingFragment : Fragment() {
     val commentCollection = db.collection("comment")
     var postingWriterUid =""
 
+    var numOfChatting =-1
+    var initChatCnt =0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -135,6 +138,15 @@ class ShowPostingFragment : Fragment() {
             getCommentsToRecyclerView(comment_id_list!!)
         }
         postingCollection.document(document_id).addSnapshotListener { value, error ->
+            //제약
+            if(numOfChatting ==-1){
+                println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener -1 spf")
+                return@addSnapshotListener
+            }
+            if (initChatCnt < numOfChatting){
+                println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener < spf")
+                return@addSnapshotListener
+            }
             val writer_uid = value?.data?.get("writer_uid").toString()
             val upload_time = value?.data?.get("upload_time")
             val title = value?.data?.get("title").toString()
@@ -143,10 +155,12 @@ class ShowPostingFragment : Fragment() {
             //댓글 추가 혹은 삭제 되면 업데이트 수정기능은 아직 보류한다는 가정하에 추가 기능만 작동
             // 만약 삭제 기능 추가 되면 코드도 바뀌어야 함
             val comment_id_list = value.data?.get("comment_id_list") as List<String>
+
             if(viewModel.items.size == comment_id_list.size){//개수 변화 없으면 아무것도 하지 않음
                 println("탈출----")
             }else if(viewModel.items.size <comment_id_list.size){//맴버가 추가 되면(개수 증가) 새로 받아오기
                 //맨뒤에 있는 것이 새로운 맴버일때 정상 동작함
+                numOfChatting++
                 addPostingComment(comment_id_list[comment_id_list.size-1])
             }else if(viewModel.items.size > comment_id_list.size){//맴버가 사라지면 그 맴버는 리사이클러에서 지우기
                 println("삭제 ------")
@@ -186,6 +200,14 @@ class ShowPostingFragment : Fragment() {
     }
     private fun addWriterSnapShot(writer_uid: String){
         userCollection.document(writer_uid).addSnapshotListener { value, error ->
+            if(numOfChatting ==-1){
+                println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener -1 spf")
+                return@addSnapshotListener
+            }
+            if (initChatCnt < numOfChatting){
+                println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener < spf")
+                return@addSnapshotListener
+            }
             binding.nicknamePostingShow.text = "${value?.data?.get("nickname")}"
             var ref = rootRef.child("user_profile_image/${value?.data?.get("uid")}.jpg")
             ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
@@ -292,6 +314,7 @@ class ShowPostingFragment : Fragment() {
     }
     private fun getCommentsToRecyclerView(comment_id_list:Any){
         val commentIdListListString :List<String> = comment_id_list as List<String>
+        numOfChatting = comment_id_list.size
         for(commentId in commentIdListListString){
             commentCollection.document(commentId.trim()).get().addOnSuccessListener {
                 var writer_uid = ""
@@ -306,7 +329,15 @@ class ShowPostingFragment : Fragment() {
                 }
 
                 userCollection.document(writer_uid.trim()).addSnapshotListener { snapshot, error ->
-
+                    //ㅇㄹㅇㅎ
+                    if(numOfChatting ==-1){
+                        println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener -1 spf")
+                        return@addSnapshotListener
+                    }
+                    if (initChatCnt < numOfChatting){
+                        println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener < spf")
+                        return@addSnapshotListener
+                    }
                     val nickname = snapshot?.data?.get("nickname")
                     println("addSnapShot -------- getnickname ${nickname}")
                     val uid = snapshot?.data?.get("uid") as String
@@ -336,11 +367,9 @@ class ShowPostingFragment : Fragment() {
                         return@addOnCompleteListener
                     }
                 }
+
                 viewModel.addItem(Comment(bmp,nickname,comment_text,upload_time,writer_uid,commemt_id))
-                viewModel.items.sortBy{
-                    it.timePosting
-                }
-                viewModel.itemsListData.value = viewModel.items
+                updateInitCnt()
             }else{
                 var ref = rootRef.child("user_profile_image/default.jpg")
                 ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
@@ -352,10 +381,7 @@ class ShowPostingFragment : Fragment() {
                             }
                         }
                         viewModel.addItem(Comment(bmp,nickname,comment_text,upload_time,writer_uid,commemt_id))
-                        viewModel.items.sortBy{
-                            it.timePosting
-                        }
-                        viewModel.itemsListData.value = viewModel.items
+                        updateInitCnt()
                     }else{
                         println("undefined err")
                     }
@@ -383,6 +409,18 @@ class ShowPostingFragment : Fragment() {
                 }
             }
         }
+    }
+    @Synchronized
+    fun updateInitCnt(){//임계 영역
+        if (initChatCnt+1 >= numOfChatting){// 마지막 것을 받아왔을때 정렬한다.
+            viewModel.items.sortBy{
+                it.timePosting
+            }
+            viewModel.itemsListData.value = viewModel.items
+
+        }
+
+        initChatCnt++ //비동기로 추가 될때 마다 업데이트
     }
 
     companion object {
