@@ -62,7 +62,8 @@ class MeetingRoomInfoFragment : Fragment() {
     var writerUid =""
     class DataForUI(val infoText:Any?,val max:Any?,val memberList:Any?,
                     val title:Any?,val upload_time:Any?,val category:Any?)
-
+    var numOfChatting =-1
+    var initChatCnt =0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -131,8 +132,12 @@ class MeetingRoomInfoFragment : Fragment() {
                 if(isDuple){
                     Toast.makeText(activity?.applicationContext,"이미 가입된 모임 입니다.",Toast.LENGTH_SHORT).show()
                 }else{//meeting_room_id_list가 널이거나 중복된 meeting room이 없는 경우
-                    userCollection.document("${Firebase.auth.uid}").update("meeting_room_id_list" , FieldValue.arrayUnion(meetingRoomId)).addOnSuccessListener {
-                        Toast.makeText(activity?.applicationContext,"가입 성공",Toast.LENGTH_SHORT).show()
+                    //posting 컬랙션에도 추가 해야 함 member_list
+                    meetingRoomCollection.document("${meetingRoomId}").update("member_list" , FieldValue.arrayUnion(Firebase.auth.uid)).addOnSuccessListener {
+                        //Toast.makeText(activity?.applicationContext,"가입 성공",Toast.LENGTH_SHORT).show()
+                        userCollection.document("${Firebase.auth.uid}").update("meeting_room_id_list" , FieldValue.arrayUnion(meetingRoomId)).addOnSuccessListener {
+                            Toast.makeText(activity?.applicationContext,"가입 성공",Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
@@ -153,6 +158,8 @@ class MeetingRoomInfoFragment : Fragment() {
             val title =it.data?.get("title")
             val upload_time =it.data?.get("upload_time")
             val category = it.data?.get("category")
+
+            numOfChatting = friendUidArr.size
 
             writerUid = it.data?.get("writer_uid") as String
             binding.editMeetingRoomInfoBtn.setOnClickListener {
@@ -175,31 +182,41 @@ class MeetingRoomInfoFragment : Fragment() {
                     var profileMessage = ""
                     var nickname = ""
                     var uid = ""
+                    var editTime = 0.toLong()
 
                     uid = "${it["uid"]}"
                     profileMessage = "${it["profile_message"]}"
                     nickname = "${it["nickname"]}"
-                    addUserToRecyclerView(uid,nickname,profileMessage)
+                    editTime = it["edit_time"] as Long
+                    addUserToRecyclerView(uid,nickname,profileMessage,editTime)
                     memCurruntCnt++
                     if(memCntOfFirebase==memCurruntCnt){
                         println("------ all success ${memCurruntCnt}/${memCntOfFirebase}")
                         isInitAboutMember = true
                     }
-
                 }
                 //미팅룸의 회원들의 정보가 변했을때
                 userCollection.document(friendUid.trim()).addSnapshotListener { snapshot, error ->
                     if(isInitAboutMember==false){
                         return@addSnapshotListener
                     }
+                    if(numOfChatting ==-1){
+                        println("아직 초기화 안됨 userCollection addSnapshotListener -1 mrI")
+                        return@addSnapshotListener
+                    }
+                    if (initChatCnt < numOfChatting){
+                        println("아직 초기화 안됨 userCollection addSnapshotListener < mrI")
+                        return@addSnapshotListener
+                    }
                     val nickname = snapshot?.data?.get("nickname")
                     val profileMessage =snapshot?.data?.get("profile_message")
+                    val editTime = snapshot?.data?.get("edit_time") as Long
                     var i=0
                     for(member in viewModel.items){
                         if(friendUid.trim() == member.uid.trim()){
                             updateUserToRecyclerview(i,friendUid.trim(),
                                 nickname as String, profileMessage as String
-                            )
+                                ,editTime)
                             break
                         }
                         i++
@@ -211,6 +228,14 @@ class MeetingRoomInfoFragment : Fragment() {
         }
         //미팅룸의 정보가 변했을때
         meetingRoomCollection.document( meetingRoomId ).addSnapshotListener { snapshot, error ->
+            if(numOfChatting ==-1){
+                println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener -1 mrI")
+                return@addSnapshotListener
+            }
+            if (initChatCnt < numOfChatting){
+                println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener < mrI")
+                return@addSnapshotListener
+            }
             println("${snapshot?.id} ${snapshot?.data?.get("info_text")}")
             println("-------- meetingRoomCollection addSnapshotListener")
             val infoText =snapshot?.data?.get("info_text")
@@ -227,8 +252,6 @@ class MeetingRoomInfoFragment : Fragment() {
             //viewmodel 기존에 있는거 삭제 해야 함
             updateInfoUI(dataForUI)
             updateMember(friendUidArr)
-
-
         }
 
     }
@@ -278,12 +301,15 @@ class MeetingRoomInfoFragment : Fragment() {
                 var profileMessage = ""
                 var nickname = ""
                 var uid = ""
-
+                var editTime =0.toLong()
                 uid = "${it["uid"]}"
                 profileMessage = "${it["profile_message"]}"
                 nickname = "${it["nickname"]}"
+                editTime = it["edit_time"] as Long
 
-                addUserToRecyclerView(uid,nickname,profileMessage)
+                numOfChatting++
+
+                addUserToRecyclerView(uid,nickname,profileMessage,editTime)
             }
 
         }else if(viewModel.items.size > friendUidArr.size){//맴버가 사라지면 그 맴버는 리사이클러에서 지우기
@@ -300,13 +326,14 @@ class MeetingRoomInfoFragment : Fragment() {
                     continue
                 }else{//firebase에는 없는데 viewmodel에는 맴버가 있는 상황 그 맴버는 지워주면 된다
                     viewModel.deleteItem(member)
+                    numOfChatting--
                     break
                 }
             }
         }
     }
 
-    fun addUserToRecyclerView(uid:String,nickname:String, profileMessage:String){
+    fun addUserToRecyclerView(uid:String,nickname:String, profileMessage:String,editTime :Long){
         var userProfileImage = rootRef.child("user_profile_image/${uid}.jpg")
         userProfileImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
             if(it.isSuccessful){
@@ -316,7 +343,8 @@ class MeetingRoomInfoFragment : Fragment() {
                         return@addOnCompleteListener
                     }
                 }
-                viewModel.addItem(Member(bmp,nickname,profileMessage,uid))
+                viewModel.addItem(Member(bmp,nickname,profileMessage,uid,editTime))
+                updateInitCnt()
             }else{
                 var ref = rootRef.child("user_profile_image/default.jpg")
                 ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
@@ -327,7 +355,8 @@ class MeetingRoomInfoFragment : Fragment() {
                                 return@addOnCompleteListener
                             }
                         }
-                        viewModel.addItem(Member(bmp,nickname,profileMessage,uid))
+                        viewModel.addItem(Member(bmp,nickname,profileMessage,uid,editTime))
+                        updateInitCnt()
                     }else{
                         println("undefined err")
                     }
@@ -335,24 +364,44 @@ class MeetingRoomInfoFragment : Fragment() {
             }
         }
     }
-    fun updateUserToRecyclerview(i:Int,uid:String,nickname:String, profileMessage:String){
+    fun updateUserToRecyclerview(i:Int,uid:String,nickname:String, profileMessage:String,editTime: Long){
         var userProfileImage = rootRef.child("user_profile_image/${uid}.jpg")
         userProfileImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
             if(it.isSuccessful){
                 val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
-                viewModel.updateItem(i,Member(bmp,nickname,profileMessage,uid))
+                viewModel.updateItem(i,Member(bmp,nickname,profileMessage,uid,editTime))
+                viewModel.items.sortByDescending{
+                    it.editTime
+                }
+                viewModel.itemsListData.value = viewModel.items
             }else{
                 var ref = rootRef.child("user_profile_image/default.jpg")
                 ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                     if(it.isSuccessful){
                         val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
-                        viewModel.updateItem(i,Member(bmp,nickname,profileMessage,uid))
+                        viewModel.updateItem(i,Member(bmp,nickname,profileMessage,uid,editTime))
+                        viewModel.items.sortByDescending{
+                            it.editTime
+                        }
+                        viewModel.itemsListData.value = viewModel.items
                     }else{
                         println("undefined err")
                     }
                 }
             }
         }
+    }
+    @Synchronized
+    fun updateInitCnt(){//임계 영역
+        if (initChatCnt+1 >= numOfChatting){// 마지막 것을 받아왔을때 정렬한다.
+            viewModel.items.sortByDescending{
+                it.editTime
+            }
+            viewModel.itemsListData.value = viewModel.items
+
+        }
+
+        initChatCnt++ //비동기로 추가 될때 마다 업데이트
     }
 
 
@@ -376,4 +425,3 @@ class MeetingRoomInfoFragment : Fragment() {
             }
     }
 }
-

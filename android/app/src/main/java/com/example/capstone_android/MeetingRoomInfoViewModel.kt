@@ -2,7 +2,7 @@ package com.example.capstone_android
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-data class Member(val icon: Bitmap?, val nickname: String, val profileMessage:String,val uid:String);
+data class Member(val icon: Bitmap?, val nickname: String, val profileMessage:String,val uid:String,val editTime :Long);
 
 class MeetingRoomInfoViewModel : ViewModel() {
     val itemsListData = MutableLiveData<ArrayList<Member>>()

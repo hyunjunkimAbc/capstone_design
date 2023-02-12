@@ -53,6 +53,8 @@ class MeetingRoomPostingsFragment : Fragment() {
     var memCntOfFirebase =0
     class DataForPostingUI(val infoText:Any?,val max:Any?,val memberList:Any?,
                            val title:Any?,val upload_time:Any?,val category:Any?)
+    var numOfChatting =-1
+    var initChatCnt =0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,6 +114,7 @@ class MeetingRoomPostingsFragment : Fragment() {
         }
         meetingRoomCollection.document(meetingRoomId).get().addOnSuccessListener {
             val posting_id_list = it["posting_id_list"] as List<String>
+            numOfChatting = posting_id_list.size
             for (posting_id in posting_id_list){
                 postingCollection.document(posting_id).get().addOnSuccessListener {
                     val text =it["text"]
@@ -119,7 +122,7 @@ class MeetingRoomPostingsFragment : Fragment() {
                     val writer_uid = it["writer_uid"]
                     val document_id = it.id
 
-                    addUserToRecyclerView(writer_uid as String, text as String, upload_time as Long,document_id)
+                    addPostingToRecyclerView(writer_uid as String, text as String, upload_time as Long,document_id)
                 }.addOnFailureListener {
                     println("로드 실패")
                 }
@@ -128,6 +131,14 @@ class MeetingRoomPostingsFragment : Fragment() {
 
         postingCollection.addSnapshotListener { value, error ->
             if(value == null){
+                return@addSnapshotListener
+            }
+            if(numOfChatting ==-1){
+                println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener -1 mrp")
+                return@addSnapshotListener
+            }
+            if (initChatCnt < numOfChatting){
+                println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener < mrp")
                 return@addSnapshotListener
             }
             for(d in value!!.documentChanges){
@@ -155,15 +166,16 @@ class MeetingRoomPostingsFragment : Fragment() {
                     val upload_time = d.document["upload_time"]
                     val writer_uid = d.document["writer_uid"]
                     val document_id = d.document.id
+                    numOfChatting++
 
-                    addUserToRecyclerView(writer_uid as String, text as String, upload_time as Long,document_id)
+                    addPostingToRecyclerView(writer_uid as String, text as String, upload_time as Long,document_id)
                 }
             }
         }
 
     }
 
-    fun addUserToRecyclerView(writer_uid:String, postingText:String,timePosting:Long,document_id:String){
+    fun addPostingToRecyclerView(writer_uid:String, postingText:String,timePosting:Long,document_id:String){
 
         userCollection.document(writer_uid).get().addOnSuccessListener {
             val nickname = it.data?.get("nickname")
@@ -178,10 +190,7 @@ class MeetingRoomPostingsFragment : Fragment() {
                     }
                     viewModel.addItem(Posting(bmp,
                         nickname as String, postingText, timePosting,document_id,writer_uid))
-                    viewModel.items.sortByDescending {
-                        it.timePosting
-                    }
-                    viewModel.itemsListData.value = viewModel.items
+                    updateInitCnt()
                     addUserSnapShot(writer_uid)
                 }else{
                     var ref = rootRef.child("user_profile_image/default.jpg")
@@ -195,10 +204,7 @@ class MeetingRoomPostingsFragment : Fragment() {
                             }
                             viewModel.addItem(Posting(bmp,
                                 nickname as String, postingText, timePosting,document_id,writer_uid))
-                            viewModel.items.sortByDescending {
-                                it.timePosting
-                            }
-                            viewModel.itemsListData.value = viewModel.items
+                            updateInitCnt()
                             addUserSnapShot(writer_uid)
                         }else{
                             println("undefined err")
@@ -212,6 +218,10 @@ class MeetingRoomPostingsFragment : Fragment() {
     }
     fun addUserSnapShot(writer_uid: String){
         userCollection.document(writer_uid).addSnapshotListener { value, error ->
+            if(initChatCnt < numOfChatting){
+                println("아직 초기화 안됨 userCollection addSnapshotListener m r p")
+                return@addSnapshotListener
+            }
             val nickname =value?.data?.get("nickname")
             val uid = value?.data?.get("uid")
             var userProfileImage = rootRef.child("user_profile_image/${uid}.jpg")
@@ -255,6 +265,18 @@ class MeetingRoomPostingsFragment : Fragment() {
             }
 
         }
+    }
+    @Synchronized
+    fun updateInitCnt(){//임계 영역
+        if (initChatCnt+1 >= numOfChatting){// 마지막 것을 받아왔을때 정렬한다.
+            viewModel.items.sortByDescending{
+                it.timePosting
+            }
+            viewModel.itemsListData.value = viewModel.items
+
+        }
+
+        initChatCnt++ //비동기로 추가 될때 마다 업데이트
     }
 
     companion object {
