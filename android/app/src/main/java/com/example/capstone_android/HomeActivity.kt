@@ -45,6 +45,11 @@ class HomeActivity : AppCompatActivity() {
                 val bmp = BitmapFactory.decodeByteArray(it.result, 0, it.result!!.size)
                 binding.imageView.setImageBitmap(bmp)
             }
+            // 프로필 이미지가 없을때 디폴트 이미지 리소스 띄우기
+            else{
+                val default_img = resources.getDrawable(R.drawable.profile_default_img)
+                binding.imageView.setImageDrawable(default_img)
+            }
         }
 
 
