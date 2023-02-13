@@ -178,14 +178,18 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
             }
         }
 
-        //findViewById<Button>(R.id.ToSignupButton).setOnClickListener(){
         binding.ToSignupButton.setOnClickListener(){
             println("회원가입 버튼 클릭")
-            //회원가입 화면으로 이동 (SignUpActivity)
+            // 회원가입 화면으로 이동
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
 
+        binding.findPWBtn.setOnClickListener(){
+            // 비밀번호 재설정 화면으로 이동
+            val intent = Intent(this, ResetPWActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     // 구글 로그인 버튼 텍스트 세팅

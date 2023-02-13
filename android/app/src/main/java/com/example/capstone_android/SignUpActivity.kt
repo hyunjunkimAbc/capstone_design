@@ -142,15 +142,12 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                 Firebase.auth.createUserWithEmailAndPassword(
                     binding.EmailEditText.getText().toString(),
                     binding.PWEditText.getText().toString()
-                )
-                    //findViewById<EditText>(R.id.EmailEditText).getText().toString(),
-                    //findViewById<EditText>(R.id.PWEditText).getText().toString())
-                    .addOnCompleteListener {
+                ).addOnCompleteListener {
                         if (it.isSuccessful) {
                             println("회원가입 성공")
                             // DB postings 컬렉션 레퍼런스 가져오기
                             val user = FirebaseAuth.getInstance().currentUser
-                            val col = db.collection("user")
+                            val col = db.collection("user").document("${user?.uid}")
                             val itemMap = hashMapOf(
                                 "email" to binding.EmailEditText.getText().toString(),
                                 "password" to binding.PWEditText.getText().toString(),
@@ -162,7 +159,8 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                                 "profile_message" to "",
                                 "interest_array" to interest_array
                             )
-                            col.add(itemMap)
+                            col.set(itemMap)
+//                            col.add(itemMap)
 
                             // 프로필 이미지가 선택되었으면
                             if (selected_profile_img==1){

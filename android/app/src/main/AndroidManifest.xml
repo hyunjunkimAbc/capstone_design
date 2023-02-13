@@ -29,18 +29,11 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".LoginActivity">
-
-        </activity>
-        <activity android:name=".SignUpActivity">
-
-        </activity>
-        <activity android:name=".HomeActivity">
-
-        </activity>
-        <activity android:name=".SelectInterestActivity">
-
-        </activity>
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".SelectInterestActivity"></activity>
+        <activity android:name=".ResetPWActivity"></activity>
     </application>
 
 </manifest>
