@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/activity_meeting_room.xml" value="0.1" />
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_edit_meeting_info.xml" value="0.16666666666666666" />
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_edit_posting.xml" value="0.1272644927536232" />
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_chatting.xml" value="0.1" />
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_info.xml" value="0.1" />
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_posting_add.xml" value="0.1" />
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/meeting_room_posting_comment_item_layout.xml" value="0.22" />
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/meeting_room_posting_comment_item_right.xml" value="0.11820652173913043" />
+        <entry key="..\:/capstone_design2/app/src/main/res/drawable/edge_of_recycler_view.xml" value="0.1953125" />
+        <entry key="..\:/capstone_design2/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/capstone_design2/app/src/main/res/layout/activity_meeting_room.xml" value="0.1" />
+        <entry key="..\:/capstone_design2/app/src/main/res/layout/fragment_meeting_room_chatting.xml" value="0.1" />
+        <entry key="..\:/capstone_design2/app/src/main/res/layout/fragment_meeting_room_posting_add.xml" value="0.1" />
+        <entry key="..\:/capstone_design2/app/src/main/res/layout/meeting_room_info_item_layout.xml" value="0.1" />
+        <entry key="..\:/capstone_design2/app/src/main/res/layout/meeting_room_posting_comment_item_layout.xml" value="0.1" />
+        <entry key="..\:/capstone_design2/app/src/main/res/layout/meeting_room_posting_comment_item_right.xml" value="0.1" />
+        <entry key="..\:/capstone_design2/app/src/main/res/menu/meeting_room_navigation_menu.xml" value="0.1" />
+        <entry key="..\:/capstone_design_main/android/app/src/main/res/drawable/round_button.xml" value="0.1" />
+        <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/activity_select_interest.xml" value="0.1" />
+        <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/activity_sign_up.xml" value="0.1" />
+        <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/content_login.xml" value="0.1" />
+        <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/fragment_first.xml" value="0.740625" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
