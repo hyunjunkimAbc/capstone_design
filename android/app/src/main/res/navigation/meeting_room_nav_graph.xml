@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/meeting_room_nav_graph"
+    app:startDestination="@id/meetingRoomInfoFragment"
+    app:popUpToInclusive="true"
+    >
+
+    <fragment
+        android:id="@+id/meetingRoomChattingFragment"
+        android:name="com.example.capstone_android.MeetingRoomChattingFragment"
+        android:label="fragment_meeting_room_chatting"
+        tools:layout="@layout/fragment_meeting_room_chatting" />
+    <fragment
+        android:id="@+id/meetingRoomInfoFragment"
+        android:name="com.example.capstone_android.MeetingRoomInfoFragment"
+        android:label="fragment_meeting_room_info"
+        tools:layout="@layout/fragment_meeting_room_info" >
+        <action
+            android:id="@+id/action_meetingRoomInfoFragment_to_editMeetingInfoFragment"
+            app:destination="@id/editMeetingInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/meetingRoomPostingsFragment"
+        android:name="com.example.capstone_android.MeetingRoomPostingsFragment"
+        android:label="fragment_meeting_room_postings"
+        tools:layout="@layout/fragment_meeting_room_postings" >
+        <action
+            android:id="@+id/action_meetingRoomPostingsFragment_to_showPostingFragment"
+            app:destination="@id/showPostingFragment"
+            />
+        <action
+            android:id="@+id/action_meetingRoomPostingsFragment_to_meetingRoomPostingAddFragment"
+            app:destination="@id/meetingRoomPostingAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showPostingFragment"
+        android:name="com.example.capstone_android.ShowPostingFragment"
+        android:label="fragment_show_posting"
+        tools:layout="@layout/fragment_show_posting" >
+        <action
+            android:id="@+id/action_showPostingFragment_to_editPostingFragment"
+            app:destination="@id/editPostingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/meetingRoomPostingAddFragment"
+        android:name="com.example.capstone_android.MeetingRoomPostingAddFragment"
+        android:label="fragment_meeting_room_posting_add"
+        tools:layout="@layout/fragment_meeting_room_posting_add" >
+        <action
+            android:id="@+id/action_meetingRoomPostingAddFragment_to_meetingRoomPostingsFragment"
+            app:destination="@id/meetingRoomPostingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPostingFragment"
+        android:name="com.example.capstone_android.EditPostingFragment"
+        android:label="fragment_edit_posting"
+        tools:layout="@layout/fragment_edit_posting" >
+        <action
+            android:id="@+id/action_editPostingFragment_to_showPostingFragment"
+            app:destination="@id/showPostingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editMeetingInfoFragment"
+        android:name="com.example.capstone_android.EditMeetingInfoFragment"
+        android:label="fragment_edit_meeting_info"
+        tools:layout="@layout/fragment_edit_meeting_info" >
+        <action
+            android:id="@+id/action_editMeetingInfoFragment_to_meetingRoomInfoFragment"
+            app:destination="@id/meetingRoomInfoFragment" />
+    </fragment>
+</navigation>
