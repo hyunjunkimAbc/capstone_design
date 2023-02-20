@@ -18,7 +18,7 @@ class ResetPWActivity : AppCompatActivity() {
 
     val db = Firebase.firestore
     // 생년월일 선택 DatePicker
-    val datePicker : DatePicker = binding.resetDpSpinner
+//    val datePicker : DatePicker = binding.resetdpSpinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,24 +32,27 @@ class ResetPWActivity : AppCompatActivity() {
 
 
         binding.resetBtn.setOnClickListener(){
-//            val user_data = db.collection("user")
-//            user_data.get().addOnSuccessListener {
-//                for(d in it){
-//                    if(binding.emailTextView.toString()==d["email"].toString()) {
+            val user_data = db.collection("user")
+            user_data.get().addOnSuccessListener {
+                for(d in it){
+                    if(binding.emailTextView.toString()==d["email"]) {
+                        println("check1")
+                        println(binding.emailTextView.toString())
+                        println(d["email"])
 //                        if (datePicker.year.toString() + datePicker.month.toString() + datePicker.dayOfMonth.toString()
 //                        ==d["birthday"].toString()){
 //                            findPassword()
 //                            return@addOnSuccessListener
 //                        }
 //                        else Toast.makeText(this, "생년월일이 틀렸습니다.", Toast.LENGTH_SHORT)
-//                    }
-//                }
-//                Toast.makeText(this, "해당 이메일로 가입되지않았습니다.", Toast.LENGTH_SHORT)
-//            }
+                    }
+                }
+                Toast.makeText(this, "해당 이메일로 가입된 계정이 없습니다.", Toast.LENGTH_SHORT)
+            }
         }
     }
 
-    //액션버튼 클릭 했을 때
+    // 액션버튼 클릭 했을 때
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item?.itemId){
             android.R.id.home -> {
@@ -58,16 +61,6 @@ class ResetPWActivity : AppCompatActivity() {
                 finish()
                 return true
             }
-/*            R.id.action_search -> {
-                // 검색 버튼 눌렀을 때
-                Toast.makeText(applicationContext, "검색 이벤트 실행", Toast.LENGTH_LONG).show()
-                return super.onOptionsItemSelected(item)
-            }
-            R.id.action_share -> {
-                // 공유 버튼 눌렀을 때
-                Toast.makeText(applicationContext, "공유 이벤트 실행", Toast.LENGTH_LONG).show()
-                return super.onOptionsItemSelected(item)
-            }*/
             else -> return super.onOptionsItemSelected(item)
         }
     }
