@@ -3,6 +3,7 @@ package com.example.capstone_android
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.databinding.MeetingRoomInfoItemLayoutBinding
 import com.example.capstone_android.databinding.MeetingRoomPostingsItemLayoutBinding
