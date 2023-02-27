@@ -34,6 +34,7 @@
         <activity android:name=".HomeActivity"></activity>
         <activity android:name=".SelectInterestActivity"></activity>
         <activity android:name=".ResetPWActivity"></activity>
+        <activity android:name=".SetGoogleAccountActivity"></activity>
     </application>
 
 </manifest>

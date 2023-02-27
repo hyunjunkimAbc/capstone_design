@@ -17,8 +17,6 @@ class ResetPWActivity : AppCompatActivity() {
     }
 
     val db = Firebase.firestore
-    // 생년월일 선택 DatePicker
-//    val datePicker : DatePicker = binding.resetdpSpinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,23 +29,39 @@ class ResetPWActivity : AppCompatActivity() {
         supportActionBar!!.setTitle("비밀번호 재설정") // 툴바 제목 설정
 
 
-        binding.resetBtn.setOnClickListener(){
-            val user_data = db.collection("user")
-            user_data.get().addOnSuccessListener {
-                for(d in it){
-                    if(binding.emailTextView.toString()==d["email"]) {
-                        println("check1")
-                        println(binding.emailTextView.toString())
-                        println(d["email"])
-//                        if (datePicker.year.toString() + datePicker.month.toString() + datePicker.dayOfMonth.toString()
-//                        ==d["birthday"].toString()){
-//                            findPassword()
-//                            return@addOnSuccessListener
-//                        }
-//                        else Toast.makeText(this, "생년월일이 틀렸습니다.", Toast.LENGTH_SHORT)
+        binding.changeBtn.setOnClickListener(){
+            println("재설정 버튼 클릭")
+            if(binding.EmailEditText.getText().toString()==""){
+                Toast.makeText(this, "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            else if(binding.nicknameEditText.getText().toString()==""){
+                Toast.makeText(this, "닉네임을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            else {
+                val user_data = db.collection("user")
+                user_data.get().addOnSuccessListener {
+                    for(d in it){
+                        if(binding.EmailEditText.getText().toString()==d["email"]) {
+                            if(binding.nicknameEditText.getText().toString()==d["nickname"]){
+                                // 생년월일 선택 DatePicker
+                                val datePicker = binding.changedpSpinner
+                                var birthday = datePicker.year.toString()+datePicker.month.toString()+datePicker.dayOfMonth.toString()
+                                if (birthday==d["birthday"]){
+                                    findPassword()
+                                    return@addOnSuccessListener
+                                }
+                                else {
+                                    Toast.makeText(this, "생년월일이 틀렸습니다.", Toast.LENGTH_SHORT).show()
+                                    return@addOnSuccessListener
+                                }
+                            }
+                            else Toast.makeText(this, "해당 이메일의 닉네임을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                        }
                     }
+                    Toast.makeText(this, "해당 이메일로 가입된 계정이 없습니다.", Toast.LENGTH_SHORT).show()
                 }
-                Toast.makeText(this, "해당 이메일로 가입된 계정이 없습니다.", Toast.LENGTH_SHORT)
             }
         }
     }
@@ -66,13 +80,13 @@ class ResetPWActivity : AppCompatActivity() {
     }
 
     fun findPassword() {
-        FirebaseAuth.getInstance().sendPasswordResetEmail(binding.EmailEditText.text.toString())
+        FirebaseAuth.getInstance().sendPasswordResetEmail(binding.EmailEditText.getText().toString())
             .addOnCompleteListener {	task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "재설정 메일을 보냈습니다.", Toast.LENGTH_LONG).show()
                     finish()
                 } else {
-//                    Toast(task.getException)
+                    Toast.makeText(this, "메일을 다시 입력해주세요.", Toast.LENGTH_LONG).show()
                 }
             }
     }

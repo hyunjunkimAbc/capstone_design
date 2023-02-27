@@ -2,13 +2,11 @@ package com.example.capstone_android
 
 import android.R
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.capstone_android.databinding.ActivitySignupBinding
@@ -35,8 +33,6 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
         const val REQUEST_CODE = 1
         const val UPLOAD_FOLDER = "upload_images/"
     }
-
-    var selected_interest = ""
 
     // 회원가입 중 선택된 관심사를 담는 배열 (DB 필드 이름: interest_array)
     var interest_array = ArrayList<String>()
@@ -68,16 +64,11 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
         // 생년월일 선택 DatePicker
         val datePicker : DatePicker = binding.dpSpinner
 
-
-
-//        binding.interestButton.setOnClickListener(){
-//            val intent = Intent(this, SelectInterestActivity::class.java)
-//            startActivity(intent)
-//        }
-
         // 가입하기 버튼 클릭
         binding.SignUpButton.setOnClickListener(){
             println("가입하기 버튼 클릭")
+            // 체크된 관심사 배열에 세팅
+            select_interest_CheckBox()
             if (binding.EmailEditText.getText().toString()==""){     // email을 입력하지 않았을 때
                 println("이메일을 입력하지 않음")
                 Toast.makeText(
@@ -134,11 +125,15 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                     Toast.LENGTH_LONG
                 ).show()
             }
-//            else if (interest_array==null){
-//                //
-//            }
+            else if (interest_array.isNullOrEmpty()){
+                println("체크된 관심사가 없음")
+                Toast.makeText(
+                    this,
+                    "관심사를 선택해주세요.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
             else {
-                select_interest_CheckBox()
                 Firebase.auth.createUserWithEmailAndPassword(
                     binding.EmailEditText.getText().toString(),
                     binding.PWEditText.getText().toString()
@@ -154,7 +149,6 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                                 "nickname" to binding.NicknameEditText.getText().toString(),
                                 "uid" to (user?.uid ?: String),
                                 "birthday" to datePicker.year.toString()+datePicker.month.toString()+datePicker.dayOfMonth.toString(),
-                                "interest" to selected_interest,
                                 "edit_time" to System.currentTimeMillis(),
                                 "profile_message" to "",
                                 "interest_array" to interest_array
@@ -173,15 +167,6 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                                     println("이미지 업로드 성공")
                                 }
                             }
-/*
-                            //추가: friendCommit에 friendArr 과 nickName
-                            val col_friendCommit = db.collection("friendCommit")
-                            val itemMap_friendCommit = hashMapOf(
-                                "nickName" to binding.NicknameEditText.getText().toString(),
-                                "friendArr" to arrayListOf<String>()
-                            )
-                            col_friendCommit.add(itemMap_friendCommit)
-*/
                             // 스낵바(토스트) 메시지
                             Toast.makeText(
                                 this,

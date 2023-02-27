@@ -27,16 +27,22 @@ class HomeActivity : AppCompatActivity() {
 
         var user = FirebaseAuth.getInstance().currentUser
 
+        println("홈화면 시 uid : ${user?.uid}")
+        println("홈화면2 시 uid : ${user?.uid ?: String}")
+
+//        val secondIntent = intent
+//        val userUid = secondIntent.getStringExtra("userUid")
+
         // DB에 있는 닉네임 띄우기
         val user_data = db.collection("user")
         user_data.get().addOnSuccessListener {
             for(d in it){
-                if((user?.uid ?: String)==d["uid"]){
+                if(user?.uid==d["uid"]){
                     binding.textView3.text = "${d["nickname"]}"
                 }
             }
         }
-
+        println(user?.uid ?: String)
 
         // 스토리지에 있는 profile image 이미지뷰에 띄우기
         val ref = rootRef.child("user_profile_image/"+"${(user?.uid ?: String)}") // 이미지 파일 이름 가져옴

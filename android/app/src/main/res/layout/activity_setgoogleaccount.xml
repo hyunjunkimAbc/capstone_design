@@ -7,7 +7,7 @@
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/signupToolbar"
+        android:id="@+id/initToolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#F0F0F0"
@@ -21,11 +21,12 @@
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/SignUpButton"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/InitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupToolbar"
+        app:layout_constraintTop_toBottomOf="@+id/initToolbar"
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,7 +50,7 @@
 
 
             <EditText
-                android:id="@+id/EmailEditText"
+                android:id="@+id/NicknameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
@@ -57,99 +58,12 @@
                 android:layout_marginEnd="16dp"
                 android:background="#E1E1E1"
                 android:ems="10"
-                android:hint="E-mail을 입력해주세요"
-                android:inputType="textEmailAddress"
+                android:hint="닉네임을 입력해주세요"
+                android:inputType="textPersonName"
                 android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profileImageButton" />
-
-            <EditText
-                android:id="@+id/PWEditText"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
-                android:background="#E1E1E1"
-                android:ems="10"
-                android:hint="비밀번호를 입력해주세요"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                app:layout_constraintEnd_toEndOf="@+id/EmailEditText"
-                app:layout_constraintStart_toStartOf="@+id/EmailEditText"
-                app:layout_constraintTop_toBottomOf="@+id/EmailEditText" />
-
-            <EditText
-                android:id="@+id/NicknameEditText"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
-                android:background="#E1E1E1"
-                android:ems="10"
-                android:hint="닉네임을 입력해주세요"
-                android:inputType="textPersonName"
-                android:padding="10dp"
-                app:layout_constraintEnd_toEndOf="@+id/PWEditText2"
-                app:layout_constraintStart_toStartOf="@+id/PWEditText2"
-                app:layout_constraintTop_toBottomOf="@+id/PWEditText2" />
-
-            <EditText
-                android:id="@+id/PWEditText2"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
-                android:background="#E1E1E1"
-                android:ems="10"
-                android:hint="비밀번호를 한번 더 입력해주세요"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                app:layout_constraintEnd_toEndOf="@+id/PWEditText"
-                app:layout_constraintStart_toStartOf="@+id/PWEditText"
-                app:layout_constraintTop_toBottomOf="@+id/PWEditText" />
-
-            <TextView
-                android:id="@+id/emailTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_marginBottom="4dp"
-                android:text="이메일"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/EmailEditText"
-                app:layout_constraintStart_toStartOf="@+id/EmailEditText" />
-
-            <TextView
-                android:id="@+id/pw1TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_marginBottom="4dp"
-                android:text="비밀번호"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/PWEditText"
-                app:layout_constraintStart_toStartOf="@+id/EmailEditText" />
-
-            <TextView
-                android:id="@+id/pw2TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_marginBottom="4dp"
-                android:text="비밀번호 확인"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/PWEditText2"
-                app:layout_constraintStart_toStartOf="@+id/PWEditText" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -456,11 +370,11 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/SignUpButton"
+        android:id="@+id/InitButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/round_button"
-        android:text="가입하기"
+        android:text="저장하기"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
