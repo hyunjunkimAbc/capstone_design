@@ -114,28 +114,31 @@ class MeetingRoomChattingFragment : Fragment() {
                 return@addOnSuccessListener
             }
             getCommentsToRecyclerView(comment_id_list!!)
+            meetingRoomCollection.document(document_id).addSnapshotListener { value, error ->
+                if(numOfChatting ==-1){
+                    println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener -1")
+                    return@addSnapshotListener
+                }
+                if (initChatCnt < numOfChatting){
+                    println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener <")
+                    return@addSnapshotListener
+                }
+                val comment_id_list = value?.data?.get("chatting_id_list")
+                println("comment_id_list addSnapshotListener ${comment_id_list}")
+                if(comment_id_list==null){
+                    return@addSnapshotListener
+                }
+                val commentIdListListString :List<String> = comment_id_list as List<String>
+                if(commentIdListListString.size <=0){
+                    return@addSnapshotListener
+                }
+                updateRecyclerView(commentIdListListString[commentIdListListString.size-1])
+                //미팅룸의 댓글 리스트가 변하는 순간은 댓글이 추가되는 경우 밖에 없을때 정상 작동
+                //댓글 삭제 기능이 추가 되면 if문으로 분기 처리를 해주어야 함
+            }
+            //댓글에 있는 맴버들도 snapShot 추가 ok
         }
-        meetingRoomCollection.document(document_id).addSnapshotListener { value, error ->
-            if(numOfChatting ==-1){
-                println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener -1")
-                return@addSnapshotListener
-            }
-            if (initChatCnt < numOfChatting){
-                println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener <")
-                return@addSnapshotListener
-            }
-            val comment_id_list = value?.data?.get("chatting_id_list")
-            println("comment_id_list addSnapshotListener ${comment_id_list}")
-            if(comment_id_list==null){
-                return@addSnapshotListener
-            }
-            val commentIdListListString :List<String> = comment_id_list as List<String>
-            numOfChatting++
-            updateRecyclerView(commentIdListListString[commentIdListListString.size-1])
-            //미팅룸의 댓글 리스트가 변하는 순간은 댓글이 추가되는 경우 밖에 없을때 정상 작동
-            //댓글 삭제 기능이 추가 되면 if문으로 분기 처리를 해주어야 함
-        }
-        //댓글에 있는 맴버들도 snapShot 추가 ok
+
     }
     private fun updateRecyclerView(comment_id: String){
         println("updateRecyclerView")
@@ -148,9 +151,10 @@ class MeetingRoomChattingFragment : Fragment() {
             upload_time = it["upload_time"] as Long
             comment_text = "${it["comment_text"]}"
             userCollection.document(writer_uid).get().addOnSuccessListener {
+                updateNumOfChatting(true)
                 addUserToRecyclerView("${it["nickname"]}",writer_uid,upload_time,comment_text,comment_id)
+                addUserSnapShot(writer_uid)
             }
-            addUserSnapShot(writer_uid)
         }
     }
     private fun getCommentsToRecyclerView(comment_id_list:Any){
@@ -167,9 +171,12 @@ class MeetingRoomChattingFragment : Fragment() {
                 comment_text = "${it["comment_text"]}"
                 userCollection.document(writer_uid).get().addOnSuccessListener {
                     addUserToRecyclerView("${it["nickname"]}",writer_uid,upload_time,comment_text,commentId)
+                    addUserSnapShot(writer_uid)
+                }.addOnFailureListener {
+                    updateInitCnt(false)
                 }
-                addUserSnapShot(writer_uid)
-
+            }.addOnFailureListener {
+                updateInitCnt(false)
             }
 
         }
@@ -186,7 +193,7 @@ class MeetingRoomChattingFragment : Fragment() {
                     }
                 }
                 viewModel.addItem(ChattingData(bmp,nickname,comment_text,upload_time,writer_uid,commemt_id))
-                updateInitCnt()
+                updateInitCnt(true)
             }else{
                 var ref = rootRef.child("user_profile_image/default.jpg")
                 ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
@@ -198,7 +205,7 @@ class MeetingRoomChattingFragment : Fragment() {
                             }
                         }
                         viewModel.addItem(ChattingData(bmp,nickname,comment_text,upload_time,writer_uid,commemt_id))
-                        updateInitCnt()
+                        updateInitCnt(true)
                     }else{
                         println("undefined err")
                     }
@@ -227,17 +234,42 @@ class MeetingRoomChattingFragment : Fragment() {
             }
         }
     }
-    @Synchronized
-    fun updateInitCnt(){//임계 영역
-        if (initChatCnt+1 >= numOfChatting){// 마지막 것을 받아왔을때 정렬한다.
-            viewModel.items.sortBy{
-                it.timePosting
-            }
-            viewModel.itemsListData.value = viewModel.items
 
+    @Synchronized
+    fun updateInitCnt(isSuccess :Boolean,isSort :Boolean = true){//임계 영역
+        if(isSuccess){
+            if(isSort){
+                if (initChatCnt+1 >= numOfChatting){// 마지막 것을 받아왔을때 정렬한다.
+                    viewModel.items.sortBy{
+                        it.timePosting
+                    }
+                    viewModel.itemsListData.value = viewModel.items
+
+                }
+            }
+
+            initChatCnt++ //비동기로 추가 될때 마다 업데이트
+        }else{
+            if(isSort){
+                if (initChatCnt-1 >= numOfChatting){// 마지막 것을 받아왔을때 정렬한다.
+                    viewModel.items.sortBy{
+                        it.timePosting
+                    }
+                    viewModel.itemsListData.value = viewModel.items
+
+                }
+            }
+            initChatCnt--
         }
 
-        initChatCnt++ //비동기로 추가 될때 마다 업데이트
+    }
+    @Synchronized
+    fun updateNumOfChatting(isPlus:Boolean){
+        if(isPlus){
+            numOfChatting++
+        }else{
+            numOfChatting--
+        }
     }
     fun addUserSnapShot(writer_uid :String){
         userCollection.document(writer_uid.trim()).addSnapshotListener { snapshot, error ->

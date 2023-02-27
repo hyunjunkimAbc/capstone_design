@@ -135,10 +135,16 @@ class ShowPostingFragment : Fragment() {
             addWriterSnapShot(writer_uid)
             initPostingUI(writer_uid, upload_time as Long,title,text)
             //댓글 가져오기 리사이클러 뷰에 반영 ok
-            getCommentsToRecyclerView(comment_id_list!!)
+            if(comment_id_list ==null){
+                return@addOnSuccessListener
+            }
+            getCommentsToRecyclerView(comment_id_list)
         }
         postingCollection.document(document_id).addSnapshotListener { value, error ->
             //제약
+            if(value ==null){
+                return@addSnapshotListener
+            }
             if(numOfChatting ==-1){
                 println("아직 초기화 안됨 meetingRoomCollection addSnapshotListener -1 spf")
                 return@addSnapshotListener
@@ -160,7 +166,8 @@ class ShowPostingFragment : Fragment() {
                 println("탈출----")
             }else if(viewModel.items.size <comment_id_list.size){//맴버가 추가 되면(개수 증가) 새로 받아오기
                 //맨뒤에 있는 것이 새로운 맴버일때 정상 동작함
-                numOfChatting++
+                //numOfChatting++
+                updateNumOfChatting(true)
                 addPostingComment(comment_id_list[comment_id_list.size-1])
             }else if(viewModel.items.size > comment_id_list.size){//맴버가 사라지면 그 맴버는 리사이클러에서 지우기
                 println("삭제 ------")
@@ -176,6 +183,8 @@ class ShowPostingFragment : Fragment() {
                         continue
                     }else{//firebase에는 없는데 viewmodel에는 맴버가 있는 상황 그 맴버는 지워주면 된다
                         viewModel.deleteItem(comment)
+                        updateNumOfChatting(false)
+                        updateInitCnt(false,false)
                         break
                     }
                 }
@@ -352,6 +361,8 @@ class ShowPostingFragment : Fragment() {
                     }
                 }
 
+            }.addOnFailureListener {
+                updateInitCnt(false)
             }
 
         }
@@ -369,7 +380,7 @@ class ShowPostingFragment : Fragment() {
                 }
 
                 viewModel.addItem(Comment(bmp,nickname,comment_text,upload_time,writer_uid,commemt_id))
-                updateInitCnt()
+                updateInitCnt(true)
             }else{
                 var ref = rootRef.child("user_profile_image/default.jpg")
                 ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
@@ -381,7 +392,7 @@ class ShowPostingFragment : Fragment() {
                             }
                         }
                         viewModel.addItem(Comment(bmp,nickname,comment_text,upload_time,writer_uid,commemt_id))
-                        updateInitCnt()
+                        updateInitCnt(true)
                     }else{
                         println("undefined err")
                     }
@@ -410,17 +421,40 @@ class ShowPostingFragment : Fragment() {
             }
         }
     }
+
     @Synchronized
-    fun updateInitCnt(){//임계 영역
-        if (initChatCnt+1 >= numOfChatting){// 마지막 것을 받아왔을때 정렬한다.
-            viewModel.items.sortBy{
-                it.timePosting
+    fun updateInitCnt(isSuccess :Boolean,isSort :Boolean = true){//임계 영역
+        if(isSuccess){
+            if(isSort){
+                if (initChatCnt+1 >= numOfChatting){// 마지막 것을 받아왔을때 정렬한다.
+                    viewModel.items.sortBy{
+                        it.timePosting
+                    }
+                    viewModel.itemsListData.value = viewModel.items
+
+                }
             }
-            viewModel.itemsListData.value = viewModel.items
-
+            initChatCnt++ //비동기로 추가 될때 마다 업데이트
+        }else{
+            if(isSort){
+                if (initChatCnt-1 >= numOfChatting){// 마지막 것을 받아왔을때 정렬한다.
+                    viewModel.items.sortBy{
+                        it.timePosting
+                    }
+                    viewModel.itemsListData.value = viewModel.items
+                }
+            }
+            initChatCnt--
         }
+    }
 
-        initChatCnt++ //비동기로 추가 될때 마다 업데이트
+    @Synchronized
+    fun updateNumOfChatting(isPlus:Boolean){
+        if(isPlus){
+            numOfChatting++
+        }else{
+            numOfChatting--
+        }
     }
 
     companion object {

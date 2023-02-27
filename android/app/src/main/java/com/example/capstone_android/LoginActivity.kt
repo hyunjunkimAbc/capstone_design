@@ -1,24 +1,16 @@
 package com.example.capstone_android
 
-import android.app.Application
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.widget.Button
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.capstone_android.databinding.ActivityLoginBinding
-import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -27,13 +19,11 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import java.util.*
 
 class LoginActivity : AppCompatActivity() { // 로그인 화면
     private val binding by lazy {
@@ -60,43 +50,6 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
     // 구글 로그인에 필요한 변수 설정 onActivityResultCode 를 위한것임
     private val RC_SIGN_IN = 9001
 
-    /*
-        fun activateTimer(){
-            //타이머 동작 시간 지정 및 작업 내용 지정
-            timer.schedule(object : TimerTask(){
-                override fun run(){
-                    //카운트 값 증가
-                    timeCnt ++
-                    if(timeCnt > 30){
-                        runOnUiThread {
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "30초가 넘었습니다. 네트워크 상태를 확인해 보세요",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        timer.cancel()
-                    }
-                }
-            },1000, 1000) //1초뒤 실행, 1초 마다 반복
-        }
-        fun inActivateTimer(){
-            Toast.makeText(
-                this@LoginActivity,
-                "로그인을 성공했습니다.",
-                Toast.LENGTH_SHORT
-            ).show()
-            timer.cancel()
-        }
-        fun inActivateTimer2(){
-            Toast.makeText(
-                this@LoginActivity,
-                "로그인을 실패했습니다.",
-                Toast.LENGTH_SHORT
-            ).show()
-            timer.cancel()
-        }
-     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -158,10 +111,8 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
                                 println("로그인 성공")
 
                                 // 홈화면으로 이동
-                                val intent = Intent(this, MeetingRoomActivity::class.java)
+                                val intent = Intent(this, HomeActivity::class.java)
 //                                intent.putExtra("userNickName", myNickName)
-                                intent.putExtra("meeting_room_id", "ce5vmU58GHfPTNhDtmfR")
-
                                 startActivity(intent)
 
                             }
@@ -180,14 +131,18 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
             }
         }
 
-        //findViewById<Button>(R.id.ToSignupButton).setOnClickListener(){
-        binding.ToSignupButton.setOnClickListener(){
-            println("회원가입 버튼 클릭")
-            //회원가입 화면으로 이동 (SignUpActivity)
+        binding.SignupTextView.setOnClickListener(){
+            println("회원가입 클릭")
+            // 회원가입 화면으로 이동
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
 
+        binding.SetPWTextView.setOnClickListener(){
+            // 비밀번호 재설정 화면으로 이동
+            val intent = Intent(this, ResetPWActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     // 구글 로그인 버튼 텍스트 세팅
@@ -210,8 +165,10 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
     public override fun onStart() {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        if (account !== null) { // 이미 로그인 되어있을시 바로 메인 액티비티로 이동
-            //MainActivity(firebaseAuth.currentUser)
+        if (account !== null) { // 이미 로그인 되어있을시 바로 홈 액티비티로 이동
+//            MainActivity(firebaseAuth.currentUser)
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -253,21 +210,8 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
 
                     // 구글 로그인 : user DB 정보 설정
                     val user = auth.currentUser
-                    setUserInfo(user)
-
-
-//                    // 프로필 이미지가 선택되었으면
-//                    if (selected_profile_img==1) {
-//                        // Firebase Storage로 이미지 전송
-//                        imgName = "${user?.uid ?: String}"
-//                        var storageReference =
-//                            st?.reference?.child("user_profile_image")?.child(imgName!!)
-//
-//                        storageReference?.putFile(image!!)?.addOnSuccessListener {
-//                            println("이미지 업로드 성공")
-//                        }
-//                    }
-                    moveMainPage(auth?.currentUser) // 홈화면으로 이동
+//                    setUserInfo(user) // 구글 계정의 개인정보를 DB에 세팅
+                    moveSetPage(user) // 구글 계정의 개인정보 설정화면으로 이동 (추가적인 개인정보 설정을 위함)
                 } else { // 구글 로그인 실패
                     println("구글 로그인 인증 실패")
                     Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
@@ -277,34 +221,25 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
 
     // 구글 로그인 : 정보 설정
     fun setUserInfo(user: FirebaseUser?) {
-        val col = db.collection("user")
+        val col = db.collection("user").document("${user?.uid}")
         user?.let{
             val itemMap = hashMapOf(
                 "email" to user.email,
-//                        "password" to binding.PWEditText.getText().toString(),
                 "nickname" to user.displayName,
                 "uid" to user.uid,
-//                            "birthday" to datePicker.year.toString()+datePicker.month.toString()+datePicker.dayOfMonth.toString(),
-//                            "interest" to selected_interest,
                 "edit_time" to System.currentTimeMillis(),
-                "profile_message" to ""
+                "profile_message" to "",
+                "birthday" to "",
+                "interest_array" to ""
             )
-            col.add(itemMap)
-
-            // 구글 로그인 : 프로필 이미지 storage에 전송
-            var imgName = "${user?.uid ?: String}"
-            var storageReference =
-                st?.reference?.child("user_profile_image")?.child(imgName!!)
-            storageReference?.putFile(user.photoUrl!!)?.addOnSuccessListener {
-                println("이미지 업로드 성공")
-            }
+            col.set(itemMap)
         }
     }
 
-    fun moveMainPage(user: FirebaseUser?){ // 홈화면으로 이동
+    fun moveSetPage(user: FirebaseUser?){ // 구글로그인 시 개인정보 설정 화면으로 이동
         if(user!=null){
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
+            val intent = Intent(this, SetGoogleAccountActivity::class.java)
+            startActivity(intent)
         }
     }
 
