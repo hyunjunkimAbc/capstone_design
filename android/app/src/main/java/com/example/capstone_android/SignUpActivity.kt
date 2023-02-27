@@ -2,17 +2,15 @@ package com.example.capstone_android
 
 import android.R
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.capstone_android.data.SignUpData
 import com.example.capstone_android.databinding.ActivitySignUpBinding
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -36,8 +34,6 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
         const val REQUEST_CODE = 1
         const val UPLOAD_FOLDER = "upload_images/"
     }
-
-    var selected_interest = ""
 
     // 회원가입 중 선택된 관심사를 담는 배열 (DB 필드 이름: interest_array)
     var interest_array = ArrayList<String>()
@@ -69,16 +65,11 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
         // 생년월일 선택 DatePicker
         val datePicker : DatePicker = binding.dpSpinner
 
-
-
-//        binding.interestButton.setOnClickListener(){
-//            val intent = Intent(this, SelectInterestActivity::class.java)
-//            startActivity(intent)
-//        }
-
         // 가입하기 버튼 클릭
         binding.SignUpButton.setOnClickListener(){
             println("가입하기 버튼 클릭")
+            // 체크된 관심사 배열에 세팅
+            select_interest_CheckBox()
             if (binding.EmailEditText.getText().toString()==""){     // email을 입력하지 않았을 때
                 println("이메일을 입력하지 않음")
                 Toast.makeText(
@@ -135,89 +126,84 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                     Toast.LENGTH_LONG
                 ).show()
             }
-//            else if (interest_array==null){
-//                //
-//            }
+            else if (interest_array.isNullOrEmpty()){
+                println("체크된 관심사가 없음")
+                Toast.makeText(
+                    this,
+                    "관심사를 선택해주세요.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
             else {
-                select_interest_CheckBox()
                 Firebase.auth.createUserWithEmailAndPassword(
                     binding.EmailEditText.getText().toString(),
                     binding.PWEditText.getText().toString()
-                )
-                    //findViewById<EditText>(R.id.EmailEditText).getText().toString(),
-                    //findViewById<EditText>(R.id.PWEditText).getText().toString())
-                    .addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            println("회원가입 성공")
-                            // DB postings 컬렉션 레퍼런스 가져오기
-                            val user = FirebaseAuth.getInstance().currentUser
-                            val col = db.collection("user").document("${user?.uid}")
-                            val itemMap = hashMapOf(
-                                "email" to binding.EmailEditText.getText().toString(),
-                                "password" to binding.PWEditText.getText().toString(),
-                                "nickname" to binding.NicknameEditText.getText().toString(),
-                                "uid" to (user?.uid ?: String),
-                                "birthday" to datePicker.year.toString()+datePicker.month.toString()+datePicker.dayOfMonth.toString(),
-                                "interest" to selected_interest,
-                                "edit_time" to System.currentTimeMillis(),
-                                "profile_message" to "",
-                                "interest_array" to interest_array
-                            )
-                            col.set(itemMap)
-                            //col.add(itemMap)
+                ).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        println("회원가입 성공")
+                        // DB postings 컬렉션 레퍼런스 가져오기
+                        val user = FirebaseAuth.getInstance().currentUser
+                        var signdata= SignUpData()
+                        signdata.email=binding.EmailEditText.getText().toString()
+                        signdata.password=binding.PWEditText.getText().toString()
+                        signdata.nickname= binding.NicknameEditText.getText().toString()
+                        signdata.uid=Firebase.auth.currentUser?.uid
+                        signdata.birthday=datePicker.year.toString()+datePicker.month.toString()+datePicker.dayOfMonth.toString()
+                        signdata.timestamp=System.currentTimeMillis()
+                        signdata.profile_message=""
+                        signdata.interest_array=interest_array
+                        signdata.edit_time=System.currentTimeMillis()
 
-                            // 프로필 이미지가 선택되었으면
-                            if (selected_profile_img==1){
-                                // Firebase Storage로 이미지 전송
-                                imgName = "${user?.uid ?: String}"
-                                var storageReference =
-                                    st?.reference?.child("user_profile_image")?.child(imgName!!)
+                        // DB postings 컬렉션 레퍼런스 가져오기
+                        db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).set(signdata)
 
-                                storageReference?.putFile(image!!)?.addOnSuccessListener {
-                                    println("이미지 업로드 성공")
-                                }
-                            }
-/*
-                            //추가: friendCommit에 friendArr 과 nickName
-                            val col_friendCommit = db.collection("friendCommit")
-                            val itemMap_friendCommit = hashMapOf(
-                                "nickName" to binding.NicknameEditText.getText().toString(),
-                                "friendArr" to arrayListOf<String>()
-                            )
-                            col_friendCommit.add(itemMap_friendCommit)
-*/
-                            // 스낵바(토스트) 메시지
-                            Toast.makeText(
-                                this,
-                                "회원가입에 성공하였습니다.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            finish()
-                        }
-                        // 이메일 중복 검사
-                        else if (binding.EmailEditText.getText().toString()!=""){     // email을 입력했을때
-                            user_data.get().addOnSuccessListener {// 이메일 중복 검사를 위해 데이터베이스 읽기
-                                for(d in it){
-                                    if(d["email"]==binding.EmailEditText.getText().toString()){
-                                        println("해당 이메일이 이미 존재")
-                                        Toast.makeText(
-                                            this,
-                                            "해당 이메일이 이미 존재합니다.",
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                    }
-                                }
+
+
+//                            col.add(itemMap)
+
+                        // 프로필 이미지가 선택되었으면
+                        if (selected_profile_img==1){
+                            // Firebase Storage로 이미지 전송
+                            imgName = "${user?.uid ?: String}"
+                            var storageReference =
+                                st?.reference?.child("user_profile_image")?.child(imgName!!)
+
+                            storageReference?.putFile(image!!)?.addOnSuccessListener {
+                                println("이미지 업로드 성공")
                             }
                         }
-                        else {
-                            println("회원가입 실패 ${it.exception?.message}")
-                            Toast.makeText(
-                                this,
-                                "이메일 형식이 아닙니다.",
-                                Toast.LENGTH_LONG
-                            ).show()
+                        // 스낵바(토스트) 메시지
+                        Toast.makeText(
+                            this,
+                            "회원가입에 성공하였습니다.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        finish()
+                    }
+                    // 이메일 중복 검사
+                    else if (binding.EmailEditText.getText().toString()!=""){     // email을 입력했을때
+                        user_data.get().addOnSuccessListener {// 이메일 중복 검사를 위해 데이터베이스 읽기
+                            for(d in it){
+                                if(d["email"]==binding.EmailEditText.getText().toString()){
+                                    println("해당 이메일이 이미 존재")
+                                    Toast.makeText(
+                                        this,
+                                        "해당 이메일이 이미 존재합니다.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
                         }
                     }
+                    else {
+                        println("회원가입 실패 ${it.exception?.message}")
+                        Toast.makeText(
+                            this,
+                            "이메일 형식이 아닙니다.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
             }
         }
 

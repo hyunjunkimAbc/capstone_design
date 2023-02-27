@@ -5,7 +5,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.capstone_android.databinding.ActivitySignUpBinding
 
-
 class SelectInterestActivity : AppCompatActivity(){
     private val binding by lazy {
         ActivitySignUpBinding.inflate(layoutInflater)

@@ -13,4 +13,13 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_login">LoginActivity</string>
+
+    <string name="myInterests">myInterests</string>
+    <string name="home">홈</string>
+    <string name="search">Search</string>
+    <string name="gps">위치</string>
+    <string name="more">더보기</string>
+    <string name="account">프로필</string>
+    <string name="setting">관심사 설정</string>
+    <string name="scroll">스크롤</string>
 </resources>
