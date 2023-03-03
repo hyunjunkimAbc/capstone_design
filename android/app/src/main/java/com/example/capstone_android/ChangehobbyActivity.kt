@@ -1,30 +1,39 @@
 package com.example.capstone_android
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.capstone_android.databinding.ActivityChangehobbyBinding
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
-import com.example.capstone_android.databinding.ActivityCreateBinding
 
-class CreateActivity: AppCompatActivity() {
-    private lateinit var binding:ActivityCreateBinding
-    var createViewFragment=CreateViewFragment()
+class ChangehobbyActivity:AppCompatActivity() {
+    lateinit var db : FirebaseFirestore
+    private lateinit var binding: ActivityChangehobbyBinding
+    private  var gridview: GridView?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCreateBinding.inflate(layoutInflater)
+        binding=ActivityChangehobbyBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
+        db= Firebase.firestore
         val toolbar=binding.toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.textview.text="클럽개설"
-        println(intent.getStringExtra("create"))
-        supportFragmentManager.beginTransaction().replace(R.id.createfragment,createViewFragment).commit()
+        binding.textview.text="관심사  재설정"
 
 
+
+
+
+        val hobbygrid=binding.hobbygrid
 
 
     }
@@ -38,12 +47,4 @@ class CreateActivity: AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-    override fun onDestroy() {
-        super.onDestroy()
-        println("종료")
-        val newintent= Intent()
-        newintent.putExtra("result",1)
-        setResult(RESULT_OK,newintent)
-    }
-
 }
