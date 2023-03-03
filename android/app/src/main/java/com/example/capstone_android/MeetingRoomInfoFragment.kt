@@ -64,6 +64,8 @@ class MeetingRoomInfoFragment : Fragment() {
                     val title:Any?,val upload_time:Any?,val category:Any?)
     var numOfChatting =-1
     var initChatCnt =0
+    var numOfCurrentUsers =0
+    var numOfMaxUsers =0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -117,31 +119,46 @@ class MeetingRoomInfoFragment : Fragment() {
     private fun initDataAndUI(){
         //val meetingRoomId = viewModel.meetingRoomId 모임 설명 이미지 얻어오기
         meetingRoomId = activity?.intent?.getStringExtra("meeting_room_id").toString()
-        //미팅룸 정보 얻어오기
         binding.enterMeetingRoomBtn.setOnClickListener {
-            userCollection.document("${Firebase.auth.uid}").get().addOnSuccessListener {
-                val meeting_room_id_list = it["meeting_room_id_list"]
-                var isDuple = false
-                if(meeting_room_id_list !=null){
-                    for(meetingRoomUid in meeting_room_id_list as List<String>){
-                        if(meetingRoomId == meetingRoomUid){
-                            isDuple = true
+            meetingRoomCollection.document(meetingRoomId).get().addOnSuccessListener {
+                val max =it.data?.get("max")
+                val memberList = it.data?.get("member_list")
+                if(memberList!= null){
+                    numOfCurrentUsers = (memberList as List<String>).size
+                }else{
+                    numOfCurrentUsers = 0
+                }
+                numOfMaxUsers = Integer.parseInt(max.toString())
+                userCollection.document("${Firebase.auth.uid}").get().addOnSuccessListener {
+                    if(numOfCurrentUsers+1 >= numOfMaxUsers){
+                        Toast.makeText(activity?.applicationContext,"최대 인원을 넘었습니다.",Toast.LENGTH_SHORT).show()
+                        return@addOnSuccessListener
+                    }
+                    val meeting_room_id_list = it["meeting_room_id_list"]
+                    var isDuple = false
+                    if(meeting_room_id_list !=null){
+
+                        for(meetingRoomUid in meeting_room_id_list as List<String>){
+                            if(meetingRoomId == meetingRoomUid){
+                                isDuple = true
+                            }
                         }
                     }
-                }
-                if(isDuple){
-                    Toast.makeText(activity?.applicationContext,"이미 가입된 모임 입니다.",Toast.LENGTH_SHORT).show()
-                }else{//meeting_room_id_list가 널이거나 중복된 meeting room이 없는 경우
-                    //posting 컬랙션에도 추가 해야 함 member_list
-                    meetingRoomCollection.document("${meetingRoomId}").update("member_list" , FieldValue.arrayUnion(Firebase.auth.uid)).addOnSuccessListener {
-                        //Toast.makeText(activity?.applicationContext,"가입 성공",Toast.LENGTH_SHORT).show()
-                        userCollection.document("${Firebase.auth.uid}").update("meeting_room_id_list" , FieldValue.arrayUnion(meetingRoomId)).addOnSuccessListener {
-                            Toast.makeText(activity?.applicationContext,"가입 성공",Toast.LENGTH_SHORT).show()
+                    if(isDuple){
+                        Toast.makeText(activity?.applicationContext,"이미 가입된 모임 입니다.",Toast.LENGTH_SHORT).show()
+                    }else{//meeting_room_id_list가 널이거나 중복된 meeting room이 없는 경우
+                        //posting 컬랙션에도 추가 해야 함 member_list
+                        meetingRoomCollection.document("${meetingRoomId}").update("member_list" , FieldValue.arrayUnion(Firebase.auth.uid)).addOnSuccessListener {
+                            //Toast.makeText(activity?.applicationContext,"가입 성공",Toast.LENGTH_SHORT).show()
+                            userCollection.document("${Firebase.auth.uid}").update("meeting_room_id_list" , FieldValue.arrayUnion(meetingRoomId)).addOnSuccessListener {
+                                Toast.makeText(activity?.applicationContext,"가입 성공",Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }
             }
         }
+        //미팅룸 정보 얻어오기
         meetingRoomCollection.document(meetingRoomId).get().addOnSuccessListener {
 
             println("-------- meetingRoomCollection addOnSuccessListener")

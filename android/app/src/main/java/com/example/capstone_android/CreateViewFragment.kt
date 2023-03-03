@@ -34,58 +34,50 @@ class CreateViewFragment: Fragment() {
     lateinit var storage: FirebaseStorage
     lateinit var db : FirebaseFirestore
     var photoUri: Uri?=null
-
+    lateinit var hobby:String
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view= LayoutInflater.from(activity).inflate(R.layout.fragment_create,container,false)
         storage = Firebase.storage
         db= Firebase.firestore
         var mActivity = activity as CreateActivity
         view.changehobby.setOnClickListener{
-            mActivity.changeFragment(1,"")
+            val orderBottomDialogFragment: OrderBottomDialogFragment = OrderBottomDialogFragment {
+                when (it) {
+                    "운동"->{hobby="운동"
+                        view.changehobby.setImageResource(R.drawable.icon_sports)}
+                    "여행"->{hobby="여행"
+                        view.changehobby.setImageResource(R.drawable.icon_trip)}
+                    "음악"->{hobby="음악"
+                        view.changehobby.setImageResource(R.drawable.icon_music)}
+                    "사교"->{hobby="사교"
+                        view.changehobby.setImageResource(R.drawable.icon_job)}
+                    "독서"->{hobby="독서"
+                        view.changehobby.setImageResource(R.drawable.icon_read)}
+                    "요리"->{hobby="요리"
+                        view.changehobby.setImageResource(R.drawable.icon_cook)}
+                    "사진"->{hobby="사진"
+                        view.changehobby.setImageResource(R.drawable.icon_photo)}
+                    "게임"->{hobby="게임"
+                        view.changehobby.setImageResource(R.drawable.icon_game)}
+                    "댄스"->{hobby="댄스"
+                        view.changehobby.setImageResource(R.drawable.icon_dance)}
+                    "자동차"->{hobby="자동차"
+                        view.changehobby.setImageResource(R.drawable.icon_car)}
+                    "애완동물"->{hobby="애완동물"
+                        view.changehobby.setImageResource(R.drawable.icon_pet)}
+                    "공예"->{hobby="공예"
+                        view.changehobby.setImageResource(R.drawable.icon_art)}
+                    "봉사활동"->{hobby="봉사활동"
+                        view.changehobby.setImageResource(R.drawable.icon_volunteer)}
+                    "스터디그룹"->{hobby="스터디그룹"
+                        view.changehobby.setImageResource(R.drawable.icon_study)}
+                }
+            }
+            orderBottomDialogFragment.show(mActivity.supportFragmentManager, orderBottomDialogFragment.tag)
         }
 
-        if(arguments?.getString("hobby")=="운동"){
-            view.changehobby.setImageResource(R.drawable.icon_sports)
-        }
-        if(arguments?.getString("hobby")=="여행"){
-            view.changehobby.setImageResource(R.drawable.icon_trip)
-        }
-        if(arguments?.getString("hobby")=="음악"){
-            view.changehobby.setImageResource(R.drawable.icon_music)
-        }
-        if(arguments?.getString("hobby")=="사교"){
-            view.changehobby.setImageResource(R.drawable.icon_job)
-        }
-        if(arguments?.getString("hobby")=="독서"){
-            view.changehobby.setImageResource(R.drawable.icon_read)
-        }
-        if(arguments?.getString("hobby")=="요리"){
-            view.changehobby.setImageResource(R.drawable.icon_cook)
-        }
-        if(arguments?.getString("hobby")=="사진"){
-            view.changehobby.setImageResource(R.drawable.icon_photo)
-        }
-        if(arguments?.getString("hobby")=="게임"){
-            view.changehobby.setImageResource(R.drawable.icon_game)
-        }
-        if(arguments?.getString("hobby")=="댄스"){
-            view.changehobby.setImageResource(R.drawable.icon_dance)
-        }
-        if(arguments?.getString("hobby")=="자동차"){
-            view.changehobby.setImageResource(R.drawable.icon_car)
-        }
-        if(arguments?.getString("hobby")=="애완동물"){
-            view.changehobby.setImageResource(R.drawable.icon_pet)
-        }
-        if(arguments?.getString("hobby")=="공예"){
-            view.changehobby.setImageResource(R.drawable.icon_art)
-        }
-        if(arguments?.getString("hobby")=="봉사활동"){
-            view.changehobby.setImageResource(R.drawable.icon_volunteer)
-        }
-        if(arguments?.getString("hobby")=="스터디그룹"){
-            view.changehobby.setImageResource(R.drawable.icon_study)
-        }
+
+
 
         val filterActivityLauncher: ActivityResultLauncher<Intent> =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -123,8 +115,7 @@ class CreateViewFragment: Fragment() {
             filterActivityLauncher.launch(intent)
         }
         view.CreateBtn.setOnClickListener{
-            uploadContent(arguments?.getString("hobby").toString(),view)
-            println(arguments?.getString("hobby").toString())
+            uploadContent(hobby,view)
         }
         return view
     }
@@ -151,15 +142,21 @@ class CreateViewFragment: Fragment() {
                 clubdata.imageUrl=uri.toString()
                 clubdata.title = view.club.text.toString()
                 clubdata.info_text = view.explainclub2.text.toString()
-                clubdata.max = Integer.parseInt(view.maxnumber.text.toString())
+                clubdata.max = view.maxnumber.text.toString()
                 clubdata.upload_time = System.currentTimeMillis()
                 clubdata.writer_uid = Firebase.auth.currentUser?.uid.toString()
                 clubdata.Uid=makeuid
-                db.collection("meeting_room").document(makeuid).set(clubdata)
-                db.collection("meeting_room").document(makeuid).update("member_list",FieldValue.arrayUnion(Firebase.auth.currentUser?.uid.toString()))
-                db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).update("meeting_room_id_list",FieldValue.arrayUnion(makeuid))
+                db.collection("meeting_room").document(makeuid).set(clubdata).addOnSuccessListener {
+                    db.collection("meeting_room").document(makeuid).update("member_list",FieldValue.arrayUnion(Firebase.auth.currentUser?.uid.toString())).addOnSuccessListener {
+                        db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).update("meeting_room_id_list",FieldValue.arrayUnion(makeuid)).addOnSuccessListener {
+                            activity?.finish()
+                            println("모임만들기성공")
+                        }
+                    }
+                }
+
             }
         }
-        activity?.finish()
+
     }
 }
