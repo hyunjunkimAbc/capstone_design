@@ -59,6 +59,8 @@ class EditMeetingInfoFragment : Fragment() {
     var chatting_id_list :Any? =null
     var member_list :Any? =null
     var posting_id_list :Any? =null
+    var Uid:Any? = null
+    var imageUrl:Any? = null
     val categoryItems =
         arrayListOf<String>(
             "운동", "여행", "음악", "사교/직업", "독서",
@@ -110,7 +112,8 @@ class EditMeetingInfoFragment : Fragment() {
             chatting_id_list = it["chatting_id_list"]
             member_list = it["member_list"]
             posting_id_list = it["posting_id_list"]
-
+            Uid = it["Uid"]
+            imageUrl = it["imageUrl"]
             //commentsListString = it["comment_id_list"]
             //writer_uid = it["writer_uid"] //주석 했지만 나중에는 사용할 수도 있음
 
@@ -176,8 +179,11 @@ class EditMeetingInfoFragment : Fragment() {
             "posting_id_list" to posting_id_list,
             "title" to title,
             "upload_time" to time,
-            "writer_uid" to writer_uid
+            "writer_uid" to writer_uid,
+            "Uid" to Uid,
+            "imageUrl" to imageUrl
         )
+
         meetingRoomCollection.document("${document_id}").set(docData).addOnSuccessListener {
             //meetingroom에 배열에도 반영
             //val bundle = bundleOf("document_id" to document_id)

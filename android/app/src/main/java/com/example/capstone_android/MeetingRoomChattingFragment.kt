@@ -129,7 +129,9 @@ class MeetingRoomChattingFragment : Fragment() {
                     return@addSnapshotListener
                 }
                 val commentIdListListString :List<String> = comment_id_list as List<String>
-
+                if(commentIdListListString.size <=0){
+                    return@addSnapshotListener
+                }
                 updateRecyclerView(commentIdListListString[commentIdListListString.size-1])
                 //미팅룸의 댓글 리스트가 변하는 순간은 댓글이 추가되는 경우 밖에 없을때 정상 작동
                 //댓글 삭제 기능이 추가 되면 if문으로 분기 처리를 해주어야 함

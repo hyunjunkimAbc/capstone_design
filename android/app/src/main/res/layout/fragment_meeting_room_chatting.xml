@@ -11,13 +11,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="7"
         android:ems="10"
+        android:hint="comment"
         android:inputType="textMultiLine"
         android:minHeight="48dp"
-        android:text="Name"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.213"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/uploadChattingBtn"
