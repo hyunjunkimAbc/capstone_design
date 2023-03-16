@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.example.capstone_android.data.SignUpData
 import com.example.capstone_android.data.lightningFragment
 import com.example.capstone_android.databinding.ActivityHomeBinding
 import com.example.capstone_android.databinding.ActivityMainBinding
@@ -14,22 +15,25 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 
 class HomeActivity: AppCompatActivity() {
-
+    lateinit var db : FirebaseFirestore
     private lateinit var binding: ActivityHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        db= Firebase.firestore
         val toolbar=binding.toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.textview.text="성북구"
         binding.textview.setOnClickListener{
             val intent=Intent(this,AddressActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent,1)
         }
-
+        db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{ document->
+            val item=document.toObject(SignUpData::class.java)
+            val test=item?.address?.split(" ")
+            binding.textview.text= test?.get(2)
+        }
         val detailViewFragment=DetailViewFragment()
         supportFragmentManager.beginTransaction().replace(R.id.main_content,detailViewFragment).commit()
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
@@ -64,6 +68,14 @@ class HomeActivity: AppCompatActivity() {
                 }
             }
             false
+        }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{ document->
+            val item=document.toObject(SignUpData::class.java)
+            val test=item?.address?.split(" ")
+            binding.textview.text= test?.get(2)
         }
     }
 }

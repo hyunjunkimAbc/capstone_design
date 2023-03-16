@@ -397,6 +397,7 @@ class DetailViewFragment: Fragment() {
             db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{   document->
                 val item=document.toObject(SignUpData::class.java)
                 view?.UserName?.text=item?.nickname+"님을"
+
                 for(data in item?.interest_array!!){
                   interest_text(data)
                     db.collection("category").document(data).get().addOnSuccessListener { document2 ->

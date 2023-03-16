@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.data.AddressData
 import com.example.capstone_android.databinding.ActivityAddressBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import jxl.Workbook
 import jxl.read.biff.BiffException
 import kotlinx.android.synthetic.main.addressitem.view.*
@@ -22,12 +28,14 @@ import java.io.IOException
 
 class AddressActivity:AppCompatActivity() {
     private lateinit var binding: ActivityAddressBinding
+    lateinit var db : FirebaseFirestore
     var itemlist:ArrayList<AddressData> = arrayListOf()
     var searchlist:ArrayList<AddressData> = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddressBinding.inflate(layoutInflater)
         setContentView(binding.root)
+       db = Firebase.firestore
         val addressrecycler=binding.addressrecyclerview
         val search=binding.searchicon
         search.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
@@ -99,6 +107,16 @@ class AddressActivity:AppCompatActivity() {
 
         })
     }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
     inner class SearchAddressAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         private var items: ArrayList<AddressData> = ArrayList<AddressData>()
         init{
@@ -113,9 +131,19 @@ class AddressActivity:AppCompatActivity() {
         }
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val viewholder=(holder as AddressActivity.SearchAddressAdapter.CustomViewHolder).itemView
-           viewholder.subaddress.text=searchlist[position].third
+             viewholder.subaddress.text=searchlist[position].third
             val explain:String="(".plus(searchlist[position].first).plus(" ").plus(searchlist[position].second).plus(")")
             viewholder.address.text=explain
+            viewholder.CardView.setOnClickListener{
+                val third=searchlist[position].third
+                val second=searchlist[position].second
+                val first=searchlist[position].first
+                val ad=first.plus(" ").plus(second).plus(" ").plus(third)
+                val data = hashMapOf("address" to ad)
+                db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).set(data, SetOptions.merge()).addOnSuccessListener{
+                    finish()
+                }
+            }
         }
 
         override fun getItemCount(): Int {

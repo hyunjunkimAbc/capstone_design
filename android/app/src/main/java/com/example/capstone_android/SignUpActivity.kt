@@ -153,7 +153,7 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                         signdata.profile_message=""
                         signdata.interest_array=interest_array
                         signdata.edit_time=System.currentTimeMillis()
-
+                        signdata.address="활동 위치 설정하기"
 
                         // DB postings 컬렉션 레퍼런스 가져오기
                         db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).set(signdata)
