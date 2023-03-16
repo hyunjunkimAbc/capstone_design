@@ -1,21 +1,42 @@
 package com.example.capstone_android
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
+import android.text.InputType
+import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.data.AddressData
 import com.example.capstone_android.databinding.ActivityAddressBinding
 import jxl.Workbook
 import jxl.read.biff.BiffException
+import kotlinx.android.synthetic.main.addressitem.view.*
+import kotlinx.android.synthetic.main.fragment_main.view.*
 import java.io.IOException
 
 
 class AddressActivity:AppCompatActivity() {
     private lateinit var binding: ActivityAddressBinding
+    var itemlist:ArrayList<AddressData> = arrayListOf()
+    var searchlist:ArrayList<AddressData> = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddressBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val addressrecycler=binding.addressrecyclerview
+        val search=binding.searchicon
+        search.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
+        val toolbar=binding.toolbar
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        binding.textview.text="클럽 지역"
+
         try {
             val `is` = baseContext.resources.assets.open("address.xls")
             val wb = Workbook.getWorkbook(`is`)
@@ -27,14 +48,13 @@ class AddressActivity:AppCompatActivity() {
                     val rowTotal = sheet.getColumn(colTotal - 1).size
                     var sb: StringBuilder
                     for (row in rowIndexStart until rowTotal) {
-                        sb = StringBuilder()
                         val item= AddressData()
-                        val contentss = sheet.getCell(row, row).contents
-                        for (col in 0 until colTotal) {
-                            val contents = sheet.getCell(col, row).contents
-                            sb.append("col$col : $contents , ")
+                        item.first=sheet.getCell(0,row).contents
+                        item.second=sheet.getCell(1,row).contents
+                        item.third=sheet.getCell(2,row).contents
+                        if(item.third!="") {
+                            itemlist.add(item)
                         }
-                        Log.i("test", sb.toString())
                     }
                 }
             }
@@ -45,7 +65,62 @@ class AddressActivity:AppCompatActivity() {
             e.printStackTrace()
             println("?wkfaht")
         }
+        addressrecycler.adapter=SearchAddressAdapter()
+        addressrecycler.layoutManager= LinearLayoutManager(this)
+        search.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val searchtext:String=binding.searchicon.text.toString()
+                searchlist.clear()
+                if(searchtext.equals("")){
+                    searchlist.clear()
+                    (addressrecycler.adapter as SearchAddressAdapter).notifyDataSetChanged()
+                }
+            }
+
+            @SuppressLint("NotifyDataSetChanged")
+            override fun afterTextChanged(s: Editable?) {
+              val searchtext:String=binding.searchicon.text.toString()
+                searchlist.clear()
+                if(searchtext.equals("")){
+                    searchlist.clear()
+                    (addressrecycler.adapter as SearchAddressAdapter).notifyDataSetChanged()
+                }
+                for((index,data) in itemlist.withIndex()){
+                    if(itemlist[index].first!!.contains(searchtext)||itemlist[index].second!!.contains(searchtext)||itemlist[index].third!!.contains(searchtext)){
+                        searchlist.add(itemlist[index])
+                    }
+                    (addressrecycler.adapter as SearchAddressAdapter).notifyDataSetChanged()
+                }
+            }
+
+        })
     }
-    data class SearchData(var first:String?=null,var second:String?=null,var third:String?=null)
+    inner class SearchAddressAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+        private var items: ArrayList<AddressData> = ArrayList<AddressData>()
+        init{
+
+        }
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            val view= LayoutInflater.from(parent.context).inflate(R.layout.addressitem,parent,false)
+            return CustomViewHolder(view)
+        }
+        inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        }
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+            val viewholder=(holder as AddressActivity.SearchAddressAdapter.CustomViewHolder).itemView
+           viewholder.subaddress.text=searchlist[position].third
+            val explain:String="(".plus(searchlist[position].first).plus(" ").plus(searchlist[position].second).plus(")")
+            viewholder.address.text=explain
+        }
+
+        override fun getItemCount(): Int {
+            return searchlist.size
+        }
+    }
 
 }

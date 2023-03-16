@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "680862428261",
-    "project_id": "hobby-12f0d",
-    "storage_bucket": "hobby-12f0d.appspot.com"
+    "project_number": "418764464709",
+    "project_id": "capdong-7b8a4",
+    "storage_bucket": "capdong-7b8a4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:680862428261:android:7330a9a83163437299ea8c",
+        "mobilesdk_app_id": "1:418764464709:android:52f4bee31009161495792c",
         "android_client_info": {
           "package_name": "com.example.capstone_android"
         }
       },
       "oauth_client": [
         {
-          "client_id": "680862428261-khjvrkdrelbh0duofgmuo6t1v31i2vh3.apps.googleusercontent.com",
+          "client_id": "418764464709-fnduocqdm0giaj54oll7s9ka0ks3s4m0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBZAMXZ2RU7yqfZYMD2B6sKE-e_qC0KVm0"
+          "current_key": "AIzaSyC4rLSVaQ6AOlJ7QCMsGbGrg8vvCs23ZRc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "680862428261-khjvrkdrelbh0duofgmuo6t1v31i2vh3.apps.googleusercontent.com",
+              "client_id": "418764464709-fnduocqdm0giaj54oll7s9ka0ks3s4m0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

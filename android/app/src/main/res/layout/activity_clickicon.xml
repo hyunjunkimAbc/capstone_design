@@ -49,7 +49,7 @@
                 android:iconifiedByDefault="false"
                 android:privateImeOptions="defaultInputmode=korean"
                 android:queryBackground="@null"
-                android:queryHint="원하시는 클럽을 검색해보세요."
+                android:hint="활동하시는 지역을 선택해 주세요"
                 android:searchIcon="@null" />
         </androidx.cardview.widget.CardView>
 
