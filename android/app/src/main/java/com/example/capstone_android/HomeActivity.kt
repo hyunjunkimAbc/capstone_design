@@ -25,11 +25,15 @@ class HomeActivity: AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.textview.text="성북구"
+        binding.textview.setOnClickListener{
+            val intent=Intent(this,AddressActivity::class.java)
+            startActivity(intent)
+        }
 
         val detailViewFragment=DetailViewFragment()
         supportFragmentManager.beginTransaction().replace(R.id.main_content,detailViewFragment).commit()
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
-
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1);
         binding.bottomNavigation.setOnItemSelectedListener{
             when(it.itemId){
                 R.id.action_home ->{
