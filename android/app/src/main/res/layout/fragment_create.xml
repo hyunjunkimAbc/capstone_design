@@ -124,6 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
+            android:textStyle="bold"
             android:text="위치 찾기"
             android:textColor="#D3D3D3"
             android:textSize="15dp" />

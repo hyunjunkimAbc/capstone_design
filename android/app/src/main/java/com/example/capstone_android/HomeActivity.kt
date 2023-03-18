@@ -7,12 +7,10 @@ import androidx.core.app.ActivityCompat
 import com.example.capstone_android.data.SignUpData
 import com.example.capstone_android.data.lightningFragment
 import com.example.capstone_android.databinding.ActivityHomeBinding
-import com.example.capstone_android.databinding.ActivityMainBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 
 class HomeActivity: AppCompatActivity() {
     lateinit var db : FirebaseFirestore
@@ -23,7 +21,7 @@ class HomeActivity: AppCompatActivity() {
         setContentView(binding.root)
         db= Firebase.firestore
         val toolbar=binding.toolbar
-        setSupportActionBar(toolbar)
+       setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.textview.setOnClickListener{
             val intent=Intent(this,AddressActivity::class.java)
@@ -35,25 +33,25 @@ class HomeActivity: AppCompatActivity() {
             binding.textview.text= test?.get(2)
         }
         val detailViewFragment=DetailViewFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.main_content,detailViewFragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.search_content,detailViewFragment).commit()
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1);
         binding.bottomNavigation.setOnItemSelectedListener{
             when(it.itemId){
                 R.id.action_home ->{
                     val detailViewFragment=DetailViewFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.main_content,detailViewFragment).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.search_content,detailViewFragment).commit()
 
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_gps ->{
                     val mapViewFragment=MapFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.main_content,mapViewFragment).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.search_content,mapViewFragment).commit()
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_Lightning->{
                     val lightningFragment=lightningFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.main_content,lightningFragment).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.search_content,lightningFragment).commit()
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_account ->{

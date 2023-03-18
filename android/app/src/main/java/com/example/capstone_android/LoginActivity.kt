@@ -1,9 +1,12 @@
 package com.example.capstone_android
 
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.Gravity
 import android.widget.LinearLayout
@@ -24,6 +27,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+
 
 class LoginActivity : AppCompatActivity() { // 로그인 화면
     private val binding by lazy {
@@ -53,7 +59,6 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
         listView1 = binding.container1
         listView2 = binding.container2
 
@@ -144,6 +149,7 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
             startActivity(intent)
         }
     }
+
 
     // 구글 로그인 버튼 텍스트 세팅
     private fun setGoogleButtonText(loginButton: SignInButton, buttonText: String){

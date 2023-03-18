@@ -287,7 +287,7 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
             interest_array.add("댄스")
         }
         if(binding.carCheckBox.isChecked) {
-            interest_array.add("차/오토바이")
+            interest_array.add("자동차")
         }
         if(binding.artCheckBox.isChecked) {
             interest_array.add("공예")
@@ -295,8 +295,11 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
         if(binding.volunteerCheckBox.isChecked) {
             interest_array.add("봉사활동")
         }
+        if(binding.petCheckBox.isChecked){
+            interest_array.add("애완동물")
+        }
         if(binding.studyCheckBox.isChecked) {
-            interest_array.add("공부/자기개발")
+            interest_array.add("스터디그룹")
         }
         println("선택한 관심사 카테고리"+ interest_array)
     }

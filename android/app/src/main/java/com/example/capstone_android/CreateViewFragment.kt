@@ -35,11 +35,21 @@ class CreateViewFragment: Fragment() {
     lateinit var db : FirebaseFirestore
     var photoUri: Uri?=null
     lateinit var hobby:String
+    var disx:Double?=null
+    var disy:Double?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view= LayoutInflater.from(activity).inflate(R.layout.fragment_create,container,false)
         storage = Firebase.storage
         db= Firebase.firestore
         var mActivity = activity as CreateActivity
+        view.address.setOnClickListener{
+            val intent=Intent(activity, CreateAddress::class.java)
+        }
+        view.address.setOnClickListener{
+            val intent = Intent(activity, SearchMap::class.java)
+            intent.putExtra("create","hello")
+            startActivityForResult(intent,9)
+        }
         view.changehobby.setOnClickListener{
             val orderBottomDialogFragment: OrderBottomDialogFragment = OrderBottomDialogFragment {
                 when (it) {
@@ -118,6 +128,16 @@ class CreateViewFragment: Fragment() {
             uploadContent(hobby,view)
         }
         return view
+    }
+    @SuppressLint("ResourceAsColor")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val name=data?.extras?.getString("name")
+         disx=data?.extras?.getDouble("disx")
+         disy=data?.extras?.getDouble("disy")
+        view?.useraddress?.text=name
+        view?.useraddress?.setTextColor(R.color.black)
+
     }
     @SuppressLint("SimpleDateFormat")
     fun uploadContent(hobby: String, view: View){
