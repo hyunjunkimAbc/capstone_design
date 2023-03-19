@@ -39,10 +39,15 @@
         <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/activity_sign_up.xml" value="0.1" />
         <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/content_login.xml" value="0.1" />
         <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/fragment_create.xml" value="0.16666666666666666" />
+        <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/fragment_edit_meeting_info.xml" value="0.1" />
+        <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/fragment_edit_posting.xml" value="0.1" />
         <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/fragment_first.xml" value="0.740625" />
         <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/fragment_main.xml" value="0.1" />
+        <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/fragment_meeting_room_chatting.xml" value="0.1" />
+        <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/fragment_meeting_room_posting_add.xml" value="0.1" />
         <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/fragment_order_bottom_dialog.xml" value="0.1" />
         <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/fragment_select.xml" value="0.1" />
+        <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/fragment_show_posting.xml" value="0.22" />
         <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/item_main.xml" value="0.1" />
         <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/meeting_room_posting_comment_item_layout.xml" value="0.1265625" />
         <entry key="..\:/capstone_design_main/android/app/src/main/res/layout/meeting_room_posting_comment_item_right.xml" value="0.2591508052708638" />

@@ -45,7 +45,7 @@
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
                     android:minHeight="48dp"
-                    android:text="contents" />
+                    tools:ignore="SpeakableTextPresentCheck" />
             </LinearLayout>
         </ScrollView>
 
@@ -56,14 +56,23 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:text="title"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textViewTitleEditTextPostingEdit"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.077" />
+            app:layout_constraintVertical_bias="0.077"
+            tools:ignore="SpeakableTextPresentCheck" />
 
+        <TextView
+            android:id="@+id/textViewTitleEditTextPostingEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="제목"
+            app:layout_constraintBottom_toTopOf="@id/scrollView3PostingEdit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPostingEdit" />
         <ScrollView
             android:id="@+id/scrollView3PostingEdit"
             android:layout_width="0dp"
