@@ -97,6 +97,7 @@ class MeetingRoomChattingFragment : Fragment() {
                 "upload_time" to time,
                 "writer_uid" to Firebase.auth.uid
             )
+
             commentCollection.add(itemMap).addOnSuccessListener {
                 // posting 컬랙션에 배열 추가해서 적용 set사용
 

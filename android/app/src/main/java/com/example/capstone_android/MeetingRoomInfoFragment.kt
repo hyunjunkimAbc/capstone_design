@@ -287,11 +287,14 @@ class MeetingRoomInfoFragment : Fragment() {
 
         meetingRoomId = activity?.intent?.getStringExtra("meeting_room_id") ?: ""
         var meetingInfoImage = rootRef.child("meeting_info/${meetingRoomId}.jpg")
+        println("${meetingRoomId} test")
         meetingInfoImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
             if(it.isSuccessful){
+                println("성공 23 0319")
                 val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
                 binding.meetingInfoImage.setImageBitmap(bmp)
             }else{
+                println("실패 23 0319")
                 var ref = rootRef.child("meeting_info/default.jpg")
                 ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                     if(it.isSuccessful){

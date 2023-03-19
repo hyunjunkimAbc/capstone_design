@@ -131,9 +131,8 @@ class CreateViewFragment: Fragment() {
             db.collection("category").document(hobby).set(data)
             db.collection("category").document(hobby).update("RoomId",FieldValue.arrayUnion(makeuid))
         }
-
         val clubprofileimagename=makeuid
-        val storageRef=storage.reference.child("meeting_info").child(clubprofileimagename)
+        val storageRef=storage.reference.child("meeting_info").child("${clubprofileimagename}.jpg")
 
         storageRef.putFile(photoUri!!).addOnSuccessListener {
             storageRef.downloadUrl.addOnSuccessListener { uri->
