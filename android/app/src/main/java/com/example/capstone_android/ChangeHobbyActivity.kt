@@ -75,7 +75,7 @@ class ChangeHobbyActivity:AppCompatActivity() {
             param.marginStart = 15
             checkbox.layoutParams = param
             imagegrid.addView(checkbox)
-            checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_sport,0,0)
+        //    checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.,0,0)
             checkbox.setBackgroundResource(R.color.transparent)
             checkbox.text= "    $hobby"
             checkbox.setOnCheckedChangeListener{ _,ischecked ->
@@ -90,7 +90,7 @@ class ChangeHobbyActivity:AppCompatActivity() {
             param.marginStart = 15
             checkbox.layoutParams = param
             imagegrid.addView(checkbox)
-            checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_music,0,0)
+          //  checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_music,0,0)
             checkbox.setBackgroundResource(R.color.transparent)
             checkbox.text= "      $hobby"
             checkbox.setOnCheckedChangeListener{ _,ischecked ->
@@ -105,7 +105,7 @@ class ChangeHobbyActivity:AppCompatActivity() {
             param.marginStart = 15
             checkbox.layoutParams = param
             imagegrid.addView(checkbox)
-            checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_trip,0,0)
+           // checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_trip,0,0)
             checkbox.setBackgroundResource(R.color.transparent)
             checkbox.text= "      $hobby"
             checkbox.setOnCheckedChangeListener{ _,ischecked ->
@@ -120,7 +120,7 @@ class ChangeHobbyActivity:AppCompatActivity() {
             param.marginStart = 15
             checkbox.layoutParams = param
             imagegrid.addView(checkbox)
-            checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_job,0,0)
+           // checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_job,0,0)
             checkbox.setBackgroundResource(R.color.transparent)
             checkbox.text= "      $hobby"
             checkbox.setOnCheckedChangeListener{ _,ischecked ->
@@ -135,7 +135,7 @@ class ChangeHobbyActivity:AppCompatActivity() {
             param.marginStart = 15
             checkbox.layoutParams = param
             imagegrid.addView(checkbox)
-            checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_read,0,0)
+           // checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_read,0,0)
             checkbox.setBackgroundResource(R.color.transparent)
             checkbox.text= "      $hobby"
             checkbox.setOnCheckedChangeListener{ _,ischecked ->
@@ -150,7 +150,7 @@ class ChangeHobbyActivity:AppCompatActivity() {
             param.marginStart = 15
             checkbox.layoutParams = param
             imagegrid.addView(checkbox)
-            checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_cook,0,0)
+           // checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_cook,0,0)
             checkbox.setBackgroundResource(R.color.transparent)
             checkbox.text= "      $hobby"
             checkbox.setOnCheckedChangeListener{ _,ischecked ->
@@ -165,7 +165,7 @@ class ChangeHobbyActivity:AppCompatActivity() {
             param.marginStart = 15
             checkbox.layoutParams = param
             imagegrid.addView(checkbox)
-            checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_photo,0,0)
+          //  checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_photo,0,0)
             checkbox.setBackgroundResource(R.color.transparent)
             checkbox.text= "      $hobby"
             checkbox.setOnCheckedChangeListener{ _,ischecked ->
@@ -180,7 +180,7 @@ class ChangeHobbyActivity:AppCompatActivity() {
             param.marginStart = 15
             checkbox.layoutParams = param
             imagegrid.addView(checkbox)
-            checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_game,0,0)
+           // checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_game,0,0)
             checkbox.setBackgroundResource(R.color.transparent)
             checkbox.text= "      $hobby"
             checkbox.setOnCheckedChangeListener{ _,ischecked ->
@@ -195,7 +195,7 @@ class ChangeHobbyActivity:AppCompatActivity() {
             param.marginStart = 15
             checkbox.layoutParams = param
             imagegrid.addView(checkbox)
-            checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_dance,0,0)
+            //checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_dance,0,0)
             checkbox.setBackgroundResource(R.color.transparent)
             checkbox.text= "      $hobby"
             checkbox.setOnCheckedChangeListener{ _,ischecked ->
@@ -210,7 +210,7 @@ class ChangeHobbyActivity:AppCompatActivity() {
             param.marginStart = 15
             checkbox.layoutParams = param
             imagegrid.addView(checkbox)
-            checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_car,0,0)
+           // checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_car,0,0)
             checkbox.setBackgroundResource(R.color.transparent)
             checkbox.text= "      $hobby"
             checkbox.setOnCheckedChangeListener{ _,ischecked ->
@@ -225,7 +225,7 @@ class ChangeHobbyActivity:AppCompatActivity() {
             param.marginStart = 15
             checkbox.layoutParams = param
             imagegrid.addView(checkbox)
-            checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_pet,0,0)
+           // checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_pet,0,0)
             checkbox.setBackgroundResource(R.color.transparent)
             checkbox.text= "  $hobby"
             checkbox.setOnCheckedChangeListener{ _,ischecked ->
@@ -240,7 +240,7 @@ class ChangeHobbyActivity:AppCompatActivity() {
             param.marginStart = 15
             checkbox.layoutParams = param
             imagegrid.addView(checkbox)
-            checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_art,0,0)
+            //checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_art,0,0)
             checkbox.setBackgroundResource(R.color.transparent)
             checkbox.text= "     $hobby"
             checkbox.setOnCheckedChangeListener{ _,ischecked ->
@@ -255,7 +255,7 @@ class ChangeHobbyActivity:AppCompatActivity() {
             param.marginStart = 15
             checkbox.layoutParams = param
             imagegrid.addView(checkbox)
-            checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_volunteer,0,0)
+           // checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_volunteer,0,0)
             checkbox.setBackgroundResource(R.color.transparent)
             checkbox.text= "    $hobby"
             checkbox.setOnCheckedChangeListener{ _,ischecked ->
@@ -270,7 +270,7 @@ class ChangeHobbyActivity:AppCompatActivity() {
             param.marginStart = 15
             checkbox.layoutParams = param
             imagegrid.addView(checkbox)
-            checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_study,0,0)
+            //checkbox.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable._checkbox_study,0,0)
             checkbox.setBackgroundResource(R.color.transparent)
             checkbox.text= " $hobby"
             checkbox.setOnCheckedChangeListener{ _,ischecked ->

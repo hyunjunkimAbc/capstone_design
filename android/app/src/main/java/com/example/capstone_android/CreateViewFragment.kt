@@ -17,7 +17,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.capstone_android.data.ClubData
-import com.example.capstone_android.R
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -37,6 +36,7 @@ class CreateViewFragment: Fragment() {
     lateinit var hobby:String
     var disx:Double?=null
     var disy:Double?=null
+    var bigaddress:String?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view= LayoutInflater.from(activity).inflate(R.layout.fragment_create,container,false)
         storage = Firebase.storage
@@ -51,39 +51,9 @@ class CreateViewFragment: Fragment() {
             startActivityForResult(intent,9)
         }
         view.changehobby.setOnClickListener{
-            val orderBottomDialogFragment: OrderBottomDialogFragment = OrderBottomDialogFragment {
-                when (it) {
-                    "운동"->{hobby="운동"
-                    view.changehobby.setImageResource(R.drawable.icon_sports)}
-                    "여행"->{hobby="여행"
-                        view.changehobby.setImageResource(R.drawable.icon_trip)}
-                    "음악"->{hobby="음악"
-                        view.changehobby.setImageResource(R.drawable.icon_music)}
-                    "사교"->{hobby="사교"
-                        view.changehobby.setImageResource(R.drawable.icon_job)}
-                    "독서"->{hobby="독서"
-                        view.changehobby.setImageResource(R.drawable.icon_book)}
-                    "요리"->{hobby="요리"
-                        view.changehobby.setImageResource(R.drawable.icon_cook)}
-                    "사진"->{hobby="사진"
-                        view.changehobby.setImageResource(R.drawable.icon_photo)}
-                    "게임"->{hobby="게임"
-                        view.changehobby.setImageResource(R.drawable.icon_game)}
-                    "댄스"->{hobby="댄스"
-                        view.changehobby.setImageResource(R.drawable.icon_dance)}
-                    "자동차"->{hobby="자동차"
-                        view.changehobby.setImageResource(R.drawable.icon_car)}
-                    "애완동물"->{hobby="애완동물"
-                        view.changehobby.setImageResource(R.drawable.icon_pet)}
-                    "공예"->{hobby="공예"
-                        view.changehobby.setImageResource(R.drawable.icon_art)}
-                    "봉사활동"->{hobby="봉사활동"
-                        view.changehobby.setImageResource(R.drawable.icon_volunteer)}
-                    "스터디그룹"->{hobby="스터디그룹"
-                        view.changehobby.setImageResource(R.drawable.icon_study)}
-                }
-            }
-            orderBottomDialogFragment.show(mActivity.supportFragmentManager, orderBottomDialogFragment.tag)
+            val intent=Intent(activity,SelectHobbyActivity::class.java)
+            intent.putExtra("key","select")
+            startActivityForResult(intent,5)
         }
 
 
@@ -132,12 +102,37 @@ class CreateViewFragment: Fragment() {
     @SuppressLint("ResourceAsColor")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==5){
+           hobby= data?.extras?.getString("hobby").toString()
+            if(hobby.equals("농구")) view?.changehobby?.setImageResource(R.drawable.sport_basketball)
+            if(hobby.equals("축구")) view?.changehobby?.setImageResource(R.drawable.sport_soccer)
+            if(hobby.equals("탁구")) view?.changehobby?.setImageResource(R.drawable.sport_pingpong)
+            if(hobby.equals("테니스")) view?.changehobby?.setImageResource(R.drawable.sport_tennis)
+            if(hobby.equals("배드민턴")) view?.changehobby?.setImageResource(R.drawable.sport_badminton)
+            if(hobby.equals("야구")) view?.changehobby?.setImageResource(R.drawable.sport_baseball)
+            if(hobby.equals("볼링")) view?.changehobby?.setImageResource(R.drawable.sport_bowling)
+            if(hobby.equals("자전거")) view?.changehobby?.setImageResource(R.drawable.sport_bicycle)
+            if(hobby.equals("골프")) view?.changehobby?.setImageResource(R.drawable.sport_golf)
+            if(hobby.equals("런닝")) view?.changehobby?.setImageResource(R.drawable.sport_running)
+            if(hobby.equals("수영")) view?.changehobby?.setImageResource(R.drawable.sport_swim)
+            if(hobby.equals("배구")) view?.changehobby?.setImageResource(R.drawable.sport_volleyball)
+            if(hobby.equals("요가|필라테스")) view?.changehobby?.setImageResource(R.drawable.sport_yoga)
+            if(hobby.equals("태권도|유도")) view?.changehobby?.setImageResource(R.drawable.sport_taekwonudo)
+            if(hobby.equals("복싱")) view?.changehobby?.setImageResource(R.drawable.sport_box)
+            if(hobby.equals("무술")) view?.changehobby?.setImageResource(R.drawable.sport_musul)
+            if(hobby.equals("승마")) view?.changehobby?.setImageResource(R.drawable.sport_horse)
+            if(hobby.equals("헬스")) view?.changehobby?.setImageResource(R.drawable.sport_hells)
+            if(hobby.equals("롤러|보드")) view?.changehobby?.setImageResource(R.drawable.sport_rollerboard)
+            if(hobby.equals("스키|보드")) view?.changehobby?.setImageResource(R.drawable.sport_skiboard)
+            if(hobby.equals("당구")) view?.changehobby?.setImageResource(R.drawable.sport_danggu)
+        }
         val name=data?.extras?.getString("name")
+         bigaddress=data?.extras?.getString("address")
+        println(bigaddress)
          disx=data?.extras?.getDouble("disx")
          disy=data?.extras?.getDouble("disy")
         view?.useraddress?.text=name
         view?.useraddress?.setTextColor(R.color.black)
-
     }
     @SuppressLint("SimpleDateFormat")
     fun uploadContent(hobby: String, view: View){
@@ -166,6 +161,10 @@ class CreateViewFragment: Fragment() {
                 clubdata.upload_time = System.currentTimeMillis()
                 clubdata.writer_uid = Firebase.auth.currentUser?.uid.toString()
                 clubdata.Uid=makeuid
+                clubdata.positionx=disx
+                clubdata.positiony=disy
+                clubdata.address=bigaddress
+
                 db.collection("meeting_room").document(makeuid).set(clubdata).addOnSuccessListener{
                     db.collection("meeting_room").document(makeuid).update("member_list",FieldValue.arrayUnion(Firebase.auth.currentUser?.uid.toString())).addOnSuccessListener{
                         db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).update("meeting_room_id_list",FieldValue.arrayUnion(makeuid)).addOnSuccessListener{

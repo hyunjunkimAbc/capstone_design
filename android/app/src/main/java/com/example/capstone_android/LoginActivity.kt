@@ -1,12 +1,9 @@
 package com.example.capstone_android
 
 import android.content.Intent
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Base64
 import android.util.Log
 import android.view.Gravity
 import android.widget.LinearLayout
@@ -27,8 +24,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
 
 
 class LoginActivity : AppCompatActivity() { // 로그인 화면

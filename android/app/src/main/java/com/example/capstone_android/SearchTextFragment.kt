@@ -46,6 +46,7 @@ class SearchTextFragment:Fragment() {
               println(listItems[position].y)
                 println(listItems[position].x)
                 val bundle=Bundle()
+                bundle.putString("address",listItems[position].address)
                 bundle.putDouble("ydis",listItems[position].y)
                 bundle.putDouble("xdis",listItems[position].x)
                 bundle.putString("name",listItems[position].name)

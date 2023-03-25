@@ -2,14 +2,11 @@ package com.example.capstone_android
 
 
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.capstone_android.databinding.MeetingRoomInfoItemLayoutBinding
 import com.example.capstone_android.databinding.MeetingRoomPostingCommentItemLayoutBinding
 import com.example.capstone_android.databinding.MeetingRoomPostingCommentItemRightBinding
-import com.example.capstone_android.databinding.MeetingRoomPostingsItemLayoutBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat

@@ -2,17 +2,12 @@ package com.example.capstone_android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.databinding.ActivityMeetingRoomBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MeetingRoomActivity : AppCompatActivity() {

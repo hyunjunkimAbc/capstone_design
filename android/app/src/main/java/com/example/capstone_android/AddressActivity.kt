@@ -44,7 +44,6 @@ class AddressActivity:AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.textview.text="클럽 지역"
-
         try {
             val `is` = baseContext.resources.assets.open("address.xls")
             val wb = Workbook.getWorkbook(`is`)

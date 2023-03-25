@@ -11,5 +11,8 @@ data class ClubData(var category:String?=null,
                     var upload_time: Long? = null,
                     var writer_uid:String?=null,
                     var imageUrl: String? = null,
-                    var Uid:String?=null)
+                    var Uid:String?=null,
+                    var positionx:Double?=null,
+                    var positiony:Double?=null,
+                    var address:String?=null)
 

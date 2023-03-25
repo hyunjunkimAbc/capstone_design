@@ -1,7 +1,6 @@
 package com.example.capstone_android
 
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,33 +13,40 @@ import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 
 
+
 class SearchMapFragment:Fragment() {
-     var eventListener = MarkerEventListener()
+
+    var eventListener = MarkerEventListener()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
         var view= LayoutInflater.from(activity).inflate(R.layout.fragment_searchmap,container,false)
-        val mapView = MapView(activity)
+        val mapview=MapView(activity)
         val mapViewContainer = view.map_view as ViewGroup
-        mapViewContainer.addView(mapView)
+        mapViewContainer.addView(mapview)
+        val address=arguments?.getString("address")
         val disy=arguments?.getDouble("ydis")
         val disx=arguments?.getDouble("xdis")
         val name=arguments?.getString("name")
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(disy!!, disx!!),true);
-        mapView.setZoomLevel(1,true)
-        val point=MapPOIItem()
+        mapview.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(disy!!, disx!!),true);
+        mapview.setZoomLevel(1,true)
+        val point= MapPOIItem()
         point.itemName=name
         point.mapPoint=MapPoint.mapPointWithGeoCoord(disy,disx)
         point.markerType=MapPOIItem.MarkerType.BluePin
         point.selectedMarkerType=MapPOIItem.MarkerType.RedPin
-        mapView.addPOIItem(point)
-        mapView.setPOIItemEventListener(eventListener)
+        mapview.addPOIItem(point)
+        mapview.setPOIItemEventListener(eventListener)
 
         view.confirm.setOnClickListener{
             val intent= Intent()
+            val addresslong=address?.split(" ")
+            val bigadderss= addresslong?.get(0).plus(" ").plus(addresslong?.get(1))
+            intent.putExtra("address",bigadderss)
             intent.putExtra("name",name)
             intent.putExtra("disy",disy)
             intent.putExtra("disx",disx)
             activity?.setResult(RESULT_OK,intent)
             activity?.finish()
+            println(bigadderss)
             println("정상종료")
         }
         return view
@@ -52,6 +58,7 @@ class SearchMapFragment:Fragment() {
 
         override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
             println("마커클릭")
+
         }
 
         override fun onCalloutBalloonOfPOIItemTouched(
@@ -67,4 +74,4 @@ class SearchMapFragment:Fragment() {
         }
     }
 
-    }
+}

@@ -3,7 +3,7 @@
     <style name="Theme.Capstone_android" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="windowActionBar">false</item>
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -25,7 +25,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/white</item>
     </style>
 
     <style name="Theme.Capstone_android.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

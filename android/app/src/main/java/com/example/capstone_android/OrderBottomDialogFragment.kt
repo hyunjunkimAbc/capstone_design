@@ -1,38 +1,51 @@
 package com.example.capstone_android
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.example.capstone_android.hobbyfragment.SportFragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.order_bottom_dialog.view.*
-import kotlinx.android.synthetic.main.order_bottom_dialog.view.artImageButton
-import kotlinx.android.synthetic.main.order_bottom_dialog.view.carImageButton
-import kotlinx.android.synthetic.main.order_bottom_dialog.view.cookImageButton
-import kotlinx.android.synthetic.main.order_bottom_dialog.view.danceImageButton
-import kotlinx.android.synthetic.main.order_bottom_dialog.view.gameImageButton
-import kotlinx.android.synthetic.main.order_bottom_dialog.view.jobImageButton
-import kotlinx.android.synthetic.main.order_bottom_dialog.view.musicImageButton
-import kotlinx.android.synthetic.main.order_bottom_dialog.view.petImageButton
-import kotlinx.android.synthetic.main.order_bottom_dialog.view.photoImageButton
-import kotlinx.android.synthetic.main.order_bottom_dialog.view.readImageButton
-import kotlinx.android.synthetic.main.order_bottom_dialog.view.sportsImageButton
-import kotlinx.android.synthetic.main.order_bottom_dialog.view.studyImageButton
-import kotlinx.android.synthetic.main.order_bottom_dialog.view.tripImageButton
-import kotlinx.android.synthetic.main.order_bottom_dialog.view.volunteerImageButton
 
 class OrderBottomDialogFragment(val itemClick: (String) -> Unit) :  BottomSheetDialogFragment(){
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View = inflater.inflate(R.layout.order_bottom_dialog, container, false)
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
+       val view= inflater.inflate(R.layout.order_bottom_dialog, container, false)
+
+        return view
+    }
 
     override fun getTheme(): Int {
         return R.style.AppBottomSheetDialogTheme
     }
+    override fun onStart() {
+        super.onStart()
 
+        if (dialog != null) {
+            val bottomSheet: View = dialog!!.findViewById(R.id.design_bottom_sheet)
+            bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+        }
+
+        val view = view
+        view!!.post{
+            val parent = view!!.parent as View
+            val params = parent.layoutParams as CoordinatorLayout.LayoutParams
+            val behavior = params.behavior
+            val bottomSheetBehavior = behavior as BottomSheetBehavior<*>?
+            bottomSheetBehavior!!.peekHeight = view!!.measuredHeight
+        }
+    }
+
+    @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.sportsImageButton.setOnClickListener{
+            val sportbtn=SportFragment()
             itemClick("운동")
             dialog?.dismiss()
         }

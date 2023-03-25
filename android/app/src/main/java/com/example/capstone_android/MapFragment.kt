@@ -1,38 +1,13 @@
 package com.example.capstone_android
 
-import KakaoAPI
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.capstone_android.data.ResultSearchKeyword
-import com.example.capstone_android.data.SignUpData
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_map.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import net.daum.mf.map.api.MapPoint
-import net.daum.mf.map.api.MapView
-import org.json.JSONObject
-import org.json.JSONTokener
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
-import java.net.URLEncoder
-import java.nio.charset.Charset
 
 
 class MapFragment : Fragment() {

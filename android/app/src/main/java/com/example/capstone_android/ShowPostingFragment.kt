@@ -11,7 +11,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.capstone_android.databinding.FragmentMeetingRoomPostingsBinding
 import com.example.capstone_android.databinding.FragmentShowPostingBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
