@@ -1,6 +1,6 @@
 package com.example.capstone_android
 
-import KakaoAPI
+import ApiInterface
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -28,8 +28,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class SearchTextFragment:Fragment() {
     companion object {
-        const val BASE_URL = "https://dapi.kakao.com/"
-        const val API_KEY = "KakaoAK 6671566d172651d45d7ce9e97ea521ea" // REST API 키
+        const val BASE_URL = "https://apis.openapi.sk.com/"
+        const val API_KEY =  "VwYv1tFJtY1v9qhvVmkP92XdfO8UF8Kj3Hu83jRL" // REST API 키
     }
     private val listItems = arrayListOf<ListLayout>() // 리사이클러 뷰 아이템
     private val listAdapter = SearchTextAdapter(listItems) // 리사이클러 뷰 어댑터
@@ -65,7 +65,7 @@ class SearchTextFragment:Fragment() {
                 println(query)
                 keyword = query
                 pageNumber = 1
-                searchKeyword(keyword, pageNumber)
+                searchKeyword(keyword,API_KEY)
                 return true
             }
 
@@ -76,31 +76,31 @@ class SearchTextFragment:Fragment() {
         })
         view.previous.setOnClickListener{
             pageNumber--
-            searchKeyword(keyword,pageNumber)
+           // searchKeyword(keyword,pageNumber)
         }
         view.next.setOnClickListener{
             pageNumber++
-            searchKeyword(keyword, pageNumber)
+            //searchKeyword(keyword, pageNumber)
         }
 
         return view
     }
 
 
-    private fun searchKeyword(keyword: String, page: Int) {
+    private fun searchKeyword(keyword: String, page: String) {
         val retrofit = Retrofit.Builder() // Retrofit 구성
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        val api = retrofit.create(KakaoAPI::class.java) // 통신 인터페이스를 객체로 생성
-        val call = api.getSearchKeyword(API_KEY, keyword, page) // 검색 조건 입력
+        val api = retrofit.create(ApiInterface::class.java) // 통신 인터페이스를 객체로 생성
+        val call = api.getSearchResult(keyword,API_KEY) // 검색 조건 입력
 
 // API 서버에 요청
         call.enqueue(object: Callback<ResultSearchKeyword> {
             override fun onResponse(call: Call<ResultSearchKeyword>, response: Response<ResultSearchKeyword>) {
         Log.d("Test", "Raw: ${response.raw()}")
     Log.d("Test", "Body: ${response.body()}")
-                addItemsAndMarkers(response.body())
+              // addItemsAndMarkers(response.body())
             }
 
             override fun onFailure(call: Call<ResultSearchKeyword>, t: Throwable) {
@@ -110,7 +110,7 @@ class SearchTextFragment:Fragment() {
         })
     }
 
-
+/*
     @SuppressLint("NotifyDataSetChanged")
     private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
         if (!searchResult?.documents.isNullOrEmpty()) {
@@ -133,11 +133,15 @@ class SearchTextFragment:Fragment() {
 
 
 
+
+
         }
         else {
 // 검색 결과 없음
             Toast.makeText(context, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
         }
-    }
 
+
+    }
+    */
 }

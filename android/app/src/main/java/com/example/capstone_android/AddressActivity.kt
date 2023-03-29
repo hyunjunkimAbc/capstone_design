@@ -110,6 +110,7 @@ class AddressActivity:AppCompatActivity() {
         val id = item.itemId
         when (id) {
             android.R.id.home -> {
+                setResult(RESULT_OK)
                 finish()
                 return true
             }

@@ -14,6 +14,7 @@ import com.google.firebase.ktx.Firebase
 
 class HomeActivity: AppCompatActivity() {
     lateinit var db : FirebaseFirestore
+    var checkfragment:Number=-1
     private lateinit var binding: ActivityHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +26,7 @@ class HomeActivity: AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.textview.setOnClickListener{
             val intent=Intent(this,AddressActivity::class.java)
-            startActivityForResult(intent,1)
+            startActivityForResult(intent,10)
         }
         db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{ document->
             val item=document.toObject(SignUpData::class.java)
@@ -40,6 +41,7 @@ class HomeActivity: AppCompatActivity() {
             when(it.itemId){
                 R.id.action_home ->{
                     val detailViewFragment=DetailViewFragment()
+                    checkfragment=0
                     supportFragmentManager.beginTransaction().replace(R.id.search_content,detailViewFragment).commit()
 
                     return@setOnItemSelectedListener true
@@ -74,6 +76,9 @@ class HomeActivity: AppCompatActivity() {
             val item=document.toObject(SignUpData::class.java)
             val test=item?.address?.split(" ")
             binding.textview.text= test?.get(2)
+            if(checkfragment==0) {
+
+            }
         }
     }
 }
