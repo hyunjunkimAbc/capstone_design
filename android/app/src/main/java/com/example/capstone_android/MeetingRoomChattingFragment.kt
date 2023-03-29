@@ -41,7 +41,7 @@ class MeetingRoomChattingFragment : Fragment() {
     var rootRef = Firebase.storage.reference
     val userCollection = db.collection("user")
     val commentCollection = db.collection("comment")
-    val meetingRoomCollection = db.collection("meeting_room")
+    var meetingRoomCollection = db.collection("lighting_meeting_room")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -77,6 +77,8 @@ class MeetingRoomChattingFragment : Fragment() {
             val i =viewModel.itemClickEvent.value
         }
         registerForContextMenu(recyclerViewCommentChatting)
+        val colName = activity?.intent?.getStringExtra("collectionName")
+        meetingRoomCollection = db.collection(colName!!)
         //데이터 얻어와서 ui에 반영
         initDataAndUI()
 

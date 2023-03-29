@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.databinding.FragmentMeetingRoomInfoBinding
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.MetadataChanges
 import com.google.firebase.firestore.ktx.firestore
@@ -54,7 +55,7 @@ class MeetingRoomInfoFragment : Fragment() {
 
     var rootRef = Firebase.storage.reference
 
-    val meetingRoomCollection = db.collection("meeting_room")
+    var meetingRoomCollection=db.collection("lighting_meeting_room")
     val userCollection = db.collection("user")
     var meetingRoomId = ""
     var memCurruntCnt =0
@@ -104,7 +105,8 @@ class MeetingRoomInfoFragment : Fragment() {
         }
 
         registerForContextMenu(meetingMembersRecyclerView)
-
+        val colName = activity?.intent?.getStringExtra("collectionName")
+        meetingRoomCollection = db.collection(colName!!)
         //데이터 얻어와서 ui에 반영
         initDataAndUI()
     }

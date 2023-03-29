@@ -45,7 +45,7 @@ class MeetingRoomPostingsFragment : Fragment() {
     var cnt =0
 
     var rootRef = Firebase.storage.reference
-    val meetingRoomCollection = db.collection("meeting_room")
+    var meetingRoomCollection = db.collection("lighting_meeting_room")
     val postingCollection = db.collection("posting")
     val userCollection = db.collection("user")
     var meetingRoomId = ""
@@ -102,7 +102,8 @@ class MeetingRoomPostingsFragment : Fragment() {
         registerForContextMenu(meetingMembersRecyclerView)
         //viewModel.addItem(Posting(null,"asdf","asddfgdf",1000,"","adsf"))
         //viewModel.addItem(Posting(null,"asdf","fdsgfh",100002,"","asdf"))
-
+        val colName = activity?.intent?.getStringExtra("collectionName")
+        meetingRoomCollection = db.collection(colName!!)
         //데이터 얻어와서 ui에 반영
         initDataAndUI()
     }

@@ -21,10 +21,12 @@ class MainActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
 
-            val intent = Intent(this, MeetingRoomActivity::class.java)
-            intent.putExtra("meeting_room_id", "51jWA2i3CdTt3KwA25VZkDFOIzR220230308_224544")
-            startActivity(intent)
+            //val intent = Intent(this, MeetingRoomActivity::class.java)
+            //intent.putExtra("meeting_room_id", "51jWA2i3CdTt3KwA25VZkDFOIzR220230308_224544")
+            //startActivity(intent)
 
+            val intent = Intent(this, ConciergeActivity::class.java)
+            startActivity(intent)
         }
     }
 }
