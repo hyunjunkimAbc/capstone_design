@@ -470,6 +470,44 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/danggucheckbox"
                 app:layout_constraintTop_toBottomOf="@+id/danggucheckbox" />
+            <CheckBox
+                android:id="@+id/hikecheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/_checkbox_hiking"
+                android:button="@null"
+                app:layout_constraintStart_toStartOf="@+id/horsecheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/textView29" />
+            <TextView
+                android:id="@+id/textView34"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:text="등산"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/hikecheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/hikecheckbox" />
+            <CheckBox
+                android:id="@+id/leisurecheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/_checkbox_leisure"
+                android:button="@null"
+                app:layout_constraintStart_toStartOf="@+id/hellscheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/textView30" />
+            <TextView
+                android:id="@+id/textView36"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:text="수상레저"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/leisurecheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/leisurecheckbox" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

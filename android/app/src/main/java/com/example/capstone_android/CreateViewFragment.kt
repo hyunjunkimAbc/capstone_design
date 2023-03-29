@@ -125,6 +125,8 @@ class CreateViewFragment: Fragment() {
             if(hobby.equals("롤러|보드")) view?.changehobby?.setImageResource(R.drawable.sport_rollerboard)
             if(hobby.equals("스키|보드")) view?.changehobby?.setImageResource(R.drawable.sport_skiboard)
             if(hobby.equals("당구")) view?.changehobby?.setImageResource(R.drawable.sport_danggu)
+            if(hobby.equals("등산")) view?.changehobby?.setImageResource(R.drawable.sport_hiking)
+            if(hobby.equals("수상레저")) view?.changehobby?.setImageResource(R.drawable.sport_leisure)
         }
         val name=data?.extras?.getString("name")
          bigaddress=data?.extras?.getString("address")

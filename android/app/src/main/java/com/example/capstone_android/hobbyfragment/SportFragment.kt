@@ -155,6 +155,18 @@ class SportFragment:Fragment() {
                 activity?.setResult(Activity.RESULT_OK, intent)
                 activity?.finish()
             }
+            view.hikecheckbox.setOnClickListener {
+                val intent = Intent()
+                intent.putExtra("hobby", "등산")
+                activity?.setResult(Activity.RESULT_OK, intent)
+                activity?.finish()
+            }
+            view.leisurecheckbox.setOnClickListener {
+                val intent = Intent()
+                intent.putExtra("hobby", "수상레저")
+                activity?.setResult(Activity.RESULT_OK, intent)
+                activity?.finish()
+            }
         } else {
             println("관심사 재설성문")
 
@@ -302,6 +314,20 @@ class SportFragment:Fragment() {
                         if (data == "당구") {
                             view.danggucheckbox.isChecked = thisactivity.myhobbylist.contains(data)
                             view.danggucheckbox.setOnCheckedChangeListener{_,ischecked->
+                                if(ischecked) thisactivity.myhobbylist.add(data)
+                                else thisactivity.myhobbylist.remove(data)
+                            }
+                        }
+                        if (data == "등산") {
+                            view.hikecheckbox.isChecked = thisactivity.myhobbylist.contains(data)
+                            view.hikecheckbox.setOnCheckedChangeListener{_,ischecked->
+                                if(ischecked) thisactivity.myhobbylist.add(data)
+                                else thisactivity.myhobbylist.remove(data)
+                            }
+                        }
+                        if (data == "수상레저") {
+                            view.leisurecheckbox.isChecked = thisactivity.myhobbylist.contains(data)
+                            view.leisurecheckbox.setOnCheckedChangeListener{_,ischecked->
                                 if(ischecked) thisactivity.myhobbylist.add(data)
                                 else thisactivity.myhobbylist.remove(data)
                             }
