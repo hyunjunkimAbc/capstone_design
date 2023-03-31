@@ -16,7 +16,7 @@ import net.daum.mf.map.api.MapView
 
 class SearchMapFragment:Fragment() {
 
-    var eventListener = MarkerEventListener()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
         var view= LayoutInflater.from(activity).inflate(R.layout.fragment_searchmap,container,false)
         val mapview=MapView(activity)
@@ -26,15 +26,7 @@ class SearchMapFragment:Fragment() {
         val disy=arguments?.getDouble("ydis")
         val disx=arguments?.getDouble("xdis")
         val name=arguments?.getString("name")
-        mapview.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(disy!!, disx!!),true);
-        mapview.setZoomLevel(1,true)
-        val point= MapPOIItem()
-        point.itemName=name
-        point.mapPoint=MapPoint.mapPointWithGeoCoord(disy,disx)
-        point.markerType=MapPOIItem.MarkerType.BluePin
-        point.selectedMarkerType=MapPOIItem.MarkerType.RedPin
-        mapview.addPOIItem(point)
-        mapview.setPOIItemEventListener(eventListener)
+
 
         view.confirm.setOnClickListener{
             val intent= Intent()
@@ -51,27 +43,6 @@ class SearchMapFragment:Fragment() {
         }
         return view
     }
-    class MarkerEventListener(): MapView.POIItemEventListener {
-        override fun onPOIItemSelected(mapView: MapView?, poiItem: MapPOIItem?) {
-            //println("마커클릭")
-        }
 
-        override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
-            println("마커클릭")
-
-        }
-
-        override fun onCalloutBalloonOfPOIItemTouched(
-            p0: MapView?,
-            p1: MapPOIItem?,
-            p2: MapPOIItem.CalloutBalloonButtonType?
-        ) {
-
-        }
-
-        override fun onDraggablePOIItemMoved(p0: MapView?, p1: MapPOIItem?, p2: MapPoint?) {
-
-        }
-    }
 
 }
