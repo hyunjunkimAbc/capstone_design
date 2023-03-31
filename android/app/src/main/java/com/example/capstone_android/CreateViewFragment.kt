@@ -38,6 +38,7 @@ class CreateViewFragment: Fragment() {
     var disy:Double?=null
     var bigaddress:String?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        println("나생성")
         val view= LayoutInflater.from(activity).inflate(R.layout.fragment_create,container,false)
         storage = Firebase.storage
         db= Firebase.firestore
@@ -128,13 +129,15 @@ class CreateViewFragment: Fragment() {
             if(hobby.equals("등산")) view?.changehobby?.setImageResource(R.drawable.sport_hiking)
             if(hobby.equals("수상레저")) view?.changehobby?.setImageResource(R.drawable.sport_leisure)
         }
-        val name=data?.extras?.getString("name")
-         bigaddress=data?.extras?.getString("address")
-        println(bigaddress)
-         disx=data?.extras?.getDouble("disx")
-         disy=data?.extras?.getDouble("disy")
-        view?.useraddress?.text=name
-        view?.useraddress?.setTextColor(R.color.black)
+        else if(requestCode==9) {
+            val name = data?.extras?.getString("name")
+            bigaddress = data?.extras?.getString("address")
+            println(bigaddress)
+            disx = data?.extras?.getDouble("disx")
+            disy = data?.extras?.getDouble("disy")
+            view?.useraddress?.text = name
+            view?.useraddress?.setTextColor(R.color.black)
+        }
     }
     @SuppressLint("SimpleDateFormat")
     fun uploadContent(hobby: String, view: View){

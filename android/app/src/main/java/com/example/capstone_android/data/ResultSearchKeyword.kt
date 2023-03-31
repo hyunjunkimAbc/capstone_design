@@ -14,13 +14,14 @@ data class poi(
     var poi:List<data>
 )
 data class data(
-    var id:String,
     var name:String,
     var noorLat:Double,
     var noorLon:Double,
     var upperAddrName:String,
     var middleAddrName:String,
-    var radius:String
+   var lowerAddrName:String,
+    var detailAddrName:String,
+    var radius:String?=null
 )
 
 

@@ -24,19 +24,22 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_main.*
 
 import kotlinx.android.synthetic.main.fragment_main.view.*
+import kotlinx.android.synthetic.main.fragment_meeting_room_info.*
 import kotlinx.android.synthetic.main.item_main.view.*
 
 
 
 class DetailViewFragment: Fragment() {
-
     lateinit var db : FirebaseFirestore
     var scrapMainLayout:GridLayout?=null
     var clubdata:ArrayList<ClubData> = arrayListOf()
+    var address:String?=null
     var clubroomuid:ArrayList<String> =arrayListOf()
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -126,25 +129,16 @@ class DetailViewFragment: Fragment() {
         clubdata.clear()
         db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{   document->
             val item=document.toObject(SignUpData::class.java)
-            view?.UserName?.text=item?.nickname+"님을"
+            address=item?.address
             for(data in item?.interest_array!!){
-                db.collection("category").document(data).get().addOnSuccessListener { document2 ->
-                    val item2 = document2.toObject(getclubuid::class.java)
-                    if (item2?.RoomId != null){
-                        for (data2 in item2.RoomId!!) {
-                            db.collection("meeting_room").document(data2).get()
-                                .addOnSuccessListener { document3 ->
-                                    val item3 = document3.toObject(ClubData::class.java)
-                                    if(item3!=null){
-                                        clubdata.add(item3!!)
-                                        clubdata.sortByDescending { it.upload_time }
-                                        view?.detailviewfragment_recyclerview?.adapter?.notifyDataSetChanged()
-                                    }
-
-                                }
-                        }
+                interest_text(data)
+                db.collection("meeting_room").whereEqualTo("category",data).whereEqualTo("address",address).get().addOnSuccessListener {
+                        snapshot->
+                    for(doc in snapshot){
+                        clubdata.add(doc.toObject(ClubData::class.java))
+                        view?.detailviewfragment_recyclerview?.adapter?.notifyDataSetChanged()
                     }
-                }.addOnFailureListener{}
+                }
             }
         }
     }
@@ -154,34 +148,23 @@ class DetailViewFragment: Fragment() {
         //var clubdata:ArrayList<ClubData> = arrayListOf()
 
         init{
-            clubdata= arrayListOf()
             clubdata.clear()
             db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{   document->
                 val item=document.toObject(SignUpData::class.java)
                 view?.UserName?.text=item?.nickname+"님을"
-
+                address=item?.address
                 for(data in item?.interest_array!!){
                   interest_text(data)
-                    db.collection("category").document(data).get().addOnSuccessListener { document2 ->
-                        val item2 = document2.toObject(getclubuid::class.java)
-                        if (item2?.RoomId != null){
-                            for (data2 in item2.RoomId!!) {
-                                db.collection("meeting_room").document(data2).get()
-                                    .addOnSuccessListener { document3 ->
-                                        val item3 = document3.toObject(ClubData::class.java)
-                                            clubdata.add(item3!!)
-                                            clubdata.sortByDescending { it.upload_time }
-                                            notifyDataSetChanged()
-
-                                    }
-                            }
-                        }
-                    }.addOnFailureListener{}
+                 db.collection("meeting_room").whereEqualTo("category",data).whereEqualTo("address",address).get().addOnSuccessListener {
+                     snapshot->
+                     for(doc in snapshot){
+                         clubdata.add(doc.toObject(ClubData::class.java))
+                         notifyDataSetChanged()
+                     }
+                 }
                 }
             }
-
         }
-
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val view=LayoutInflater.from(parent.context).inflate(R.layout.item_main,parent,false)

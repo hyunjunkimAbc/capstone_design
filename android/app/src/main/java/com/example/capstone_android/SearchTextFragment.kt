@@ -2,6 +2,8 @@ package com.example.capstone_android
 
 import ApiInterface
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -43,18 +45,31 @@ class SearchTextFragment:Fragment() {
         searchrecyclerView.adapter = listAdapter
         listAdapter.setItemClickListener(object: SearchTextAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
-              println(listItems[position].y)
-                println(listItems[position].x)
-                val bundle=Bundle()
-                bundle.putString("address",listItems[position].address)
-                bundle.putDouble("ydis",listItems[position].y)
-                bundle.putDouble("xdis",listItems[position].x)
-                bundle.putString("name",listItems[position].name)
-                val transaction: FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-                val searchmap=SearchMapFragment()
-                searchmap.arguments = bundle;//번들을 프래그먼트2로 보낼 준비
-                transaction.replace(R.id.search_content, searchmap);
-                transaction.commit();
+              println(listItems[position].noorLat)
+                println(listItems[position].noorLon)
+                val intent= Intent()
+                val text1=listItems[position].upperAddrName
+                val text2=listItems[position].middleAddrNmae
+                val name=listItems[position].name
+                val positiony=listItems[position].noorLat
+                val positionx=listItems[position].noorLon
+               val address=text1.plus(" ").plus(text2)
+                intent.putExtra("address",address)
+                intent.putExtra("name",name)
+                intent.putExtra("disy",positiony)
+                intent.putExtra("disx",positionx)
+                activity?.setResult(Activity.RESULT_OK,intent)
+                activity?.finish()
+                println("정상종료")
+                                    //val bundle=Bundle()
+              //  bundle.putDouble("ydis",listItems[position].y)
+                //bundle.putDouble("xdis",listItems[position].x)
+                //bundle.putString("name",listItems[position].name)
+                //val transaction: FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+               // val searchmap=SearchMapFragment()
+               // searchmap.arguments = bundle;//번들을 프래그먼트2로 보낼 준비
+              //  transaction.replace(R.id.search_content, searchmap);
+               // transaction.commit();
             }
         })
 
@@ -100,7 +115,7 @@ class SearchTextFragment:Fragment() {
             override fun onResponse(call: Call<ResultSearchKeyword>, response: Response<ResultSearchKeyword>) {
         Log.d("Test", "Raw: ${response.raw()}")
     Log.d("Test", "Body: ${response.body()}")
-              // addItemsAndMarkers(response.body())
+               addItemsAndMarkers(response.body())
             }
 
             override fun onFailure(call: Call<ResultSearchKeyword>, t: Throwable) {
@@ -110,26 +125,26 @@ class SearchTextFragment:Fragment() {
         })
     }
 
-/*
+
     @SuppressLint("NotifyDataSetChanged")
     private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
-        if (!searchResult?.documents.isNullOrEmpty()) {
+        if (!searchResult?.searchPoiInfo?.pois?.poi.isNullOrEmpty()) {
 // 검색 결과 있음
             listItems.clear() // 리스트 초기화
-            for (document in searchResult!!.documents) {
+            for (document in searchResult!!.searchPoiInfo?.pois?.poi) {
 // 결과를 리사이클러 뷰에 추가
                 val item = ListLayout(
-                    document.place_name,
-                    document.road_address_name,
-                    document.address_name,
-                    document.x.toDouble(),
-                    document.y.toDouble()
+                   document.name,
+                    document.upperAddrName,
+                    document.middleAddrName,
+                    document.lowerAddrName,
+                    document.detailAddrName,
+                    document.noorLat,
+                    document.noorLon
                 )
                 listItems.add(item)
                 listAdapter.notifyDataSetChanged()
             }
-            view?.next?.isEnabled = !searchResult.meta.is_end // 페이지가 더 있을 경우 다음 버튼 활성화
-            view?.previous?.isEnabled = pageNumber != 1
 
 
 
@@ -143,5 +158,5 @@ class SearchTextFragment:Fragment() {
 
 
     }
-    */
+
 }

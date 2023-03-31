@@ -14,7 +14,7 @@ import com.google.firebase.ktx.Firebase
 
 class HomeActivity: AppCompatActivity() {
     lateinit var db : FirebaseFirestore
-    var checkfragment:Number=-1
+    var checkfragment:Number=0
     private lateinit var binding: ActivityHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +30,8 @@ class HomeActivity: AppCompatActivity() {
         }
         db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{ document->
             val item=document.toObject(SignUpData::class.java)
-            val test=item?.address?.split(" ")
-            binding.textview.text= test?.get(2)
+            val test=item?.address
+            binding.textview.text= test
         }
         val detailViewFragment=DetailViewFragment()
         supportFragmentManager.beginTransaction().replace(R.id.search_content,detailViewFragment).commit()
@@ -74,10 +74,11 @@ class HomeActivity: AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{ document->
             val item=document.toObject(SignUpData::class.java)
-            val test=item?.address?.split(" ")
-            binding.textview.text= test?.get(2)
+            val test=item?.address
+            binding.textview.text= test
             if(checkfragment==0) {
-
+                val detailViewFragment=DetailViewFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.search_content,detailViewFragment).commit()
             }
         }
     }

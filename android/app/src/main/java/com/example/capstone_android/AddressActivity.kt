@@ -59,9 +59,7 @@ class AddressActivity:AppCompatActivity() {
                         item.first=sheet.getCell(0,row).contents
                         item.second=sheet.getCell(1,row).contents
                         item.third=sheet.getCell(2,row).contents
-                        if(item.third!="") {
                             itemlist.add(item)
-                        }
                     }
                 }
             }
@@ -88,7 +86,7 @@ class AddressActivity:AppCompatActivity() {
                 }
             }
 
-            @SuppressLint("NotifyDataSetChanged")
+            @SuppressLint("NotifyDataSetChanged", "SuspiciousIndentation")
             override fun afterTextChanged(s: Editable?) {
               val searchtext:String=binding.searchicon.text.toString()
                 searchlist.clear()
@@ -131,14 +129,13 @@ class AddressActivity:AppCompatActivity() {
         }
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val viewholder=(holder as AddressActivity.SearchAddressAdapter.CustomViewHolder).itemView
-             viewholder.subaddress.text=searchlist[position].third
-            val explain:String="(".plus(searchlist[position].first).plus(" ").plus(searchlist[position].second).plus(")")
+             viewholder.subaddress.text=searchlist[position].first
+            val explain:String="(".plus(searchlist[position].second).plus(" ").plus(searchlist[position].third).plus(")")
             viewholder.address.text=explain
             viewholder.CardView.setOnClickListener{
                 val third=searchlist[position].third
                 val second=searchlist[position].second
-                val first=searchlist[position].first
-                val ad=first.plus(" ").plus(second).plus(" ").plus(third)
+                val ad=second.plus(" ").plus(third)
                 val data = hashMapOf("address" to ad)
                 db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).set(data, SetOptions.merge()).addOnSuccessListener{
                     finish()

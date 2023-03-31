@@ -1,7 +1,9 @@
 package com.example.capstone_android.data
 
 class ListLayout(val name: String, // 장소명
-                 val road: String, // 도로명 주소
-                 val address: String, // 지번 주소
-                 val x: Double, // 경도(Longitude)
-                 val y: Double) // 위도(Latitude)
+                 val upperAddrName: String, // 지번 주소
+                 val middleAddrNmae:String,
+                 val lowerAddrName:String,
+                 val detailAddrName:String,
+                 val noorLat: Double, // 경도(Longitude)
+                 val noorLon: Double) // 위도(Latitude)

@@ -19,8 +19,7 @@ class SearchTextAdapter(val itemList: ArrayList<ListLayout>): RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: SearchTextAdapter.ViewHolder, position: Int) {
         holder.name.text = itemList[position].name
-        holder.road.text = itemList[position].road
-        holder.address.text = itemList[position].address
+        holder.address.text = itemList[position].upperAddrName.plus(itemList[position].middleAddrNmae).plus(itemList[position].lowerAddrName).plus(itemList[position].detailAddrName)
 // 아이템 클릭 이벤트
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
