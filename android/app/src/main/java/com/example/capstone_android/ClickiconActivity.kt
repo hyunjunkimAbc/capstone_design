@@ -23,10 +23,12 @@ import kotlinx.android.synthetic.main.item_main.view.*
 class ClickiconActivity: AppCompatActivity() {
     private lateinit var binding: ActivityClickiconBinding
     lateinit var hobby:String
+    lateinit var address:String
     lateinit var db : FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         hobby= intent.getStringExtra("hobby").toString()
+        address=intent.getStringExtra("address").toString()
         binding = ActivityClickiconBinding.inflate(layoutInflater)
         db= Firebase.firestore
 
@@ -59,17 +61,11 @@ class ClickiconActivity: AppCompatActivity() {
 
         init{
             clubdata.clear()
-            db.collection("category").document(hobby).get().addOnSuccessListener{   snapshot->
-                val item=snapshot.toObject(getclubuid::class.java)
-                if (item?.RoomId != null){
-                    for(data in item.RoomId!!){
-                        db.collection("meeting_room").document(data).get().addOnSuccessListener{    snapshot2->
-                            val item3 = snapshot2.toObject(ClubData::class.java)
-                            clubdata.add(item3!!)
-                            clubdata.sortByDescending { it.upload_time }
-                            binding.detailviewfragmentRecyclerview.adapter?.notifyDataSetChanged()
-                        }
-                    }
+            db.collection("meeting_room").whereEqualTo("category",hobby).whereEqualTo("address",address).get().addOnSuccessListener {
+                    snapshot->
+                for(doc in snapshot){
+                    clubdata.add(doc.toObject(ClubData::class.java))
+                    notifyDataSetChanged()
                 }
             }
 

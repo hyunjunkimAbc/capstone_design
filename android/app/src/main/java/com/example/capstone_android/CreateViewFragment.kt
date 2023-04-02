@@ -104,7 +104,7 @@ class CreateViewFragment: Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==5){
-           hobby= data?.extras?.getString("hobby").toString()
+            hobby= data?.extras?.getString("hobby").toString()
             if(hobby.equals("농구")) view?.changehobby?.setImageResource(R.drawable.sport_basketball)
             if(hobby.equals("축구")) view?.changehobby?.setImageResource(R.drawable.sport_soccer)
             if(hobby.equals("탁구")) view?.changehobby?.setImageResource(R.drawable.sport_pingpong)
@@ -144,13 +144,6 @@ class CreateViewFragment: Fragment() {
         val s1:String= Firebase.auth.currentUser?.uid.toString()
         val s2:String=SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val makeuid=s1.plus(s2)
-        db.collection("category").document(hobby).update("RoomId",FieldValue.arrayUnion(makeuid)).addOnFailureListener{
-            val data= hashMapOf("RoomId" to ArrayList<String>())
-            println(data)
-            println("테스트")
-            db.collection("category").document(hobby).set(data)
-            db.collection("category").document(hobby).update("RoomId",FieldValue.arrayUnion(makeuid))
-        }
 
         val clubprofileimagename=makeuid
         val storageRef=storage.reference.child("meeting_info").child(clubprofileimagename)

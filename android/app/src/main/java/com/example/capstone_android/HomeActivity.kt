@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.capstone_android.data.SignUpData
-import com.example.capstone_android.data.lightningFragment
 import com.example.capstone_android.databinding.ActivityHomeBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -51,11 +50,7 @@ class HomeActivity: AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(R.id.search_content,mapViewFragment).commit()
                     return@setOnItemSelectedListener true
                 }
-                R.id.action_Lightning->{
-                    val lightningFragment=lightningFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.search_content,lightningFragment).commit()
-                    return@setOnItemSelectedListener true
-                }
+
                 R.id.action_account ->{
                     val intent = Intent(this,ProfileActivity::class.java)
                     startActivity(intent)

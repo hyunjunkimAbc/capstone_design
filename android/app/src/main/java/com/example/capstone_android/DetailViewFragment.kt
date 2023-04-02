@@ -17,9 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.capstone_android.button.*
 import com.example.capstone_android.data.SignUpData
 import com.example.capstone_android.data.getclubuid
 import com.example.capstone_android.data.ClubData
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Param
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -83,7 +85,7 @@ class DetailViewFragment: Fragment() {
         }
 
         scrapMainLayout=view.imagegrid
-        scrapMainLayout?.columnCount=5
+        //scrapMainLayout?.columnCount=4
 
 
 
@@ -106,7 +108,7 @@ class DetailViewFragment: Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
             if(requestCode==9)update()
-        else {
+        else if(requestCode==1){
                 update_interest()
                 update()
             }
@@ -121,7 +123,123 @@ class DetailViewFragment: Fragment() {
         }
     }
     fun interest_text(data:String){
-
+        when (data) {
+            "축구" -> {
+                val btn = SoccerButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "농구"->{
+                val btn = BasketballButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "탁구"->{
+                val btn = PingpongButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "테니스"->{
+                val btn = TennisButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "배드민턴"->{
+                val btn = BadmintonButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "야구"->{
+                val btn = BaseballButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "볼링"->{
+                val btn = BowlingButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "자전거"->{
+                val btn = BicycleButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "골프"->{
+                val btn = GolfButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "런닝"->{
+                val btn = RunningButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "수영"->{
+                val btn = SwimButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "배구"->{
+                val btn = VolleyballButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "요가|필라테스"->{
+                val btn = YogaButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "태권|유도"->{
+                val btn = TaekwondoButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "복싱"->{
+                val btn = BoxButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "무술"->{
+                val btn = MusulButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "승마"->{
+                val btn = HorseButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "헬스"->{
+                val btn = HellsButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "롤러|보드"->{
+                val btn = RollerboardButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "스키|보드"->{
+                val btn = SkiboardButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "당구"->{
+                val btn = DangguButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "등산"->{
+                val btn = HikingButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+            "수상|레저"->{
+                val btn = LeisureButton(requireContext())
+                btn.setOnClickListener(ButtonListener(data))
+                scrapMainLayout?.addView(btn)
+            }
+        }
     }
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     fun update() {
@@ -131,7 +249,7 @@ class DetailViewFragment: Fragment() {
             val item=document.toObject(SignUpData::class.java)
             address=item?.address
             for(data in item?.interest_array!!){
-                interest_text(data)
+                //interest_text(data)
                 db.collection("meeting_room").whereEqualTo("category",data).whereEqualTo("address",address).get().addOnSuccessListener {
                         snapshot->
                     for(doc in snapshot){
@@ -192,6 +310,15 @@ class DetailViewFragment: Fragment() {
 
         override fun getItemCount(): Int {
             return clubdata.size
+        }
+
+    }
+    inner class ButtonListener(val hobby: String):View.OnClickListener{
+        override fun onClick(v: View?) {
+            val intent= Intent(activity, ClickiconActivity::class.java)
+            intent.putExtra("hobby", hobby)
+            intent.putExtra("address",address)
+            startActivity(intent)
         }
 
     }

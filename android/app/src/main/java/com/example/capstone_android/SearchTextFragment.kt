@@ -1,6 +1,5 @@
 package com.example.capstone_android
 
-import ApiInterface
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -17,6 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.data.ListLayout
 import com.example.capstone_android.data.ResultSearchKeyword
+import com.example.capstone_android.retrofit.ApiInterface
+import com.example.capstone_android.retrofit.RESPONSESTATE
+import com.example.capstone_android.retrofit.RetrofitManager
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import kotlinx.android.synthetic.main.fragment_searchtext.*
 import kotlinx.android.synthetic.main.fragment_searchtext.view.*
@@ -47,13 +49,13 @@ class SearchTextFragment:Fragment() {
             override fun onClick(v: View, position: Int) {
               println(listItems[position].noorLat)
                 println(listItems[position].noorLon)
+                /*
                 val intent= Intent()
-                val text1=listItems[position].upperAddrName
-                val text2=listItems[position].middleAddrNmae
+
                 val name=listItems[position].name
                 val positiony=listItems[position].noorLat
                 val positionx=listItems[position].noorLon
-               val address=text1.plus(" ").plus(text2)
+
                 intent.putExtra("address",address)
                 intent.putExtra("name",name)
                 intent.putExtra("disy",positiony)
@@ -61,15 +63,21 @@ class SearchTextFragment:Fragment() {
                 activity?.setResult(Activity.RESULT_OK,intent)
                 activity?.finish()
                 println("정상종료")
-                                    //val bundle=Bundle()
-              //  bundle.putDouble("ydis",listItems[position].y)
-                //bundle.putDouble("xdis",listItems[position].x)
-                //bundle.putString("name",listItems[position].name)
-                //val transaction: FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-               // val searchmap=SearchMapFragment()
-               // searchmap.arguments = bundle;//번들을 프래그먼트2로 보낼 준비
-              //  transaction.replace(R.id.search_content, searchmap);
-               // transaction.commit();
+
+                 */
+                val text1=listItems[position].upperAddrName
+                val text2=listItems[position].middleAddrNmae
+                val address=text1.plus(" ").plus(text2)
+                val bundle=Bundle()
+                bundle.putString("address",address)
+                bundle.putDouble("ydis",listItems[position].noorLon)
+                bundle.putDouble("xdis",listItems[position].noorLat)
+                bundle.putString("name",listItems[position].name)
+                val transaction: FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+                val searchmap=SearchMapFragment()
+                searchmap.arguments = bundle;//번들을 프래그먼트2로 보낼 준비
+               transaction.replace(R.id.search_content, searchmap);
+                transaction.commit();
             }
         })
 
@@ -103,11 +111,13 @@ class SearchTextFragment:Fragment() {
 
 
     private fun searchKeyword(keyword: String, page: String) {
+        /*
         val retrofit = Retrofit.Builder() // Retrofit 구성
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val api = retrofit.create(ApiInterface::class.java) // 통신 인터페이스를 객체로 생성
+
         val call = api.getSearchResult(keyword,API_KEY) // 검색 조건 입력
 
 // API 서버에 요청
@@ -122,6 +132,12 @@ class SearchTextFragment:Fragment() {
 // 통신 실패
                 Log.w("LocalSearch", "통신 실패: ${t.message}")
             }
+        })
+         */
+        RetrofitManager.instance.searchPOI(searchpoi = keyword, completion = {responseState,response->
+           when(responseState){
+              RESPONSESTATE.OKAY->addItemsAndMarkers(response)
+           }
         })
     }
 

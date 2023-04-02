@@ -1,6 +1,7 @@
 package com.example.capstone_android
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.data.AddressData
 import com.example.capstone_android.databinding.ActivityAddressBinding
+import com.example.capstone_android.retrofit.RESPONSESTATE
+import com.example.capstone_android.retrofit.RetrofitManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -32,6 +35,7 @@ class AddressActivity:AppCompatActivity() {
     var itemlist:ArrayList<AddressData> = arrayListOf()
     var searchlist:ArrayList<AddressData> = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
+        val getcode=intent.getStringExtra("address").toString()
         super.onCreate(savedInstanceState)
         binding = ActivityAddressBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -51,7 +55,7 @@ class AddressActivity:AppCompatActivity() {
                 val sheet = wb.getSheet(0) // 시트 불러오기
                 if (sheet != null) {
                     val colTotal = sheet.columns // 전체 컬럼
-                    val rowIndexStart = 1 // row 인덱스 시작
+                    val rowIndexStart = 0 // row 인덱스 시작
                     val rowTotal = sheet.getColumn(colTotal - 1).size
                     var sb: StringBuilder
                     for (row in rowIndexStart until rowTotal) {

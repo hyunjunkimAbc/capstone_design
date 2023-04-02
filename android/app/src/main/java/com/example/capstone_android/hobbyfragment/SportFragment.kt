@@ -325,7 +325,7 @@ class SportFragment:Fragment() {
                                 else thisactivity.myhobbylist.remove(data)
                             }
                         }
-                        if (data == "수상레저") {
+                        if (data == "수상|레저") {
                             view.leisurecheckbox.isChecked = thisactivity.myhobbylist.contains(data)
                             view.leisurecheckbox.setOnCheckedChangeListener{_,ischecked->
                                 if(ischecked) thisactivity.myhobbylist.add(data)
