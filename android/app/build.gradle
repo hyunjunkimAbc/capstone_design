@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-
+    implementation files('libs/libDaumMapAndroid.jar')
     implementation("com.google.android.gms:play-services-location:16.0.0")
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -63,7 +63,6 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.room:room-common:2.4.2'
     implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
-    implementation files('libs\\com.skt.Tmap_1.75.jar')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'

@@ -5,9 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.capstone_android.`interface`.SearchHistoryRecyclerview
 import com.example.capstone_android.data.ListLayout
+import com.example.capstone_android.data.SearchData
 
-class SearchTextAdapter(val itemList: ArrayList<ListLayout>): RecyclerView.Adapter<SearchTextAdapter.ViewHolder>() {
+class SearchTextAdapter(val itemList: ArrayList<ListLayout>) : RecyclerView.Adapter<SearchTextAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchTextAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.searchaddressitem, parent, false)
         return ViewHolder(view)

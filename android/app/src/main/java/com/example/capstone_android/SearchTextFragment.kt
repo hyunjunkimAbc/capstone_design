@@ -1,10 +1,7 @@
 package com.example.capstone_android
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,17 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.data.ListLayout
 import com.example.capstone_android.data.ResultSearchKeyword
-import com.example.capstone_android.retrofit.ApiInterface
 import com.example.capstone_android.retrofit.RESPONSESTATE
 import com.example.capstone_android.retrofit.RetrofitManager
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import kotlinx.android.synthetic.main.fragment_searchtext.*
 import kotlinx.android.synthetic.main.fragment_searchtext.view.*
 import kotlinx.android.synthetic.main.searchaddressitem.view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
@@ -161,18 +153,11 @@ class SearchTextFragment:Fragment() {
                 listItems.add(item)
                 listAdapter.notifyDataSetChanged()
             }
-
-
-
-
-
         }
         else {
 // 검색 결과 없음
             Toast.makeText(context, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
         }
-
-
     }
 
 }
