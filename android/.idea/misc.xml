@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/activity_concierge.xml" value="0.1" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/activity_meeting_room.xml" value="0.1" />
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/activity_test_for_hj.xml" value="0.1" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_edit_meeting_info.xml" value="0.16666666666666666" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_edit_posting.xml" value="0.1272644927536232" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_chatting.xml" value="0.1" />

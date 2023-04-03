@@ -11,7 +11,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Firebase.auth.signInWithEmailAndPassword("a@a.com","123456").addOnCompleteListener {
+
+        //테스트용 실제로는 이  activity에 진입할 때는 이미 로그인이 되어 있을 것임
+        Firebase.auth.signInWithEmailAndPassword("b@b.com","123456").addOnCompleteListener {
             //로그인 성공할 때 함수 정의
             Toast.makeText(
                 this,
@@ -19,10 +21,12 @@ class MainActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
 
-            val intent = Intent(this, MeetingRoomActivity::class.java)
-            intent.putExtra("meeting_room_id", "ce5vmU58GHfPTNhDtmfR")
-            startActivity(intent)
+            //val intent = Intent(this, MeetingRoomActivity::class.java)
+            //intent.putExtra("meeting_room_id", "51jWA2i3CdTt3KwA25VZkDFOIzR220230308_224544")
+            //startActivity(intent)
 
+            val intent = Intent(this, ConciergeActivity::class.java)
+            startActivity(intent)
         }
     }
 }
