@@ -123,12 +123,11 @@ class EditMeetingInfoFragment : Fragment() {
 
             //commentsListString = it["comment_id_list"]
             //writer_uid = it["writer_uid"] //주석 했지만 나중에는 사용할 수도 있음
+            //변경 테스트 하고 싶으면 if문 조건절에서 positionx 등에 변화를 주면 됨
             val collectionName = activity?.intent?.getStringExtra("collectionName").toString()
             if(collectionName == MeetingRoomDataManager.collectionNameOfLightingMeetingRoom){
                 positionx = it["positionx"] as Double
                 positiony = it["positiony"] as Double
-                positionx = 100.0
-                positiony =100.5
                 member_list = it["member_list"] as ArrayList<String>
 
             }else if(collectionName == MeetingRoomDataManager.collectionNameOfPeriodicMeetingRoom){
