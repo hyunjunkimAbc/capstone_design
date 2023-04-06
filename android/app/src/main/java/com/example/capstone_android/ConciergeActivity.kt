@@ -3,6 +3,7 @@ package com.example.capstone_android
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.capstone_android.data.LightingMeetingRoomData
 import com.example.capstone_android.databinding.ActivityConciergeBinding
 import com.example.capstone_android.databinding.ActivityMeetingRoomBinding
 
@@ -39,5 +40,6 @@ class ConciergeActivity : AppCompatActivity() {
         //테스트라서 이렇게 했지만 나중에는 동경님 activity로 옮겨야 함
         intent.putExtra("collectionName", collectionName)
         startActivity(intent)
+
     }
 }

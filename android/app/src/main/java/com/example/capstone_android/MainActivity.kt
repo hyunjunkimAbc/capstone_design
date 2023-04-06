@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //테스트용 실제로는 이  activity에 진입할 때는 이미 로그인이 되어 있을 것임
-        Firebase.auth.signInWithEmailAndPassword("a@a.com","123456").addOnCompleteListener {
+        Firebase.auth.signInWithEmailAndPassword("b@b.com","123456").addOnCompleteListener {
             //로그인 성공할 때 함수 정의
             Toast.makeText(
                 this,

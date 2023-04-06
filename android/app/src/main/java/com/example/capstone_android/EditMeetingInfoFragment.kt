@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import com.example.capstone_android.data.*
 import com.example.capstone_android.databinding.FragmentEditMeetingInfoBinding
 import com.example.capstone_android.databinding.FragmentEditPostingBinding
 import com.google.firebase.firestore.ktx.firestore
@@ -47,7 +48,7 @@ class EditMeetingInfoFragment : Fragment() {
     val postingCollection = db.collection("posting")
     val userCollection = db.collection("user")
     val commentCollection = db.collection("comment")
-    val meetingRoomCollection = db.collection("meeting_room")
+    var meetingRoomCollection = db.collection("lighting_meeting_room")
     var title =""
     var text =""
     var max =""
@@ -59,15 +60,19 @@ class EditMeetingInfoFragment : Fragment() {
     var chatting_id_list :Any? =null
     var member_list :Any? =null
     var posting_id_list :Any? =null
-    var Uid:Any? = null
-    var imageUrl:Any? = null
     val categoryItems =
         arrayListOf<String>(
             "운동", "여행", "음악", "사교/직업", "독서",
             "요리", "사진", "게임", "댄스", "차/오토바이",
             "반려동물", "공예", "봉사활동", "공부/자기개발"
         )
+    var address: Any? = null
 
+    var positionx = 0.2
+    var positiony = 0.1
+    var startTime :Long= 0
+    var endTime :Long= 0
+    var reservation_uid_list:Any? =null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -88,6 +93,8 @@ class EditMeetingInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         document_id = arguments?.getString("document_id").toString() //posting id 얻어옴
         //(activity as MeetingRoomActivity).setMeetingRoomId(document_id)
+        val colName = activity?.intent?.getStringExtra("collectionName")
+        meetingRoomCollection = db.collection(colName!!)
         initDataAndUI()
     }
     private fun initDataAndUI(){
@@ -110,21 +117,48 @@ class EditMeetingInfoFragment : Fragment() {
             category = "${it["category"]}"
             writer_uid = "${it["writer_uid"]}"
             chatting_id_list = it["chatting_id_list"]
-            member_list = it["member_list"]
+
             posting_id_list = it["posting_id_list"]
-            Uid = it["Uid"]
-            imageUrl = it["imageUrl"]
+            address = "${it["address"]}"
+
             //commentsListString = it["comment_id_list"]
             //writer_uid = it["writer_uid"] //주석 했지만 나중에는 사용할 수도 있음
+            //변경 테스트 하고 싶으면 if문 조건절에서 positionx 등에 변화를 주면 됨
+            val collectionName = activity?.intent?.getStringExtra("collectionName").toString()
+            if(collectionName == MeetingRoomDataManager.collectionNameOfLightingMeetingRoom){
+                positionx = it["positionx"] as Double
+                positiony = it["positiony"] as Double
+                member_list = it["member_list"] as ArrayList<String>
 
-            var ref = rootRef.child("meeting_info/${document_id}.jpg")
+            }else if(collectionName == MeetingRoomDataManager.collectionNameOfPeriodicMeetingRoom){
+                positionx = it["positionx"] as Double
+                positiony = it["positiony"] as Double
+                startTime = it["start_time"] as Long
+                endTime = it["end_time"] as Long
+                member_list = it["member_list"] as ArrayList<String>
+            }else if(collectionName == MeetingRoomDataManager.collectionNameOfPlaceRental){
+                positionx = it["positionx"] as Double
+                positiony = it["positiony"] as Double
+                reservation_uid_list = it["reservation_uid_list"]
+            }else if(collectionName == MeetingRoomDataManager.collectionNameOfCompetition){
+                positionx = it["positionx"] as Double
+                positiony = it["positiony"] as Double
+
+                member_list = it["member_list"] as ArrayList<String>
+            }else{
+                println("정의 하지 않은 컬랙션 이름입니다.")
+                return@addOnSuccessListener
+            }
+            val colName = activity?.intent?.getStringExtra("collectionName")
+
+            var ref = rootRef.child("${colName}/${document_id}.jpg")
             ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                 if(it.isSuccessful){
                     val bmp =
                         BitmapFactory.decodeByteArray(it.result, 0, it.result.size)
                     binding.imageButtonToPostingMeetingInfoEdit.setImageBitmap(bmp)
                 }else{
-                    var ref = rootRef.child("meeting_info/default.jpg")
+                    var ref = rootRef.child("${colName}/default.jpg")
                     ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                         if(it.isSuccessful){
                             val bmp =
@@ -152,8 +186,10 @@ class EditMeetingInfoFragment : Fragment() {
 
             time = System.currentTimeMillis()
 
+            val colName = activity?.intent?.getStringExtra("collectionName")
+
             if(userInputImgUri != null){
-                val uploadImageRef = rootRef.child("meeting_info/${document_id}.jpg")
+                val uploadImageRef = rootRef.child("${colName}/${document_id}.jpg")
                 //동일한 사람이 동시에 2번 업로드 할수는 없다는 가정하에 코딩함
                 uploadImageRef?.putFile(userInputImgUri!!)?.addOnSuccessListener{
                     upload()
@@ -161,7 +197,6 @@ class EditMeetingInfoFragment : Fragment() {
             }else{
                 upload()
             }
-
         }
         binding.imageButtonToPostingMeetingInfoEdit.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -179,18 +214,60 @@ class EditMeetingInfoFragment : Fragment() {
             "posting_id_list" to posting_id_list,
             "title" to title,
             "upload_time" to time,
-            "writer_uid" to writer_uid,
-            "Uid" to Uid,
-            "imageUrl" to imageUrl
+            "writer_uid" to writer_uid
         )
 
-        meetingRoomCollection.document("${document_id}").set(docData).addOnSuccessListener {
+        val collectionName = activity?.intent?.getStringExtra("collectionName").toString()
+        var meetingRoomData = MeetingRoomData()
+        if(collectionName == MeetingRoomDataManager.collectionNameOfLightingMeetingRoom){
+            meetingRoomData = LightingMeetingRoomData()
+            meetingRoomData = meetingRoomData as LightingMeetingRoomData
+            meetingRoomData.positionx = positionx
+            meetingRoomData.positiony =positiony
+            meetingRoomData.member_list = member_list as ArrayList<String>
+
+        }else if(collectionName == MeetingRoomDataManager.collectionNameOfPeriodicMeetingRoom){
+            meetingRoomData = PeriodicMeetingRoomData()
+            meetingRoomData = meetingRoomData as PeriodicMeetingRoomData
+            meetingRoomData.positionx = positionx
+            meetingRoomData.positiony = positiony
+            meetingRoomData.member_list = member_list as ArrayList<String>
+            meetingRoomData.start_time=0
+            meetingRoomData.end_time =0
+        }else if(collectionName == MeetingRoomDataManager.collectionNameOfPlaceRental){
+            meetingRoomData = PlaceRentalRoom()
+            meetingRoomData = meetingRoomData as PlaceRentalRoom
+            meetingRoomData.positionx = positionx
+            meetingRoomData.positiony = positiony
+            meetingRoomData.reservation_uid_list = reservation_uid_list as ArrayList<String>
+        }else if(collectionName == MeetingRoomDataManager.collectionNameOfCompetition){
+            meetingRoomData = CompetitionRoomData()
+            meetingRoomData = meetingRoomData as CompetitionRoomData
+            meetingRoomData.positionx = positionx
+            meetingRoomData.positiony = positiony
+            meetingRoomData.member_list = member_list as ArrayList<String>
+        }else{
+            println("정의 하지 않은 컬랙션 이름입니다.")
+            return
+        }
+        meetingRoomData.category = category as String
+        meetingRoomData.chatting_id_list = chatting_id_list as ArrayList<String>
+        meetingRoomData.info_text = text as String
+        meetingRoomData.max = max
+        meetingRoomData.posting_id_list = posting_id_list as ArrayList<String>
+        meetingRoomData.title = title
+        meetingRoomData.upload_time = time
+        meetingRoomData.writer_uid = writer_uid as String
+        meetingRoomData.address = address as String
+
+        meetingRoomCollection.document("${document_id}").set(meetingRoomData).addOnSuccessListener {
             //meetingroom에 배열에도 반영
             //val bundle = bundleOf("document_id" to document_id)
             //findNavController().navigate(R.id.action_editMeetingInfoFragment_to_meetingRoomInfoFragment ,bundle)
             findNavController().navigate(R.id.action_editMeetingInfoFragment_to_meetingRoomInfoFragment)
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK) {
