@@ -3,6 +3,8 @@ package com.example.capstone_android.retrofit
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.capstone_android.SearchTextFragment
+import com.example.capstone_android.Util.isJsonArray
+import com.example.capstone_android.Util.isJsonObject
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject

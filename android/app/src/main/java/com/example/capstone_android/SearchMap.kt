@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.InputFilter
@@ -15,8 +16,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.capstone_android.Util.App
 import com.example.capstone_android.Util.SharedPrefManager
+import com.example.capstone_android.Util.textChangesToFlow
 import com.example.capstone_android.`interface`.SearchHistoryRecyclerview
 import com.example.capstone_android.data.ListLayout
 import com.example.capstone_android.data.ResultSearchKeyword
@@ -28,9 +33,15 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_searchmap.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.coroutines.CoroutineContext
 
 class SearchMap:AppCompatActivity() ,SearchView.OnQueryTextListener,CompoundButton.OnCheckedChangeListener,
     View.OnClickListener, SearchHistoryRecyclerview {
@@ -40,25 +51,38 @@ class SearchMap:AppCompatActivity() ,SearchView.OnQueryTextListener,CompoundButt
     private val listAdapter = SearchTextAdapter(listItems) // 리사이클러 뷰 어댑터
     private val HistoryAdapter = SearchTextHistoryAdapter(historyItems,this) // 리사
     lateinit var db : FirebaseFirestore
+    private lateinit var historyrecyclerView:RecyclerView
+    private lateinit var toolbar: Toolbar
     private lateinit var binding: ActivitySearchmapBinding
     private lateinit var mySearchView:SearchView
     private lateinit var mySearchViewEditText:EditText
+    private var myCoroutineJob:Job=Job()
+    private val myCoroutineContext:CoroutineContext get()=Dispatchers.Main+myCoroutineJob
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchmapBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db= Firebase.firestore
-        val toolbar=binding.topappbar
+         toolbar=binding.topappbar
         toolbar.title="지역 및 장소검색"
         setSupportActionBar(toolbar)
         val  searchrecyclerView=binding.searchRecycler
-        val historyrecyclerView=binding.searchHistoryRecycler
+         historyrecyclerView=binding.searchHistoryRecycler
 
         searchrecyclerView.layoutManager= LinearLayoutManager(this)
         searchrecyclerView.adapter = listAdapter
         listAdapter.setItemClickListener(object: SearchTextAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
-                println("클긱")
+                val intent= Intent()
+                val ad1=listItems[position].upperAddrName
+                val ad2=listItems[position].middleAddrNmae
+                val address=ad1.plus(" ").plus(ad2)
+                intent.putExtra("address",address)
+                intent.putExtra("name",listItems[position].name)
+                intent.putExtra("disy",listItems[position].noorLon)
+                intent.putExtra("disx",listItems[position].noorLat)
+                setResult(RESULT_OK,intent)
+                finish()
             }
         })
         val myLinearLayoutManager=LinearLayoutManager(this,LinearLayoutManager.VERTICAL,true)
@@ -84,6 +108,12 @@ class SearchMap:AppCompatActivity() ,SearchView.OnQueryTextListener,CompoundButt
         binding.searchHistoryModeSwitch.isChecked=SharedPrefManager.checkSearchHistoryMode()
     }
 
+    override fun onDestroy() {
+        //코루틴 플로우 awaitClose 실행되게 해서 메모리 아끼고 editText에 리스너 삭제하기
+        myCoroutineContext.cancel()
+        super.onDestroy()
+    }
+    @OptIn(DelicateCoroutinesApi::class, FlowPreview::class)
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater=menuInflater
         inflater.inflate(R.menu.top_app_bar_menu,menu)
@@ -112,6 +142,43 @@ class SearchMap:AppCompatActivity() ,SearchView.OnQueryTextListener,CompoundButt
 
             mySearchViewEditText=this.findViewById(androidx.appcompat.R.id.search_src_text)
         }
+
+        //코틀린 플로우를 통한 디바운스 써치 구현 api자동호출을 시간 조절 가능 // EditText 이벤트니 IO쓰레드
+        GlobalScope.launch(context=myCoroutineContext){
+            val editTextFlow=mySearchViewEditText.textChangesToFlow()
+            editTextFlow
+                    //중간 연산자들 , 디바운스 시간조절해서 poi검색 api호출 낭비 안되게 가능
+                .debounce(1000)
+                .filter {
+                    it?.length!!>0
+                }
+                .onEach {
+                    Log.d(TAG,"api 검색어 호출 검색어:$it")
+                    val myLinearLayoutManager=LinearLayoutManager(App.instance,LinearLayoutManager.VERTICAL,false)
+                    historyrecyclerView.apply {
+                        this.layoutManager= myLinearLayoutManager
+                        this.adapter =listAdapter
+                    }
+                    searchKeyword(it.toString())
+                }.launchIn(this)
+
+            editTextFlow
+                .debounce(800)
+                .filter {
+                    it?.length==0
+                }
+                .onEach {
+                    val myLinearLayoutManager=LinearLayoutManager(App.instance,LinearLayoutManager.VERTICAL,true)
+                    myLinearLayoutManager.stackFromEnd=true
+                    historyrecyclerView.apply {
+                        this.layoutManager= myLinearLayoutManager
+                        this.scrollToPosition(HistoryAdapter.itemCount-1)
+                        this.adapter = HistoryAdapter
+                    }
+                }.launchIn(this)
+        }
+
+
         this.mySearchViewEditText.apply{
             this.filters=arrayOf(InputFilter.LengthFilter(12))
             this.setTextColor(Color.BLACK)
@@ -167,12 +234,15 @@ class SearchMap:AppCompatActivity() ,SearchView.OnQueryTextListener,CompoundButt
       }
     }
     private fun searchKeyword(keyword: String) {
+        println("검색어는 바로 $keyword")
         RetrofitManager.instance.searchPOI(searchpoi = keyword, completion = { responseState, response->
             when(responseState){
                 RESPONSESTATE.OKAY->addItemsAndMarkers(response)
+
             }
         })
     }
+    @SuppressLint("NotifyDataSetChanged")
     private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
         if (!searchResult?.searchPoiInfo?.pois?.poi.isNullOrEmpty()) {
 // 검색 결과 있음
@@ -189,6 +259,7 @@ class SearchMap:AppCompatActivity() ,SearchView.OnQueryTextListener,CompoundButt
                     document.noorLon
                 )
                 listItems.add(item)
+                println(item.name)
                 listAdapter.notifyDataSetChanged()
             }
         }
