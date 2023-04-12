@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.capstone_android.data.*
 import com.example.capstone_android.databinding.FragmentEditMeetingInfoBinding
 import com.example.capstone_android.databinding.FragmentEditPostingBinding
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -205,17 +206,6 @@ class EditMeetingInfoFragment : Fragment() {
         }
     }
     private fun upload(){
-        val docData = hashMapOf(
-            "category" to category,
-            "chatting_id_list" to chatting_id_list,
-            "info_text" to text,
-            "max" to max,
-            "member_list" to member_list,
-            "posting_id_list" to posting_id_list,
-            "title" to title,
-            "upload_time" to time,
-            "writer_uid" to writer_uid
-        )
 
         val collectionName = activity?.intent?.getStringExtra("collectionName").toString()
         var meetingRoomData = MeetingRoomData()
@@ -260,7 +250,7 @@ class EditMeetingInfoFragment : Fragment() {
         meetingRoomData.writer_uid = writer_uid as String
         meetingRoomData.address = address as String
 
-        meetingRoomCollection.document("${document_id}").set(meetingRoomData).addOnSuccessListener {
+        meetingRoomCollection.document("${document_id}").set(meetingRoomData, SetOptions.merge()).addOnSuccessListener {
             //meetingroom에 배열에도 반영
             //val bundle = bundleOf("document_id" to document_id)
             //findNavController().navigate(R.id.action_editMeetingInfoFragment_to_meetingRoomInfoFragment ,bundle)

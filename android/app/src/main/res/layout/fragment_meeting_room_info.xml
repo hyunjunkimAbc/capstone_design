@@ -27,6 +27,7 @@
             android:id="@+id/enterMeetingRoomBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#8BC34A"
             android:text="가입하기"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,11 +49,14 @@
 
                 <TextView
                     android:id="@+id/meetingRoomTitle"
+                    android:minHeight="50dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Title" />
+                    android:background="@drawable/view_style"
+                    android:hint="Title" />
 
                 <LinearLayout
+                    android:id="@+id/linearLayout_area_num_of_people"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -62,28 +66,35 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="관심지역" />
+                        android:minHeight="25dp"
+                        android:background="@drawable/view_style"
+
+                        android:hint="관심지역" />
 
                     <TextView
                         android:id="@+id/numOfPeople"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="n(현재 인원)/m(최대 인원)" />
+                        android:minHeight="25dp"
+                        android:background="@drawable/view_style"
+                        android:hint="n(현재 인원)/m(최대 인원)" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLayoutForEachInfo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/category"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="category" />
+                        android:minHeight="25dp"
+                        android:background="@drawable/view_style"
+                        android:hint="category" />
 
                 </LinearLayout>
 
@@ -98,13 +109,17 @@
                     android:id="@+id/uploadTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="uploadTime" />
+                    android:background="@drawable/view_style"
+                    android:hint="uploadTime" />
 
                 <TextView
                     android:id="@+id/meetingRoomText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="meetingRoomText" />
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="#FFFAFA"
+                    android:hint="meetingRoomText"
+                    android:minHeight="100dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/meetingMembersRecyclerView"
