@@ -75,7 +75,7 @@ class MapFragment : Fragment(),OnMapReadyCallback {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     val snapView = snapHelper.findSnapView(recyclerView.layoutManager)
                     val snapPosition = recyclerView.layoutManager?.getPosition(snapView!!)
-                    println("포지션 값은$snapPosition")
+                    println("포지션 값은$snapPosition 입니다")
                     // 해당 포지션에 있는 마커 클릭 이벤트 발생시키기
                     // ...
                     checkMarkers.clear()
