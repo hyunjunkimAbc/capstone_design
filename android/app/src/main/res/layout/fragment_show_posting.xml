@@ -108,9 +108,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
                 android:ems="10"
+                android:hint="comment"
                 android:inputType="textMultiLine"
                 android:minHeight="48dp"
-                android:text="Name"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <Button
@@ -118,6 +118,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
+                android:backgroundTint="#8BC34A"
                 android:text="댓글 입력"
                 tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>

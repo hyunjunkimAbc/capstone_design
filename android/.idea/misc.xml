@@ -3,18 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/capstone_design/android/app/src/main/res/drawable/view_style.xml" value="0.17916666666666667" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/activity_concierge.xml" value="0.1" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/activity_meeting_room.xml" value="0.1" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/activity_test_for_hj.xml" value="0.1" />
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/concierge_item_layout.xml" value="0.11141304347826086" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_competition_meeting_room.xml" value="0.10260416666666666" />
-        <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_edit_meeting_info.xml" value="0.16666666666666666" />
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_edit_meeting_info.xml" value="0.22" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_edit_posting.xml" value="0.1272644927536232" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_lighting_meeting_room.xml" value="0.10260416666666666" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_chatting.xml" value="0.1" />
-        <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_info.xml" value="0.1" />
-        <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_posting_add.xml" value="0.1" />
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_info.xml" value="0.22" />
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_posting_add.xml" value="0.22" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_periodic_meeting_room.xml" value="0.10260416666666666" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_place_rental_room.xml" value="0.10260416666666666" />
+        <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_show_posting.xml" value="0.11141304347826086" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/meeting_room_posting_comment_item_layout.xml" value="0.22" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/meeting_room_posting_comment_item_right.xml" value="0.11820652173913043" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/start_end_time_view.xml" value="0.4243421052631579" />

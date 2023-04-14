@@ -41,9 +41,9 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="start|top"
+                    android:hint="글 입력"
                     android:inputType="textMultiLine"
-                    android:minHeight="48dp"
-                    android:text="contents" />
+                    android:minHeight="48dp" />
             </LinearLayout>
         </ScrollView>
 
@@ -52,9 +52,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="글 제목 입력"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:text="title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -91,6 +91,7 @@
             android:id="@+id/uploadPostingBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#8BC34A"
             android:text="upload"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
