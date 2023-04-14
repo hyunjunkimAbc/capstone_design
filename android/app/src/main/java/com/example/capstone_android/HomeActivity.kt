@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.data.SignUpData
 import com.example.capstone_android.databinding.ActivityHomeBinding
 import com.google.firebase.auth.ktx.auth
@@ -29,9 +30,11 @@ class HomeActivity: AppCompatActivity() {
         }
         db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{ document->
             val item=document.toObject(SignUpData::class.java)
+            SingleTonData.userInfo=item
             val test=item?.address
             binding.textview.text= test
         }
+        val mapViewFragment=MapFragment()
         val detailViewFragment=DetailViewFragment()
         supportFragmentManager.beginTransaction().replace(R.id.search_content,detailViewFragment).commit()
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
@@ -46,7 +49,7 @@ class HomeActivity: AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_gps ->{
-                    val mapViewFragment=MapFragment()
+
                     supportFragmentManager.beginTransaction().replace(R.id.search_content,mapViewFragment).commit()
                     return@setOnItemSelectedListener true
                 }

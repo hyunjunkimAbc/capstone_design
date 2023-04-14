@@ -2,7 +2,6 @@ package com.example.capstone_android.retrofit
 
 import android.content.ContentValues.TAG
 import android.util.Log
-import com.example.capstone_android.SearchTextFragment
 import com.example.capstone_android.Util.isJsonArray
 import com.example.capstone_android.Util.isJsonObject
 import okhttp3.OkHttpClient
@@ -11,7 +10,6 @@ import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import kotlin.math.log
 
 object  RetrofitClient {
     private var retrofitClient: Retrofit?=null

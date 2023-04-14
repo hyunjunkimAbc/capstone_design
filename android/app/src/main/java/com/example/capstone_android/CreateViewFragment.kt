@@ -1,6 +1,7 @@
 package com.example.capstone_android
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -166,6 +167,7 @@ class CreateViewFragment: Fragment() {
                 db.collection("meeting_room").document(makeuid).set(clubdata).addOnSuccessListener{
                     db.collection("meeting_room").document(makeuid).update("member_list",FieldValue.arrayUnion(Firebase.auth.currentUser?.uid.toString())).addOnSuccessListener{
                         db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).update("meeting_room_id_list",FieldValue.arrayUnion(makeuid)).addOnSuccessListener{
+                            activity?.setResult(Activity.RESULT_OK)
                             activity?.finish()
                             println("모임만들기 성공")
                         }

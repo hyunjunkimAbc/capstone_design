@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
+import com.example.capstone_android.R
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -48,5 +49,14 @@ fun EditText.textChangesToFlow(): Flow<CharSequence?>{
         Log.d(TAG,"textChangeToFlow() onstart 발동")
         //코틀린 플로우 emit으로 이벤트 전달  좀더 공부 emit으로 데이터 방출?
         emit(text)
+    }
+}
+fun getImageResult(value: String): Int {
+    return when(value) {
+        "테니스" -> R.drawable.sport_tennis
+        "농구" -> R.drawable.sport_basketball
+        "축구" ->R.drawable.sport_soccer
+        "복싱" -> R.drawable.sport_box
+        else -> R.drawable.icon_art
     }
 }

@@ -85,6 +85,7 @@ class SearchMap:AppCompatActivity() ,SearchView.OnQueryTextListener,CompoundButt
                 finish()
             }
         })
+
         val myLinearLayoutManager=LinearLayoutManager(this,LinearLayoutManager.VERTICAL,true)
         myLinearLayoutManager.stackFromEnd=true
         historyrecyclerView.apply {

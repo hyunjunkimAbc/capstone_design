@@ -2,6 +2,7 @@ package com.example.capstone_android
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.button.*
 import com.example.capstone_android.data.SignUpData
 import com.example.capstone_android.data.getclubuid
@@ -105,12 +107,16 @@ class DetailViewFragment: Fragment() {
         return view
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-            if(requestCode==9)update()
+            if(requestCode==9){
+                    update()
+            }
         else if(requestCode==1){
                 update_interest()
                 update()
+
             }
     }
     fun update_interest(){
@@ -243,7 +249,7 @@ class DetailViewFragment: Fragment() {
     }
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     fun update() {
-
+        SingleTonData.clubdata.clear()
         clubdata.clear()
         db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{   document->
             val item=document.toObject(SignUpData::class.java)
@@ -254,6 +260,7 @@ class DetailViewFragment: Fragment() {
                         snapshot->
                     for(doc in snapshot){
                         clubdata.add(doc.toObject(ClubData::class.java))
+                        SingleTonData.clubdata.add(doc.toObject(ClubData::class.java))
                         view?.detailviewfragment_recyclerview?.adapter?.notifyDataSetChanged()
                     }
                 }
@@ -266,6 +273,7 @@ class DetailViewFragment: Fragment() {
         //var clubdata:ArrayList<ClubData> = arrayListOf()
 
         init{
+            SingleTonData.clubdata.clear()
             clubdata.clear()
             db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{   document->
                 val item=document.toObject(SignUpData::class.java)
@@ -277,6 +285,7 @@ class DetailViewFragment: Fragment() {
                      snapshot->
                      for(doc in snapshot){
                          clubdata.add(doc.toObject(ClubData::class.java))
+                         SingleTonData.clubdata.add(doc.toObject(ClubData::class.java))
                          notifyDataSetChanged()
                      }
                  }
@@ -296,12 +305,12 @@ class DetailViewFragment: Fragment() {
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val viewholder=(holder as CustomViewHolder).itemView
             Glide.with(holder.itemView.context).load(clubdata[position].imageUrl).apply(RequestOptions().circleCrop()).into(viewholder.detailviewitem_imageview_content)
-            viewholder.ClubName.text=clubdata[position].title
-            viewholder.NumberCount.text= clubdata[position].max.toString()
-            viewholder.ClubExplain.text=clubdata[position].info_text
+            viewholder.ClubName.text= clubdata[position].title
+            viewholder.NumberCount.text=  clubdata[position].max.toString()
+            viewholder.ClubExplain.text= clubdata[position].info_text
             viewholder.CardView.setOnClickListener{
                 var intent= Intent(context, MeetingRoomActivity::class.java)
-                intent.putExtra("meeting_room_id",clubdata[position].Uid)
+                intent.putExtra("meeting_room_id", clubdata[position].Uid)
                 startActivity(intent)
                 println(clubdata[position].Uid)
             }
@@ -309,7 +318,7 @@ class DetailViewFragment: Fragment() {
 
 
         override fun getItemCount(): Int {
-            return clubdata.size
+            return  clubdata.size
         }
 
     }

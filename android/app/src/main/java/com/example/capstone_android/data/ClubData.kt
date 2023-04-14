@@ -1,7 +1,7 @@
 package com.example.capstone_android.data
 import java.util.HashMap
 
-data class ClubData(var category:String?=null,
+ data class ClubData(var category:String?=null,
                     var title:String?=null,
                     var info_text:String?=null,
                     var chatting_id_list:ArrayList<String>?=ArrayList<String>(),
