@@ -2,7 +2,6 @@ package com.example.capstone_android.data
 
 open class MeetingRoomData {
     var title:String=""
-    var max:String=""
     var info_text:String=""
     var writer_uid:String=""
 
@@ -13,7 +12,6 @@ open class MeetingRoomData {
     var chatting_id_list :ArrayList<String>?= arrayListOf<String>()
     init {
         title=""
-        max=""
         info_text=""
         writer_uid=""
         address=""

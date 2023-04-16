@@ -18,7 +18,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.capstone_android.databinding.FragmentLightingMeetingRoomBinding
 import com.example.capstone_android.databinding.FragmentMeetingRoomInfoBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
