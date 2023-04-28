@@ -53,11 +53,29 @@ fun EditText.textChangesToFlow(): Flow<CharSequence?>{
 }
 fun getImageResult(value: String): Int {
     return when(value) {
-        "테니스" -> R.drawable.sport_tennis
         "농구" -> R.drawable.sport_basketball
         "축구" ->R.drawable.sport_soccer
-        "복싱" -> R.drawable.sport_box
+        "탁구" ->R.drawable.sport_pingpong
+        "테니스" -> R.drawable.sport_tennis
+        "배드민턴" ->R.drawable.sport_badminton
+        "야구" ->R.drawable.sport_baseball
+        "볼링"->R.drawable.sport_bowling
+        "자전거"->R.drawable.sport_bicycle
         "골프" ->R.drawable.sport_golf
+        "런닝" ->R.drawable.sport_running
+        "수영" ->R.drawable.sport_swim
+        "배구" ->R.drawable.sport_volleyball
+        "요가" ->R.drawable.sport_yoga
+        "태권|유도" ->R.drawable.sport_taekwonudo
+        "복싱" -> R.drawable.sport_box
+        "무술"->R.drawable.sport_musul
+        "승마"->R.drawable.sport_horse
+        "헬스" ->R.drawable.sport_hells
+        "롤러|보드"->R.drawable.sport_rollerboard
+        "스키|보드" ->R.drawable.sport_skiboard
+        "당구"->R.drawable.sport_danggu
+        "등산"->R.drawable.sport_hiking
+        "수상레저"->R.drawable.sport_leisure
         else -> R.drawable.icon_art
     }
 }

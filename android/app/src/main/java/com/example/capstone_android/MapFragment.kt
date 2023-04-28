@@ -63,11 +63,11 @@ class MapFragment : Fragment(),OnMapReadyCallback {
 
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
+        naverMap.minZoom = 13.0
+        naverMap.maxZoom = 18.0
 
         val infoWindow = InfoWindow()
-        naverMap.setOnMapClickListener { point, coord ->
-            println("지도가 클릭되고있씁니다")
-        }
+
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(mapRecyclerView)
 
@@ -125,8 +125,8 @@ class MapFragment : Fragment(),OnMapReadyCallback {
         SingleTonData.clubdata.forEachIndexed{index,it->
             val marker=Marker()
             marker.position=LatLng(it.positionx!!,it.positiony!!)
-            marker.width=Marker.SIZE_AUTO
-            marker.height=Marker.SIZE_AUTO
+            marker.width=150
+            marker.height=150
             marker.tag=it.title
             marker.icon= OverlayImage.fromResource(getImageResult(it.category!!))
             marker.map=naverMap
@@ -199,7 +199,7 @@ class MapFragment : Fragment(),OnMapReadyCallback {
         }
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val viewholder=(holder as CustomViewHolder).itemView
-            Glide.with(holder.itemView.context).load(SingleTonData.clubdata[position].imageUrl).into(viewholder.imageViewmap)
+            Glide.with(holder.itemView.context).load(SingleTonData.clubdata[position].imageUrl).apply(RequestOptions().circleCrop()).into(viewholder.imageViewmap)
             viewholder.explainmap.text=SingleTonData.clubdata[position].info_text
             viewholder.clubtitle.text=SingleTonData.clubdata[position].title
             viewholder.mapcategory.text=SingleTonData.clubdata[position].category

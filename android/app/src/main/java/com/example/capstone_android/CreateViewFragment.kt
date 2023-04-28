@@ -17,6 +17,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.capstone_android.Util.getImageResult
 import com.example.capstone_android.data.ClubData
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
@@ -106,29 +107,7 @@ class CreateViewFragment: Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==5){
             hobby= data?.extras?.getString("hobby").toString()
-            if(hobby.equals("농구")) view?.changehobby?.setImageResource(R.drawable.sport_basketball)
-            if(hobby.equals("축구")) view?.changehobby?.setImageResource(R.drawable.sport_soccer)
-            if(hobby.equals("탁구")) view?.changehobby?.setImageResource(R.drawable.sport_pingpong)
-            if(hobby.equals("테니스")) view?.changehobby?.setImageResource(R.drawable.sport_tennis)
-            if(hobby.equals("배드민턴")) view?.changehobby?.setImageResource(R.drawable.sport_badminton)
-            if(hobby.equals("야구")) view?.changehobby?.setImageResource(R.drawable.sport_baseball)
-            if(hobby.equals("볼링")) view?.changehobby?.setImageResource(R.drawable.sport_bowling)
-            if(hobby.equals("자전거")) view?.changehobby?.setImageResource(R.drawable.sport_bicycle)
-            if(hobby.equals("골프")) view?.changehobby?.setImageResource(R.drawable.sport_golf)
-            if(hobby.equals("런닝")) view?.changehobby?.setImageResource(R.drawable.sport_running)
-            if(hobby.equals("수영")) view?.changehobby?.setImageResource(R.drawable.sport_swim)
-            if(hobby.equals("배구")) view?.changehobby?.setImageResource(R.drawable.sport_volleyball)
-            if(hobby.equals("요가|필라테스")) view?.changehobby?.setImageResource(R.drawable.sport_yoga)
-            if(hobby.equals("태권도|유도")) view?.changehobby?.setImageResource(R.drawable.sport_taekwonudo)
-            if(hobby.equals("복싱")) view?.changehobby?.setImageResource(R.drawable.sport_box)
-            if(hobby.equals("무술")) view?.changehobby?.setImageResource(R.drawable.sport_musul)
-            if(hobby.equals("승마")) view?.changehobby?.setImageResource(R.drawable.sport_horse)
-            if(hobby.equals("헬스")) view?.changehobby?.setImageResource(R.drawable.sport_hells)
-            if(hobby.equals("롤러|보드")) view?.changehobby?.setImageResource(R.drawable.sport_rollerboard)
-            if(hobby.equals("스키|보드")) view?.changehobby?.setImageResource(R.drawable.sport_skiboard)
-            if(hobby.equals("당구")) view?.changehobby?.setImageResource(R.drawable.sport_danggu)
-            if(hobby.equals("등산")) view?.changehobby?.setImageResource(R.drawable.sport_hiking)
-            if(hobby.equals("수상레저")) view?.changehobby?.setImageResource(R.drawable.sport_leisure)
+             view?.changehobby?.setImageResource(getImageResult(hobby))
         }
         else if(requestCode==9) {
             val name = data?.extras?.getString("name")

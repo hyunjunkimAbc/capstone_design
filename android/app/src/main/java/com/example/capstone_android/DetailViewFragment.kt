@@ -3,22 +3,28 @@ package com.example.capstone_android
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.*
 
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.capstone_android.Util.SingleTonData
+import com.example.capstone_android.Util.getImageResult
 import com.example.capstone_android.button.*
 import com.example.capstone_android.data.SignUpData
 import com.example.capstone_android.data.getclubuid
@@ -36,13 +42,16 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import kotlinx.android.synthetic.main.fragment_meeting_room_info.*
 import kotlinx.android.synthetic.main.item_main.view.*
-
+import kotlinx.android.synthetic.main.item_main2.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 
 class DetailViewFragment: Fragment() {
     lateinit var db : FirebaseFirestore
-    var scrapMainLayout:GridLayout?=null
     var clubdata:ArrayList<ClubData> = arrayListOf()
+    var hobbydata:ArrayList<String> = arrayListOf()
     var address:String?=null
     var clubroomuid:ArrayList<String> =arrayListOf()
     @SuppressLint("NotifyDataSetChanged")
@@ -52,8 +61,10 @@ class DetailViewFragment: Fragment() {
         val uid= Firebase.auth.currentUser?.uid
         val fab:FloatingActionButton=view.CreateClub
         val changefab:FloatingActionButton=view.Settingbtn
-        val recyclerView:RecyclerView=view.detailviewfragment_recyclerview
+        val recyclerView1:RecyclerView=view.room_recyclerview
+        val recyclerView2:RecyclerView=view.hobby_recyclerview
         val nestedscrollview:NestedScrollView=view.nestedScrollView
+
         nestedscrollview.setOnScrollChangeListener(object: NestedScrollView.OnScrollChangeListener {
             override fun onScrollChange(
                 v: NestedScrollView,
@@ -86,18 +97,37 @@ class DetailViewFragment: Fragment() {
             }
         }
 
-        scrapMainLayout=view.imagegrid
-        //scrapMainLayout?.columnCount=4
+        lifecycleScope.launch(Dispatchers.Main){
+            try{
+               RoadData()
+                val userinfo=db.collection("user").document(Firebase.auth.currentUser?.uid.toString())
+                val hobby=userinfo.get().await().toObject(SignUpData::class.java)
+                hobbydata=hobby?.interest_array!!
+                address=hobby.address
+                recyclerView2.adapter=HobbyImageIconAdapter()
+                recyclerView2.layoutManager=LinearLayoutManager(activity,RecyclerView.HORIZONTAL,false)
+                for(data in hobbydata){
+                    val roominfo=db.collection("meeting_room").whereEqualTo("category",data).whereEqualTo("address",address).get().await()
+                    for(data2 in roominfo){
+                        clubdata.add(data2.toObject(ClubData::class.java))
+                        SingleTonData.clubdata.add(data2.toObject(ClubData::class.java))
+                        SingleTonData.clubdata.sortByDescending { it.positionx }
+                    }
+                }
+                recyclerView1.adapter=DetailViewRecyclerViewAdapter()
+                recyclerView1.layoutManager=LinearLayoutManager(activity)
+                ClearData()
+            }catch(e:Exception){
+                Log.e(TAG,"Firebase Error : ${e.message}")
+            }
+        }
 
 
-
-        view.detailviewfragment_recyclerview.adapter=DetailViewRecyclerViewAdapter()
-        view.detailviewfragment_recyclerview.layoutManager=LinearLayoutManager(activity)
 
         view.refresh_layout.setOnRefreshListener {
             //clubdata.shuffle()
             update()
-            view.detailviewfragment_recyclerview.adapter?.notifyDataSetChanged()
+           recyclerView1.adapter?.notifyDataSetChanged()
             refresh_layout.isRefreshing = false
         }
 
@@ -119,154 +149,48 @@ class DetailViewFragment: Fragment() {
 
             }
     }
+    fun RoadData(){
+        view?.progressBar?.visibility=View.VISIBLE
+        activity?.getWindow()?.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
+    fun ClearData(){
+        view?.progressBar?.visibility=View.GONE
+        activity?.getWindow()?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
     fun update_interest(){
-        scrapMainLayout?.removeAllViews()
+        hobbydata.clear()
         db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{ document->
             val item=document.toObject(SignUpData::class.java)
             for(data in item?.interest_array!!){
-                interest_text(data)
+                hobbydata.add(data)
+                view?.hobby_recyclerview?.adapter?.notifyDataSetChanged()
             }
         }
     }
 
-    fun interest_text(data:String){
-        when (data) {
-            "축구" -> {
-                val btn = SoccerButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "농구"->{
-                val btn = BasketballButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "탁구"->{
-                val btn = PingpongButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "테니스"->{
-                val btn = TennisButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "배드민턴"->{
-                val btn = BadmintonButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "야구"->{
-                val btn = BaseballButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "볼링"->{
-                val btn = BowlingButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "자전거"->{
-                val btn = BicycleButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "골프"->{
-                val btn = GolfButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "런닝"->{
-                val btn = RunningButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "수영"->{
-                val btn = SwimButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "배구"->{
-                val btn = VolleyballButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "요가|필라테스"->{
-                val btn = YogaButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "태권|유도"->{
-                val btn = TaekwondoButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "복싱"->{
-                val btn = BoxButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "무술"->{
-                val btn = MusulButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "승마"->{
-                val btn = HorseButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "헬스"->{
-                val btn = HellsButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "롤러|보드"->{
-                val btn = RollerboardButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "스키|보드"->{
-                val btn = SkiboardButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "당구"->{
-                val btn = DangguButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "등산"->{
-                val btn = HikingButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-            "수상|레저"->{
-                val btn = LeisureButton(requireContext())
-                btn.setOnClickListener(ButtonListener(data))
-                scrapMainLayout?.addView(btn)
-            }
-        }
-    }
+
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     fun update() {
+        RoadData()
         SingleTonData.clubdata.clear()
         clubdata.clear()
         db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{   document->
             val item=document.toObject(SignUpData::class.java)
             address=item?.address
             for(data in item?.interest_array!!){
-                interest_text(data)
                 db.collection("meeting_room").whereEqualTo("category",data).whereEqualTo("address",address).get().addOnSuccessListener {
                         snapshot->
                     for(doc in snapshot){
                         clubdata.add(doc.toObject(ClubData::class.java))
                         SingleTonData.clubdata.add(doc.toObject(ClubData::class.java))
                         SingleTonData.clubdata.sortByDescending { it.positionx }
-                        view?.detailviewfragment_recyclerview?.adapter?.notifyDataSetChanged()
+                        view?.room_recyclerview?.adapter?.notifyDataSetChanged()
                     }
                 }
             }
+            ClearData()
         }
     }
 
@@ -274,15 +198,16 @@ class DetailViewFragment: Fragment() {
     inner class DetailViewRecyclerViewAdapter:RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         //var clubdata:ArrayList<ClubData> = arrayListOf()
 
+        /*
         init{
             SingleTonData.clubdata.clear()
             clubdata.clear()
             db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{   document->
                 val item=document.toObject(SignUpData::class.java)
-                view?.UserName?.text=item?.nickname+"님을"
+                view?.username?.text=item?.nickname+"님을"
                 address=item?.address
                 for(data in item?.interest_array!!){
-                 interest_text(data)
+                // interest_text(data)
                  db.collection("meeting_room").whereEqualTo("category",data).whereEqualTo("address",address).get().addOnSuccessListener {
                      snapshot->
                      for(doc in snapshot){
@@ -295,6 +220,7 @@ class DetailViewFragment: Fragment() {
                 }
             }
         }
+         */
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val view=LayoutInflater.from(parent.context).inflate(R.layout.item_main,parent,false)
@@ -325,6 +251,29 @@ class DetailViewFragment: Fragment() {
         }
 
     }
+    inner class HobbyImageIconAdapter:RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            val view=LayoutInflater.from(parent.context).inflate(R.layout.item_main2,parent,false)
+            return CustomViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+            val viewholder=(holder as HobbyImageIconAdapter.CustomViewHolder).itemView
+            viewholder.hobbyiconimage.setImageResource(getImageResult(hobbydata[position]))
+            viewholder.iconimagetext.text=hobbydata[position]
+            viewholder.hobbyimage.setOnClickListener(ButtonListener(hobbydata[position]))
+        }
+        inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        }
+        override fun getItemCount(): Int {
+            return hobbydata.size
+        }
+
+    }
+
     inner class ButtonListener(val hobby: String):View.OnClickListener{
         override fun onClick(v: View?) {
             val intent= Intent(activity, ClickiconActivity::class.java)
@@ -332,6 +281,12 @@ class DetailViewFragment: Fragment() {
             intent.putExtra("address",address)
             startActivity(intent)
         }
+
+    }
+
+    override fun onDestroy() {
+        print("디테일뷰 ㅍ파괴")
+        super.onDestroy()
 
     }
 }

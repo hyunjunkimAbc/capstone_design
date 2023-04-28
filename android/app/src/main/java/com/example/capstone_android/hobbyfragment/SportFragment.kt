@@ -103,13 +103,13 @@ class SportFragment:Fragment() {
             }
             view.yogacheckbox.setOnClickListener {
                 val intent = Intent()
-                intent.putExtra("hobby", "요가|필라테스")
+                intent.putExtra("hobby", "요가")
                 activity?.setResult(Activity.RESULT_OK, intent)
                 activity?.finish()
             }
             view.taekunudocheckbox.setOnClickListener {
                 val intent = Intent()
-                intent.putExtra("hobby", "태권도|유도")
+                intent.putExtra("hobby", "태권|유도")
                 activity?.setResult(Activity.RESULT_OK, intent)
                 activity?.finish()
             }
@@ -325,7 +325,7 @@ class SportFragment:Fragment() {
                                 else thisactivity.myhobbylist.remove(data)
                             }
                         }
-                        if (data == "수상|레저") {
+                        if (data == "수상레저") {
                             view.leisurecheckbox.isChecked = thisactivity.myhobbylist.contains(data)
                             view.leisurecheckbox.setOnCheckedChangeListener{_,ischecked->
                                 if(ischecked) thisactivity.myhobbylist.add(data)

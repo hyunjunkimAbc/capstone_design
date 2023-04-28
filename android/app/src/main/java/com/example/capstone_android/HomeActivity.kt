@@ -42,7 +42,7 @@ class HomeActivity: AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener{
             when(it.itemId){
                 R.id.action_home ->{
-                    val detailViewFragment=DetailViewFragment()
+                   // val detailViewFragment=DetailViewFragment()
                     checkfragment=0
                     supportFragmentManager.beginTransaction().replace(R.id.search_content,detailViewFragment).commit()
 
