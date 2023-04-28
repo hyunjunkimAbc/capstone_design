@@ -128,6 +128,7 @@ class DetailViewFragment: Fragment() {
             }
         }
     }
+
     fun interest_text(data:String){
         when (data) {
             "축구" -> {
@@ -255,12 +256,13 @@ class DetailViewFragment: Fragment() {
             val item=document.toObject(SignUpData::class.java)
             address=item?.address
             for(data in item?.interest_array!!){
-                //interest_text(data)
+                interest_text(data)
                 db.collection("meeting_room").whereEqualTo("category",data).whereEqualTo("address",address).get().addOnSuccessListener {
                         snapshot->
                     for(doc in snapshot){
                         clubdata.add(doc.toObject(ClubData::class.java))
                         SingleTonData.clubdata.add(doc.toObject(ClubData::class.java))
+                        SingleTonData.clubdata.sortByDescending { it.positionx }
                         view?.detailviewfragment_recyclerview?.adapter?.notifyDataSetChanged()
                     }
                 }
@@ -280,12 +282,13 @@ class DetailViewFragment: Fragment() {
                 view?.UserName?.text=item?.nickname+"님을"
                 address=item?.address
                 for(data in item?.interest_array!!){
-                  interest_text(data)
+                 interest_text(data)
                  db.collection("meeting_room").whereEqualTo("category",data).whereEqualTo("address",address).get().addOnSuccessListener {
                      snapshot->
                      for(doc in snapshot){
                          clubdata.add(doc.toObject(ClubData::class.java))
                          SingleTonData.clubdata.add(doc.toObject(ClubData::class.java))
+                         SingleTonData.clubdata.sortByDescending { it.positionx }
                          notifyDataSetChanged()
                      }
                  }

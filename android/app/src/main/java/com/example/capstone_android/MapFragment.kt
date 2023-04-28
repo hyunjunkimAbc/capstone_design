@@ -1,3 +1,6 @@
+
+
+
 package com.example.capstone_android
 
 import android.annotation.SuppressLint
@@ -42,7 +45,7 @@ class MapFragment : Fragment(),OnMapReadyCallback {
     private lateinit var mapView: com.naver.maps.map.MapView
     var normalMarkers:ArrayList<Marker> = arrayListOf()
     val checkMarkers:ArrayList<Marker> = arrayListOf()
-
+    private lateinit var mapRecyclerView:RecyclerView
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view= LayoutInflater.from(activity).inflate(R.layout.fragment_map,container,false)
@@ -52,6 +55,7 @@ class MapFragment : Fragment(),OnMapReadyCallback {
 
     override fun onViewCreated(view: View,@Nullable  savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mapRecyclerView=view.map_recyclerview
         mapView = view.findViewById(R.id.map_view)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
@@ -62,15 +66,15 @@ class MapFragment : Fragment(),OnMapReadyCallback {
 
         val infoWindow = InfoWindow()
         naverMap.setOnMapClickListener { point, coord ->
-           println("지도가 클릭되고있씁니다")
+            println("지도가 클릭되고있씁니다")
         }
         val snapHelper = LinearSnapHelper()
-        snapHelper.attachToRecyclerView(view?.map_recyclerview)
+        snapHelper.attachToRecyclerView(mapRecyclerView)
 
 
         val mylayout:LayoutManager=LinearLayoutManager(activity,RecyclerView.HORIZONTAL,false)
-        view?.map_recyclerview?.layoutManager=mylayout
-        view?.map_recyclerview?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        mapRecyclerView.layoutManager=mylayout
+        mapRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     val snapView = snapHelper.findSnapView(recyclerView.layoutManager)
@@ -78,12 +82,17 @@ class MapFragment : Fragment(),OnMapReadyCallback {
                     println("포지션 값은$snapPosition 입니다")
                     // 해당 포지션에 있는 마커 클릭 이벤트 발생시키기
                     // ...
+                    if(checkMarkers.isNotEmpty()){
+                        checkMarkers[0].zIndex=0
+                        checkMarkers[0].isHideCollidedMarkers = true
+                        checkMarkers[0].isForceShowIcon = false
+                    }
                     checkMarkers.clear()
                     checkMarkers.add(normalMarkers[snapPosition!!])
 
                     checkMarkers.forEach{
                             marker ->
-                        marker.zIndex=marker.zIndex+1
+                        marker.zIndex=1
                         marker.isHideCollidedMarkers = true
                         marker.isForceShowIcon = true
                     }
@@ -102,10 +111,10 @@ class MapFragment : Fragment(),OnMapReadyCallback {
                 return infoWindow.marker?.tag as CharSequence? ?: ""
             }
         }
-     naverMap.setOnMapClickListener{_,_->
-         infoWindow.close()
-         view?.map_recyclerview?.adapter=null
-     }
+        naverMap.setOnMapClickListener{_,_->
+            infoWindow.close()
+            mapRecyclerView.adapter=null
+        }
 
 
 
@@ -116,8 +125,8 @@ class MapFragment : Fragment(),OnMapReadyCallback {
         SingleTonData.clubdata.forEachIndexed{index,it->
             val marker=Marker()
             marker.position=LatLng(it.positionx!!,it.positiony!!)
-            marker.width=150
-            marker.height=150
+            marker.width=Marker.SIZE_AUTO
+            marker.height=Marker.SIZE_AUTO
             marker.tag=it.title
             marker.icon= OverlayImage.fromResource(getImageResult(it.category!!))
             marker.map=naverMap
@@ -130,10 +139,12 @@ class MapFragment : Fragment(),OnMapReadyCallback {
                     // 이미 현재 마커에 정보 창이 열려있을 경우 닫음
                     infoWindow.close()
                 }
-                if(  view?.map_recyclerview?.adapter==null)
-                    view?.map_recyclerview?.adapter=MapViewRecyclerViewAdapter()
-                view?.map_recyclerview?.scrollToPosition(index)
-                println(index)
+                if(mapRecyclerView.adapter==null)
+                    mapRecyclerView.adapter=MapViewRecyclerViewAdapter()
+                mapRecyclerView.scrollToPosition(index)
+                val coord=LatLng(SingleTonData.clubdata[index].positionx!!,SingleTonData.clubdata[index].positiony!!)
+                val cameraUpdate= CameraUpdate.scrollTo(coord) .animate(CameraAnimation.Easing)
+                naverMap.moveCamera(cameraUpdate)
                 true
             }
             normalMarkers.add(marker)
@@ -195,7 +206,7 @@ class MapFragment : Fragment(),OnMapReadyCallback {
         }
 
         override fun getItemCount(): Int {
-           return SingleTonData.clubdata.size
+            return SingleTonData.clubdata.size
         }
 
     }

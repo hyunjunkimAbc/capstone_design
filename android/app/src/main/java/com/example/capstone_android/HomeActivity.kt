@@ -34,7 +34,7 @@ class HomeActivity: AppCompatActivity() {
             val test=item?.address
             binding.textview.text= test
         }
-        val mapViewFragment=MapFragment()
+
         val detailViewFragment=DetailViewFragment()
         supportFragmentManager.beginTransaction().replace(R.id.search_content,detailViewFragment).commit()
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
@@ -49,7 +49,7 @@ class HomeActivity: AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_gps ->{
-
+                    val mapViewFragment=MapFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.search_content,mapViewFragment).commit()
                     return@setOnItemSelectedListener true
                 }

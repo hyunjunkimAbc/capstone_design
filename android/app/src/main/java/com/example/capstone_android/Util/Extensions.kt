@@ -57,6 +57,7 @@ fun getImageResult(value: String): Int {
         "농구" -> R.drawable.sport_basketball
         "축구" ->R.drawable.sport_soccer
         "복싱" -> R.drawable.sport_box
+        "골프" ->R.drawable.sport_golf
         else -> R.drawable.icon_art
     }
 }
