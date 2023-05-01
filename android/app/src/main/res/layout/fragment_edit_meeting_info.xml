@@ -46,8 +46,8 @@
         <ScrollView
             android:id="@+id/scrollView6"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline9MeetingInfoEdit"
+            android:layout_height="wrap_content"
+            android:maxHeight="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinnerMeetingRoomCategory">
@@ -57,6 +57,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/editTextStartTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="" />
+
+                <EditText
+                    android:id="@+id/editTextTextEndTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="" />
 
                 <LinearLayout
                     android:id="@+id/linear_max_horiz"
@@ -141,7 +157,7 @@
             app:layout_constraintBottom_toTopOf="@+id/scrollView4MeetingInfoEdit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline9MeetingInfoEdit">
+            app:layout_constraintTop_toBottomOf="@id/scrollView6">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -176,12 +192,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.7" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline9MeetingInfoEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.4" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

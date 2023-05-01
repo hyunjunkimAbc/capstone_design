@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="150dp"
-            android:minHeight="60dp"
+            android:minHeight="50dp"
             android:text="gfdfghdfghdfgjghvbcvbxcvbjnn"
             android:textAlignment="textEnd"
             app:layout_constraintBottom_toBottomOf="parent"

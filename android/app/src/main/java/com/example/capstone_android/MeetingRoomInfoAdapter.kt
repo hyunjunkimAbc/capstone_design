@@ -1,5 +1,6 @@
 package com.example.capstone_android
 
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup

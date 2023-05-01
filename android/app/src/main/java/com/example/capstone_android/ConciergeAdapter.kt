@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.databinding.ConciergeItemLayoutBinding
 
-class ConciergeAdapter (private val viewModel: ConciergeViewModel): RecyclerView.Adapter<ConciergeAdapter.ViewHolder>(){
+open class ConciergeAdapter (private val viewModel: ConciergeViewModel): RecyclerView.Adapter<ConciergeAdapter.ViewHolder>(){
     inner class ViewHolder(private val binding: ConciergeItemLayoutBinding): RecyclerView.ViewHolder(binding.root){
         fun setContents(pos : Int){
             with(viewModel.items[pos]){
@@ -18,11 +18,14 @@ class ConciergeAdapter (private val viewModel: ConciergeViewModel): RecyclerView
 
             binding.root.setOnClickListener {
                 viewModel.itemClickEvent.value = adapterPosition
+                println("click-------------------")
             }
             binding.root.setOnLongClickListener {
                 viewModel.itemLongClick = adapterPosition
                 false
             }
+
+
         }
     }
 
@@ -37,5 +40,16 @@ class ConciergeAdapter (private val viewModel: ConciergeViewModel): RecyclerView
     }
 
     override fun getItemCount()=viewModel.items.size
+
+}
+open class LightingAdapter (private val viewModel: LightingViewModel): ConciergeAdapter(viewModel){
+}
+open class PeriodicAdapter (private val viewModel: PeriodicViewModel): ConciergeAdapter(viewModel){
+
+}
+open class PlaceRentalAdapter (private val viewModel: PlaceRentalViewModel): ConciergeAdapter(viewModel){
+
+}
+open class CompetitionAdapter (private val viewModel: CompetitionViewModel): ConciergeAdapter(viewModel){
 
 }

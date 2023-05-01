@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 data class ChattingData(val icon: Bitmap?, val nickname: String, val commentText:String,val timePosting:Long,
-                        val writer_uid:String,val document_id: String)
+                   val writer_uid:String,val document_id: String)
 
 class MeetingRoomChattingViewModel : ViewModel(){
     val itemsListData = MutableLiveData<ArrayList<ChattingData>>()

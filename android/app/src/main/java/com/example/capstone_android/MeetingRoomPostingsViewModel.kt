@@ -1,12 +1,11 @@
 package com.example.capstone_android
 
-
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 data class Posting(val icon: Bitmap?, val nickname: String, val postingText:String,val timePosting:Long,val document_id:String,
-                   val writer_uid:String)
+val writer_uid:String)
 
 class MeetingRoomPostingsViewModel : ViewModel(){
     val itemsListData = MutableLiveData<ArrayList<Posting>>()
