@@ -2,7 +2,6 @@ package com.example.capstone_android
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -20,22 +19,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.Util.getImageResult
 import com.example.capstone_android.button.*
 import com.example.capstone_android.data.SignUpData
-import com.example.capstone_android.data.getclubuid
 import com.example.capstone_android.data.ClubData
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Param
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -56,6 +50,7 @@ class DetailViewFragment: Fragment() {
     var clubroomuid:ArrayList<String> =arrayListOf()
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        print("디테일뷰 생성됨")
         var view= LayoutInflater.from(activity).inflate(R.layout.fragment_main,container,false)
         db= Firebase.firestore
         val uid= Firebase.auth.currentUser?.uid
@@ -102,6 +97,7 @@ class DetailViewFragment: Fragment() {
                RoadData()
                 val userinfo=db.collection("user").document(Firebase.auth.currentUser?.uid.toString())
                 val hobby=userinfo.get().await().toObject(SignUpData::class.java)
+                view.username.text=hobby?.nickname+"님을"
                 hobbydata=hobby?.interest_array!!
                 address=hobby.address
                 recyclerView2.adapter=HobbyImageIconAdapter()
@@ -143,10 +139,11 @@ class DetailViewFragment: Fragment() {
             if(requestCode==9){
                     update()
             }
-        else if(requestCode==1){
+        else if(requestCode==1&&resultCode==-1){
+                print("리설트 코드는")
+                print(resultCode)
                 update_interest()
                 update()
-
             }
     }
     fun RoadData(){
@@ -235,7 +232,9 @@ class DetailViewFragment: Fragment() {
             val viewholder=(holder as CustomViewHolder).itemView
             Glide.with(holder.itemView.context).load(clubdata[position].imageUrl).apply(RequestOptions().circleCrop()).into(viewholder.detailviewitem_imageview_content)
             viewholder.ClubName.text= clubdata[position].title
-            viewholder.NumberCount.text=  clubdata[position].max.toString()
+            viewholder.usercount.text="멤버 "+clubdata[position].member_list?.size
+            viewholder.address.text=  clubdata[position].address
+            viewholder.maincategory.text = clubdata[position].category
             viewholder.ClubExplain.text= clubdata[position].info_text
             viewholder.CardView.setOnClickListener{
                 var intent= Intent(context, MeetingRoomActivity::class.java)
@@ -285,7 +284,7 @@ class DetailViewFragment: Fragment() {
     }
 
     override fun onDestroy() {
-        print("디테일뷰 ㅍ파괴")
+        print("디테일뷰 파괴")
         super.onDestroy()
 
     }

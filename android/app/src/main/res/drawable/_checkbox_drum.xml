@@ -4,11 +4,11 @@
         android:width="40dp"
         android:height="30dp"
         android:state_checked="true"
-        android:drawable="@drawable/sport_check_basketball"/>
+        android:drawable="@drawable/music_check_drum"/>
     <item
         android:width="40dp"
         android:height="30dp"
         android:state_checked="false"
-        android:drawable="@drawable/sport_basketball"/>
+        android:drawable="@drawable/music_drum"/>
 
 </selector>

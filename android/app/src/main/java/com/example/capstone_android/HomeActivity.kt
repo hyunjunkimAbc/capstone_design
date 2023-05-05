@@ -15,6 +15,9 @@ import com.google.firebase.ktx.Firebase
 class HomeActivity: AppCompatActivity() {
     lateinit var db : FirebaseFirestore
     var checkfragment:Number=0
+    var detailViewFragment:DetailViewFragment?=null
+    var mapFragment:MapFragment?=null
+
     private lateinit var binding: ActivityHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,23 +38,33 @@ class HomeActivity: AppCompatActivity() {
             binding.textview.text= test
         }
 
-        val detailViewFragment=DetailViewFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.search_content,detailViewFragment).commit()
+       detailViewFragment=DetailViewFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.search_content,detailViewFragment!!).commit()
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1);
         binding.bottomNavigation.setOnItemSelectedListener{
             when(it.itemId){
                 R.id.action_home ->{
-                   // val detailViewFragment=DetailViewFragment()
-                    checkfragment=0
-                    supportFragmentManager.beginTransaction().replace(R.id.search_content,detailViewFragment).commit()
+                   if(detailViewFragment==null){
+                       detailViewFragment= DetailViewFragment()
+                       supportFragmentManager.beginTransaction().add(R.id.search_content,detailViewFragment!!).commit()
+                   }
+                    if(detailViewFragment!=null)
+                        supportFragmentManager.beginTransaction().show(detailViewFragment!!).commit()
+                    if(mapFragment!=null)
+                        supportFragmentManager.beginTransaction().hide(mapFragment!!).commit()
 
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_gps ->{
-                    val mapViewFragment=MapFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.search_content,mapViewFragment).commit()
-                    return@setOnItemSelectedListener true
+                    if(mapFragment==null){
+                        mapFragment= MapFragment()
+                        supportFragmentManager.beginTransaction().add(R.id.search_content,mapFragment!!).commit()
+                    }
+                    if(mapFragment!=null)
+                        supportFragmentManager.beginTransaction().show(mapFragment!!).commit()
+                    if(detailViewFragment!=null)
+                        supportFragmentManager.beginTransaction().hide(detailViewFragment!!).commit()
                 }
 
                 R.id.action_account ->{
@@ -68,16 +81,17 @@ class HomeActivity: AppCompatActivity() {
             false
         }
     }
+
+    override fun onDestroy() {
+        print("홈 액티비티 종료")
+        super.onDestroy()
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().addOnSuccessListener{ document->
             val item=document.toObject(SignUpData::class.java)
             val test=item?.address
             binding.textview.text= test
-            if(checkfragment==0) {
-                val detailViewFragment=DetailViewFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.search_content,detailViewFragment).commit()
-            }
         }
     }
 }

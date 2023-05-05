@@ -12,7 +12,6 @@
         android:id="@+id/CardView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        app:cardCornerRadius="13dp"
         app:cardElevation="30dp"
         app:cardMaxElevation="20dp"
         android:foreground="?android:attr/selectableItemBackground">
@@ -35,44 +34,86 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/ClubName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="클럽이름"
-                    android:textSize="20dp"
-                    app:layout_constraintBottom_toTopOf="@+id/NumberCount"
-                    app:layout_constraintEnd_toEndOf="@+id/NumberCount"
-                    app:layout_constraintStart_toStartOf="@+id/NumberCount"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="spread_inside" />
-
-                <TextView
-                    android:id="@+id/NumberCount"
-                    android:layout_width="331dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:text="인원 수"
-                    android:textSize="15dp"
-                    app:layout_constraintBottom_toTopOf="@+id/ClubExplain"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ClubName" />
 
                 <TextView
                     android:id="@+id/ClubExplain"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginBottom="14dp"
-                    android:text="본문 내용"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="8dp"
                     android:ellipsize="marquee"
                     android:singleLine="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/NumberCount"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    android:text="본문 내용"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/NumberCount" />
+                    app:layout_constraintTop_toBottomOf="@+id/ClubName" />
+
+                <TextView
+                    android:id="@+id/ClubName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="클럽이름"
+                    android:textColor="@color/black"
+                    android:textSize="17dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread_inside" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    app:cardBackgroundColor="#f0f0f0"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintStart_toEndOf="@+id/usercount"
+                    app:layout_constraintTop_toTopOf="@+id/usercount">
+
+                    <TextView
+                        android:id="@+id/maincategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
+                        android:text="카테고리"
+                        android:textSize="15dp"
+                        tools:layout_editor_absoluteX="166dp"
+                        tools:layout_editor_absoluteY="43dp" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:text="지역"
+                    android:textSize="15dp"
+                    app:layout_constraintStart_toStartOf="@+id/ClubExplain"
+                    app:layout_constraintTop_toBottomOf="@+id/ClubExplain" />
+
+
+
+                <TextView
+                    android:id="@+id/textView37"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="|"
+                    app:layout_constraintStart_toEndOf="@+id/address"
+                    app:layout_constraintTop_toBottomOf="@+id/ClubExplain" />
+
+                <TextView
+                    android:id="@+id/usercount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="멤버수"
+                    app:layout_constraintStart_toEndOf="@+id/textView37"
+                    app:layout_constraintTop_toBottomOf="@+id/ClubExplain" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>

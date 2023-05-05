@@ -6,17 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.GridLayout
 import androidx.fragment.app.Fragment
 import com.example.capstone_android.R
 import com.example.capstone_android.SelectHobbyActivity
-import com.example.capstone_android.data.SignUpData
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.fragment_create.view.*
 import kotlinx.android.synthetic.main.fragment_sportfragment.view.*
 
 class SportFragment:Fragment() {
@@ -173,7 +168,7 @@ class SportFragment:Fragment() {
                     for (data in thisactivity.allhobbylist) {
                         if (data == "농구") {
                             view.basketballcheckbox.isChecked = thisactivity.myhobbylist.contains(data)
-                            view.basketballcheckbox.setOnCheckedChangeListener{_,ischecked->
+                            view.basketballcheckbox.setOnCheckedChangeListener{ _, ischecked->
                                 if(ischecked) thisactivity.myhobbylist.add(data)
                                 else thisactivity.myhobbylist.remove(data)
                             }

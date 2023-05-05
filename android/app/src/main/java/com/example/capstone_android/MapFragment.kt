@@ -5,13 +5,11 @@ package com.example.capstone_android
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
@@ -29,7 +27,6 @@ import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.overlay.OverlayImage
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import kotlinx.android.synthetic.main.fragment_map.view.*
@@ -198,11 +195,16 @@ class MapFragment : Fragment(),OnMapReadyCallback {
 
         }
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            val viewholder=(holder as CustomViewHolder).itemView
+          val viewholder=(holder as CustomViewHolder).itemView
             Glide.with(holder.itemView.context).load(SingleTonData.clubdata[position].imageUrl).apply(RequestOptions().circleCrop()).into(viewholder.imageViewmap)
-            viewholder.explainmap.text=SingleTonData.clubdata[position].info_text
-            viewholder.clubtitle.text=SingleTonData.clubdata[position].title
-            viewholder.mapcategory.text=SingleTonData.clubdata[position].category
+            viewholder.mapaddress.text=SingleTonData.clubdata[position].address
+            viewholder.mapmember.text= SingleTonData.clubdata[position].member_list?.size.toString()
+            viewholder.mapclubName.text=SingleTonData.clubdata[position].title
+            viewholder.category.text=SingleTonData.clubdata[position].category
+            viewholder.mapexplain.text=SingleTonData.clubdata[position].info_text
+            viewholder.mapclick.setOnClickListener{
+                println("클릭")
+            }
         }
 
         override fun getItemCount(): Int {

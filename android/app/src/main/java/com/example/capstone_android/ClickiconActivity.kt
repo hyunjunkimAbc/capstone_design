@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.capstone_android.data.ClubData
-import com.example.capstone_android.data.getclubuid
 import com.example.capstone_android.databinding.ActivityClickiconBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -86,7 +85,9 @@ class ClickiconActivity: AppCompatActivity() {
             Glide.with(holder.itemView.context).load(clubdata[position].imageUrl).apply(
                 RequestOptions().circleCrop()).into(viewholder.detailviewitem_imageview_content)
             viewholder.ClubName.text=clubdata[position].title
-            viewholder.NumberCount.text= clubdata[position].max.toString()
+            viewholder.usercount.text=clubdata[position].max.toString()
+            viewholder.address.text=  clubdata[position].address
+            viewholder.maincategory.text = clubdata[position].category
             viewholder.ClubExplain.text=clubdata[position].info_text
             viewholder.CardView.setOnClickListener{
                 var intent= Intent(applicationContext,MeetingRoomActivity::class.java)

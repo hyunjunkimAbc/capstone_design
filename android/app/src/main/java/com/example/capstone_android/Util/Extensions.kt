@@ -76,6 +76,8 @@ fun getImageResult(value: String): Int {
         "당구"->R.drawable.sport_danggu
         "등산"->R.drawable.sport_hiking
         "수상레저"->R.drawable.sport_leisure
+        "세계여행" ->R.drawable.trip_worldtravel
+        "국내여행" ->R.drawable.trip_domestictravel
         else -> R.drawable.icon_art
     }
 }
