@@ -9,8 +9,7 @@ import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.data.SignUpData
 import com.example.capstone_android.databinding.ActivityHomeBinding
 import com.example.capstone_android.databinding.ActivitySelecthobbyBinding
-import com.example.capstone_android.hobbyfragment.SportFragment
-import com.example.capstone_android.hobbyfragment.TripFragment
+import com.example.capstone_android.hobbyfragment.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -26,7 +25,9 @@ class SelectHobbyActivity:AppCompatActivity() {
         "야구", "볼링", "자전거", "골프", "런닝",
         "수영", "배구", "요가|필라테스", "태권도|유도", "복싱",
         "무술", "승마", "헬스", "롤러|보드", "스키|보드", "당구","등산","수상레저",
-        "세계여행","국내여행"
+        "세계여행","국내여행","밴드","피아노","드럼","바이올린","기타","노래","작곡","힙합"
+    ,"버스킹","콘서트","디제잉","런치패드","색소폰","친구","카페","술 한잔","코노","맛집탐방"
+    ,"독서","글쓰기","토론"
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +67,27 @@ class SelectHobbyActivity:AppCompatActivity() {
             bundle.putString("key",key)
             tripfragment.arguments=bundle
             supportFragmentManager.beginTransaction().replace(R.id.categoryfragment,tripfragment).commit()
+        }
+        binding.musicImageButton.setOnClickListener{
+            val musicfragment=MusicFragment()
+            val bundle=Bundle()
+            bundle.putString("key",key)
+            musicfragment.arguments=bundle
+            supportFragmentManager.beginTransaction().replace(R.id.categoryfragment,musicfragment).commit()
+        }
+        binding.jobImageButton.setOnClickListener{
+            val societyfragment=SocietyFragment()
+            val bundle=Bundle()
+            bundle.putString("key",key)
+            societyfragment.arguments=bundle
+            supportFragmentManager.beginTransaction().replace(R.id.categoryfragment,societyfragment).commit()
+        }
+        binding.readImageButton.setOnClickListener{
+            val bookfragment=BookFragment()
+            val bundle=Bundle()
+            bundle.putString("key",key)
+            bookfragment.arguments=bundle
+            supportFragmentManager.beginTransaction().replace(R.id.categoryfragment,bookfragment).commit()
         }
 
     }

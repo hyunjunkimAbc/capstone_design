@@ -78,6 +78,27 @@ fun getImageResult(value: String): Int {
         "수상레저"->R.drawable.sport_leisure
         "세계여행" ->R.drawable.trip_worldtravel
         "국내여행" ->R.drawable.trip_domestictravel
+        "밴드" ->R.drawable.music_band
+        "피아노" ->R.drawable.music_piano
+        "드럼" ->R.drawable.music_drum
+        "바이올린" ->R.drawable.music_violin
+        "기타" ->R.drawable.music_guitar
+        "노래" ->R.drawable.music_sing
+        "작곡" ->R.drawable.music_musicwriter
+        "힙합" ->R.drawable.music_hip_hop
+        "버스킹" ->R.drawable.music_busking
+        "콘서트" ->R.drawable.music_concert
+        "디제잉" ->R.drawable.music_djing
+        "런치패드" ->R.drawable.music_launch_pad
+        "색소폰" ->R.drawable.music_saxophone
+        "친구"->R.drawable.society_friends
+        "카페" ->R.drawable.society_cafe
+        "술 한잔" ->R.drawable.society_beer
+        "코노" ->R.drawable.society_coinsong
+        "맛집탐방" ->R.drawable.society_food
+        "독서" ->R.drawable.book_reading
+        "글쓰기"->R.drawable.book_writing
+        "토론"->R.drawable.book_discussion
         else -> R.drawable.icon_art
     }
 }

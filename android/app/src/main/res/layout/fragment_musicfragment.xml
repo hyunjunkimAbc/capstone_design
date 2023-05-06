@@ -12,7 +12,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
@@ -66,8 +66,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="밴드"
-                android:textStyle="bold"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/bandcheckbox"
                 app:layout_constraintStart_toStartOf="@+id/bandcheckbox"
                 app:layout_constraintTop_toBottomOf="@+id/bandcheckbox" />
@@ -88,8 +88,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="피아노"
-                android:textStyle="bold"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/pianocheckbox"
                 app:layout_constraintStart_toStartOf="@+id/pianocheckbox"
                 app:layout_constraintTop_toBottomOf="@+id/pianocheckbox" />
@@ -110,8 +110,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="드럼"
-                android:textStyle="bold"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/drumcheckbox"
                 app:layout_constraintStart_toStartOf="@+id/drumcheckbox"
                 app:layout_constraintTop_toBottomOf="@+id/drumcheckbox" />
@@ -132,8 +132,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="바이올린"
-                android:textStyle="bold"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/violincheckbox"
                 app:layout_constraintStart_toStartOf="@+id/violincheckbox"
                 app:layout_constraintTop_toBottomOf="@+id/violincheckbox" />
@@ -154,8 +154,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="기타"
-                android:textStyle="bold"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/guitarcheckbox"
                 app:layout_constraintStart_toStartOf="@+id/guitarcheckbox"
                 app:layout_constraintTop_toBottomOf="@+id/guitarcheckbox" />
@@ -170,16 +170,18 @@
                 app:layout_constraintEnd_toStartOf="@+id/guideline40"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView39" />
+
             <TextView
                 android:id="@+id/textView44"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="노래|합창"
-                android:textStyle="bold"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/singcheckbox"
                 app:layout_constraintStart_toStartOf="@+id/singcheckbox"
                 app:layout_constraintTop_toBottomOf="@+id/singcheckbox" />
+
             <CheckBox
                 android:id="@+id/musicwritercheckbox"
                 android:layout_width="50dp"
@@ -190,16 +192,18 @@
                 app:layout_constraintEnd_toStartOf="@+id/guideline41"
                 app:layout_constraintStart_toStartOf="@+id/guideline40"
                 app:layout_constraintTop_toBottomOf="@+id/textView39" />
+
             <TextView
                 android:id="@+id/textView45"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="작곡|비트"
-                android:textStyle="bold"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/musicwritercheckbox"
                 app:layout_constraintStart_toStartOf="@+id/musicwritercheckbox"
                 app:layout_constraintTop_toBottomOf="@+id/musicwritercheckbox" />
+
             <CheckBox
                 android:id="@+id/hiphopcheckbox"
                 android:layout_width="50dp"
@@ -210,17 +214,135 @@
                 app:layout_constraintEnd_toStartOf="@+id/guideline42"
                 app:layout_constraintStart_toStartOf="@+id/guideline41"
                 app:layout_constraintTop_toBottomOf="@+id/textView39" />
+
             <TextView
                 android:id="@+id/textView46"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="힙합"
-                android:textStyle="bold"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/hiphopcheckbox"
                 app:layout_constraintStart_toStartOf="@+id/hiphopcheckbox"
                 app:layout_constraintTop_toBottomOf="@+id/hiphopcheckbox" />
+
+            <CheckBox
+                android:id="@+id/buskingcheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/_checkbox_busking"
+                android:button="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline43"
+                app:layout_constraintStart_toStartOf="@+id/guideline42"
+                app:layout_constraintTop_toBottomOf="@+id/textView39" />
+
+            <TextView
+                android:id="@+id/textView47"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="버스킹"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/buskingcheckbox"
+                app:layout_constraintStart_toStartOf="@+id/buskingcheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/buskingcheckbox" />
+
+            <CheckBox
+                android:id="@+id/concertcheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/_checkbox_concert"
+                android:button="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline43"
+                app:layout_constraintTop_toBottomOf="@+id/textView39" />
+
+            <TextView
+                android:id="@+id/textView48"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="콘서트"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/concertcheckbox"
+                app:layout_constraintStart_toStartOf="@+id/concertcheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/concertcheckbox" />
+
+            <CheckBox
+                android:id="@+id/djingcheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/_checkbox_djing"
+                android:button="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline40"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView44" />
+
+            <TextView
+                android:id="@+id/textView49"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="디제잉"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/djingcheckbox"
+                app:layout_constraintStart_toStartOf="@+id/djingcheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/djingcheckbox" />
+            <CheckBox
+                android:id="@+id/launchpadcheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/_checkbox_launch_pad"
+                android:button="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline41"
+                app:layout_constraintStart_toStartOf="@+id/guideline40"
+                app:layout_constraintTop_toBottomOf="@+id/textView44" />
+            <TextView
+                android:id="@+id/textView50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="런치패드"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/launchpadcheckbox"
+                app:layout_constraintStart_toStartOf="@+id/launchpadcheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/launchpadcheckbox" />
+            <CheckBox
+                android:id="@+id/saxophonecheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/_checkbox_saxophone"
+                android:button="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline42"
+                app:layout_constraintStart_toStartOf="@+id/guideline41"
+                app:layout_constraintTop_toBottomOf="@+id/textView44" />
+            <TextView
+                android:id="@+id/textView51"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="색소폰"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/saxophonecheckbox"
+                app:layout_constraintStart_toStartOf="@+id/saxophonecheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/saxophonecheckbox" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <TextView
+        android:id="@+id/textView52"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="세부 카테고리 선택"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
