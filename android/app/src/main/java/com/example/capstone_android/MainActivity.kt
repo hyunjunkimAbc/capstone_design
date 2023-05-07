@@ -14,5 +14,6 @@ class MainActivity : AppCompatActivity() {
         //val intent = Intent(this, MeetingRoomActivity::class.java)
         //            intent.putExtra("meeting_room_id", "ce5vmU58GHfPTNhDtmfR")
         //            startActivity(intent)
+        //test
     }
 }
