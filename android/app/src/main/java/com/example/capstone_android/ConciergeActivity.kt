@@ -98,6 +98,7 @@ class ConciergeActivity : AppCompatActivity() {
             }
         }
     }
+    //test
     fun setRecyclerView(adapter: ConciergeAdapter,viewModel: ConciergeViewModel,view: androidx.recyclerview.widget.RecyclerView){
         //val meetingMembersRecyclerView = v.findViewById<RecyclerView>(R.id.meetingMembersRecyclerView)
         val MeetingRecyclerView = view
