@@ -102,7 +102,7 @@
             android:id="@+id/uploadPostingBtnPostingEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#8BC34A"
+            android:backgroundTint="#4CBADC"
             android:text="edit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

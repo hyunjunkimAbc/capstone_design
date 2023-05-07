@@ -118,7 +118,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:backgroundTint="#8BC34A"
+                android:backgroundTint="#4CBADC"
                 android:text="댓글 입력"
                 tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
