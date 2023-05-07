@@ -67,7 +67,7 @@ class ConciergeActivity : AppCompatActivity() {
         val intent = Intent(this, TestActivityForHJ::class.java)
         //테스트라서 이렇게 했지만 나중에는 동경님 activity로 옮겨야 함
         intent.putExtra("collectionName", collectionName)
-        startActivity(intent)
+        startActivity(intent)//test
     }
     fun addToRecyclerView(collectionName: String,viewModel: ConciergeViewModel){
         var meetingRoomCollection=db.collection(collectionName)
