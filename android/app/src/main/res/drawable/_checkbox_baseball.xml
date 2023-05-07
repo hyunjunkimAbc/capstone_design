@@ -10,7 +10,4 @@
         android:height="30dp"
         android:state_checked="false"
         android:drawable="@drawable/sport_baseball"/>
-
-
-
 </selector>

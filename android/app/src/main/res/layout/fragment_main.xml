@@ -23,15 +23,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
-
-
             <RelativeLayout
                 android:id="@+id/toolbar_division"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
-
-
+                <View
+                    android:id="@+id/viewline"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#f0f0f0"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
                 <TextView
                     android:id="@+id/username"
                     android:layout_width="wrap_content"

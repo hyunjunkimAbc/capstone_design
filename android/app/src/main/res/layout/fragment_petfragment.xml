@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline58"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.2" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline59"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.4" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline60"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.6" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline61"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.8" />
+            <CheckBox
+                android:id="@+id/dogcheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/_checkbox_dog"
+                android:button="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline58"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/txt43"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="강아지"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/dogcheckbox"
+                app:layout_constraintStart_toStartOf="@+id/dogcheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/dogcheckbox" />
+            <CheckBox
+                android:id="@+id/catcheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/_checkbox_cat"
+                android:button="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline59"
+                app:layout_constraintStart_toStartOf="@+id/guideline58"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/txt44"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="고양이"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/catcheckbox"
+                app:layout_constraintStart_toStartOf="@+id/catcheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/catcheckbox" />
+            <CheckBox
+                android:id="@+id/hedgehogcheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/_checkbox_hedgehog"
+                android:button="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline60"
+                app:layout_constraintStart_toStartOf="@+id/guideline59"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/txt45"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="고슴도치"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/hedgehogcheckbox"
+                app:layout_constraintStart_toStartOf="@+id/hedgehogcheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/hedgehogcheckbox" />
+            <CheckBox
+                android:id="@+id/hamstercheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/_checkbox_hamster"
+                android:button="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline61"
+                app:layout_constraintStart_toStartOf="@+id/guideline60"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/txt46"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="햄스터"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/hamstercheckbox"
+                app:layout_constraintStart_toStartOf="@+id/hamstercheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/hamstercheckbox" />
+            <CheckBox
+                android:id="@+id/fishcheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/_checkbox_fish"
+                android:button="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline61"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/txt47"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="물고기"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/fishcheckbox"
+                app:layout_constraintStart_toStartOf="@+id/fishcheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/fishcheckbox" />
+            <CheckBox
+                android:id="@+id/parrotcheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/_checkbox_parrot"
+                android:button="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline58"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt43" />
+            <TextView
+                android:id="@+id/txt48"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="앵무새"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/parrotcheckbox"
+                app:layout_constraintStart_toStartOf="@+id/parrotcheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/parrotcheckbox" />
+            <CheckBox
+                android:id="@+id/squirrelcheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/_checkbox_squirrel"
+                android:button="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline59"
+                app:layout_constraintStart_toStartOf="@+id/guideline58"
+                app:layout_constraintTop_toBottomOf="@+id/txt43" />
+            <TextView
+                android:id="@+id/txt49"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="다람쥐"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/squirrelcheckbox"
+                app:layout_constraintStart_toStartOf="@+id/squirrelcheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/squirrelcheckbox" />
+            <CheckBox
+                android:id="@+id/lizardcheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/_checkbox_lizard"
+                android:button="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline60"
+                app:layout_constraintStart_toStartOf="@+id/guideline59"
+                app:layout_constraintTop_toBottomOf="@+id/txt43" />
+            <TextView
+                android:id="@+id/txt50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="도마뱀"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/lizardcheckbox"
+                app:layout_constraintStart_toStartOf="@+id/lizardcheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/lizardcheckbox" />
+            <CheckBox
+                android:id="@+id/snakecheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/_checkbox_snake"
+                android:button="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline61"
+                app:layout_constraintStart_toStartOf="@+id/guideline60"
+                app:layout_constraintTop_toBottomOf="@+id/txt43" />
+            <TextView
+                android:id="@+id/txt51"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="뱀"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/snakecheckbox"
+                app:layout_constraintStart_toStartOf="@+id/snakecheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/snakecheckbox" />
+            <CheckBox
+                android:id="@+id/tarantualcheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/_checkbox_tarantula"
+                android:button="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline61"
+                app:layout_constraintTop_toBottomOf="@+id/txt43" />
+            <TextView
+                android:id="@+id/txt52"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="거미"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/tarantualcheckbox"
+                app:layout_constraintStart_toStartOf="@+id/tarantualcheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/tarantualcheckbox" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/textView61"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="세부 카테고리 선택"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

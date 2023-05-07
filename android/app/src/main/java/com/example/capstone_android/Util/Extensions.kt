@@ -96,9 +96,73 @@ fun getImageResult(value: String): Int {
         "술 한잔" ->R.drawable.society_beer
         "코노" ->R.drawable.society_coinsong
         "맛집탐방" ->R.drawable.society_food
+        "봉사활동"->R.drawable.society_volunteer
         "독서" ->R.drawable.book_reading
         "글쓰기"->R.drawable.book_writing
         "토론"->R.drawable.book_discussion
+        "한식"->R.drawable.cook_koreafood
+        "중식"->R.drawable.cook_chinafood
+        "일식"->R.drawable.cook_japanfood
+        "양식"->R.drawable.cook_usfood
+        "제과제빵"->R.drawable.cook_bread
+        "칵테일" ->R.drawable.cook_cocktail
+        "와인"->R.drawable.cook_wine
+        "사진"->R.drawable.camera_camera
+        "영상제작"->R.drawable.camera_editing
+        "AOS"->R.drawable.game_aos
+        "RPG"->R.drawable.game_rpg
+        "FPS"->R.drawable.game_fps
+        "카드게임"->R.drawable.game_card
+        "두뇌심리"->R.drawable.game_brain
+        "스포츠게임"->R.drawable.game_sport
+        "레이싱게임"->R.drawable.game_racing
+        "닌텐도|플스"->R.drawable.game_nintendo
+        "팝핀"->R.drawable.dance_popping
+        "락킹"->R.drawable.dance_rocking
+        "비보잉"->R.drawable.dance_b_boying
+        "왁킹"->R.drawable.dance_waacking
+        "힙합댄스"->R.drawable.dance_hiphopdance
+        "하우스"->R.drawable.dance_house
+        "크럼프"->R.drawable.dance_krump
+        "현대무용"->R.drawable.dance_modern
+        "한국무용"->R.drawable.dance_korea
+        "K-POP"->R.drawable.dance_kpop
+        "발레"->R.drawable.dance_vallet
+        "댄스스포츠"->R.drawable.dance_dancesport
+        "발리댄스"->R.drawable.dance_hula
+        "재즈"->R.drawable.dance_jazz
+        "에어로빅"->R.drawable.dance_aerobics
+        "자동차"->R.drawable.car_car
+        "오토바이"->R.drawable.car_motorbike
+        "강아지"->R.drawable.pet_dog
+        "고양이"->R.drawable.pet_cat
+        "고슴도치"->R.drawable.pet_hedgehog
+        "햄스터"->R.drawable.pet_hamster
+        "물고기"->R.drawable.pet_fish
+        "앵무새"->R.drawable.pet_parrot
+        "다람쥐"->R.drawable.pet_squirrel
+        "도마뱀"->R.drawable.pet_lizard
+        "뱀"->R.drawable.pet_snake
+        "거미"->R.drawable.pet_tarantula
+        "미술"->R.drawable.art_art
+        "공방"->R.drawable.art_bracelet
+        "도예"->R.drawable.art_porcelain
+        "자수"->R.drawable.art_crossstitch
+        "꽃"->R.drawable.art_flower
+        "화장품"->R.drawable.art_cosmetics
+        "가구"->R.drawable.art_furniture
+        "스터디"->R.drawable.study_study
+        "언어"->R.drawable.study_languages
+        "동기부여"->R.drawable.study_motivated
+        "스피치"->R.drawable.study_speech
+        "IT"->R.drawable.job_it
+        "디자인"->R.drawable.job_designer
+        "의료"->R.drawable.job_medicine
+        "화학"->R.drawable.job_chemistry
+        "금융"->R.drawable.job_finance
+        "건설"->R.drawable.job_constructor
+        "법"->R.drawable.job_law
+        "패션"->R.drawable.job_dress
         else -> R.drawable.icon_art
     }
 }

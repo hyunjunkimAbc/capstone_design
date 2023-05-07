@@ -146,9 +146,27 @@
                 app:layout_constraintEnd_toEndOf="@+id/foodcheckbox"
                 app:layout_constraintStart_toStartOf="@+id/foodcheckbox"
                 app:layout_constraintTop_toBottomOf="@+id/foodcheckbox" />
+            <CheckBox
+                android:id="@+id/volunteercheckbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/_checkbox_volunteer"
+                android:button="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline30"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt1" />
+            <TextView
+                android:id="@+id/txt500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="봉사활동"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/volunteercheckbox"
+                app:layout_constraintStart_toStartOf="@+id/volunteercheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/volunteercheckbox" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </ScrollView>
 
     <TextView

@@ -53,6 +53,12 @@ class SocietyFragment:Fragment() {
                 activity?.setResult(Activity.RESULT_OK, intent)
                 activity?.finish()
             }
+            view.volunteercheckbox.setOnClickListener {
+                val intent = Intent()
+                intent.putExtra("hobby", "봉사활동")
+                activity?.setResult(Activity.RESULT_OK, intent)
+                activity?.finish()
+            }
         }
         else{
             for (data in thisactivity.allhobbylist) {
@@ -87,6 +93,13 @@ class SocietyFragment:Fragment() {
                 if (data == "맛집탐방") {
                     view.foodcheckbox.isChecked = thisactivity.myhobbylist.contains(data)
                     view.foodcheckbox.setOnCheckedChangeListener { _, ischecked ->
+                        if (ischecked) thisactivity.myhobbylist.add(data)
+                        else thisactivity.myhobbylist.remove(data)
+                    }
+                }
+                if (data == "봉사활동") {
+                    view.volunteercheckbox.isChecked = thisactivity.myhobbylist.contains(data)
+                    view.volunteercheckbox.setOnCheckedChangeListener { _, ischecked ->
                         if (ischecked) thisactivity.myhobbylist.add(data)
                         else thisactivity.myhobbylist.remove(data)
                     }
