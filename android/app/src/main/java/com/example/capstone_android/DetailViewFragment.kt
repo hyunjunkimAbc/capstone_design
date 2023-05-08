@@ -23,7 +23,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.Util.getImageResult
-import com.example.capstone_android.button.*
 import com.example.capstone_android.data.SignUpData
 import com.example.capstone_android.data.ClubData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
