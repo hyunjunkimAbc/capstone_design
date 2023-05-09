@@ -91,6 +91,12 @@ class DetailViewFragment: Fragment() {
             }
         }
 
+        hobbydata=SingleTonData.userInfo?.interest_array!!
+        recyclerView1.adapter=DetailViewRecyclerViewAdapter()
+        recyclerView1.layoutManager=LinearLayoutManager(activity)
+        recyclerView2.adapter=HobbyImageIconAdapter()
+        recyclerView2.layoutManager=LinearLayoutManager(activity,RecyclerView.HORIZONTAL,false)
+/*
         lifecycleScope.launch(Dispatchers.Main){
             try{
                RoadData()
@@ -116,7 +122,7 @@ class DetailViewFragment: Fragment() {
                 Log.e(TAG,"Firebase Error : ${e.message}")
             }
         }
-
+ */
 
 
         view.refresh_layout.setOnRefreshListener {
@@ -229,23 +235,23 @@ class DetailViewFragment: Fragment() {
         @SuppressLint("CheckResult", "SuspiciousIndentation")
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val viewholder=(holder as CustomViewHolder).itemView
-            Glide.with(holder.itemView.context).load(clubdata[position].imageUrl).apply(RequestOptions().circleCrop()).into(viewholder.detailviewitem_imageview_content)
-            viewholder.ClubName.text= clubdata[position].title
-            viewholder.usercount.text="멤버 "+clubdata[position].member_list?.size
-            viewholder.address.text=  clubdata[position].address
-            viewholder.maincategory.text = clubdata[position].category
-            viewholder.ClubExplain.text= clubdata[position].info_text
+            Glide.with(holder.itemView.context).load(SingleTonData.clubdata[position].imageUrl).apply(RequestOptions().circleCrop()).into(viewholder.detailviewitem_imageview_content)
+            viewholder.ClubName.text= SingleTonData.clubdata[position].title
+            viewholder.usercount.text="멤버 "+SingleTonData.clubdata[position].member_list?.size
+            viewholder.address.text= SingleTonData.clubdata[position].address
+            viewholder.maincategory.text = SingleTonData.clubdata[position].category
+            viewholder.ClubExplain.text= SingleTonData.clubdata[position].info_text
             viewholder.CardView.setOnClickListener{
                 var intent= Intent(context, MeetingRoomActivity::class.java)
-                intent.putExtra("meeting_room_id", clubdata[position].Uid)
+                intent.putExtra("meeting_room_id", SingleTonData.clubdata[position].Uid)
                 startActivity(intent)
-                println(clubdata[position].Uid)
+                println(SingleTonData.clubdata[position].Uid)
             }
         }
 
 
         override fun getItemCount(): Int {
-            return  clubdata.size
+            return  SingleTonData.clubdata.size
         }
 
     }

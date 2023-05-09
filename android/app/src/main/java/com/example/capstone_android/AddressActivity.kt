@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.data.AddressData
 import com.example.capstone_android.databinding.ActivityAddressBinding
 import com.example.capstone_android.retrofit.RESPONSESTATE
@@ -34,6 +35,7 @@ class AddressActivity:AppCompatActivity() {
     lateinit var db : FirebaseFirestore
     var itemlist:ArrayList<AddressData> = arrayListOf()
     var searchlist:ArrayList<AddressData> = arrayListOf()
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         val getcode=intent.getStringExtra("address").toString()
         super.onCreate(savedInstanceState)
@@ -142,6 +144,7 @@ class AddressActivity:AppCompatActivity() {
                 val ad=second.plus(" ").plus(third)
                 val data = hashMapOf("address" to ad)
                 db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).set(data, SetOptions.merge()).addOnSuccessListener{
+                    SingleTonData.userInfo?.address=ad
                     finish()
                 }
             }
