@@ -69,6 +69,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
+        android:background="@drawable/shape_for_circle_button"
         app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
         app:layout_constraintStart_toStartOf="parent"

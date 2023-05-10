@@ -90,8 +90,8 @@ class DetailViewFragment: Fragment() {
                 Toast.makeText(activity, "스토리지 읽기 권한이 없습니다.", Toast.LENGTH_LONG).show()
             }
         }
-
         hobbydata=SingleTonData.userInfo?.interest_array!!
+        view.username.text=SingleTonData.userInfo?.nickname+"님을"
         recyclerView1.adapter=DetailViewRecyclerViewAdapter()
         recyclerView1.layoutManager=LinearLayoutManager(activity)
         recyclerView2.adapter=HobbyImageIconAdapter()
@@ -199,7 +199,6 @@ class DetailViewFragment: Fragment() {
     @SuppressLint("NotifyDataSetChanged", "ResourceAsColor", "SetTextI18n")
     inner class DetailViewRecyclerViewAdapter:RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         //var clubdata:ArrayList<ClubData> = arrayListOf()
-
         /*
         init{
             SingleTonData.clubdata.clear()

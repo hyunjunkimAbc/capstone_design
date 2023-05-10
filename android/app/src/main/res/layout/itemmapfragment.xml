@@ -19,6 +19,8 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         android:text="본문내용"
+        android:ellipsize="marquee"
+        android:singleLine="true"
         app:layout_constraintStart_toEndOf="@+id/imageViewmap"
         app:layout_constraintTop_toBottomOf="@+id/mapclubName" />
 
