@@ -22,6 +22,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -60,13 +61,18 @@ class ReservationRequestFragment: Fragment() {
         db.collection("place_rental_room").document(place_id).get().addOnSuccessListener {
             binding.TitleTextView.text = it["title"] as String
             binding.subtitleTextView2.text = it["info_text"] as String
+            binding.ContentsTextView.text = it["sub_info_text"] as String
             binding.addressTextView2.text = it["address"] as String
             binding.routeTextView2.text = it["route"] as String
         }
         var calendarView = binding.calendarView
-        val dateFormat:DateFormat = SimpleDateFormat("yyyyMMdd")
+        val dateFormat:DateFormat = SimpleDateFormat("yyyy-MM-dd")
         val date : Date = Date(calendarView.date)
-        val formatted = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE)
+        val formatted = if(Build.VERSION.SDK_INT>= 26) { println("check1")
+            LocalDateTime.now().format(DateTimeFormatter.ISO_DATE)}
+        else { println("check2")
+        LocalDate.now().format(DateTimeFormatter.ISO_DATE)}
+
         var reservationDay:String?=formatted
         binding.textView18.text=dateFormat.format(date)
         calendarView.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
@@ -111,7 +117,7 @@ class ReservationRequestFragment: Fragment() {
             db.collection("user").document(Firebase.auth.uid.toString()).get().addOnSuccessListener {
                 //nickname = it["nickname"].toString()
                 reserData.reservatorName = it["nickname"].toString()
-                //장소 id를 받아야함, place_rental_room_id = activity?.intent?.getStringExtra("place_rental_room_id").toString()
+                //장소 id를 받아야함
                 db.collection("place_rental_room").document(place_id).get().addOnSuccessListener {
                     reserData.placeName = it["title"].toString()
                     reserData.placeUid = it.id
@@ -126,18 +132,21 @@ class ReservationRequestFragment: Fragment() {
                     db.collection("place_rental_room").document(place_id)
                         .update("reservation_id_list", FieldValue.arrayUnion("${Firebase.auth.uid}${time}"))
                 }
+                Toast.makeText(this.context, "예약신청이 완료되었습니다.", Toast.LENGTH_LONG).show()
+                requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+                requireActivity().supportFragmentManager.popBackStack()
             }
         }
 
     }
     private fun setImageView(){
-        var placeImage = stRef.child("place_image/${place_id}.jpg")
+        var placeImage = stRef.child("place_rental_room/${place_id}.jpg")
         placeImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
             if(it.isSuccessful){
                 val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
                 binding.PlaceImageView.setImageBitmap(bmp)
             }/*else{
-                var ref = stRef.child("place_image/default.jpg")
+                var ref = stRef.child("place_rental_room/default.jpg")
                 ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                     if(it.isSuccessful){
                         val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)

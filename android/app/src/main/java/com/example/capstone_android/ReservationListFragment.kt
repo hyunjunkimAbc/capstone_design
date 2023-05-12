@@ -83,7 +83,7 @@ class ReservationListFragment : Fragment() {
             }
             val reservation_id_list = it["reservation_id_list"] as List<String>
             viewModel.items.clear()
-            var placeImageRes = stRef.child("place_image/${place_id}.jpg")
+            var placeImageRes = stRef.child("place_rental_room/${place_id}.jpg")
             placeImageRes.getBytes(Long.MAX_VALUE).addOnCompleteListener {
                 if (it.isSuccessful) {
                     bmp = BitmapFactory.decodeByteArray(it.result, 0, it.result.size)

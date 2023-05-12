@@ -135,7 +135,7 @@
             android:id="@+id/numOfPeopleText"
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="32dp"
             android:text="인원 수"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
