@@ -1,4 +1,4 @@
-package com.example.capstone_android
+package com.example.place_rental
 
 import android.graphics.BitmapFactory
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.example.capstone_android
+package com.example.place_rental
 
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
@@ -21,10 +21,8 @@ class ReservationViewModel : ViewModel() {
     val itemsListData = MutableLiveData<ArrayList<ReservationData>>()
     val items = ArrayList<ReservationData>()
 
-    var memberListArrStr =""
     val itemClickEvent = MutableLiveData<Int>()
     var itemLongClick = -1
-    var loginUserName="star1"
 
     fun addItem(item: ReservationData){
         items.add(item);

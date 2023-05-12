@@ -39,6 +39,7 @@
                     android:layout_marginTop="16dp"
                     android:text="TextView"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/PlaceImageView" />
 
@@ -49,6 +50,8 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
                     android:text="공간 소개"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/TitleTextView" />
 
@@ -58,6 +61,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="공간 소개 본문"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/subtitleTextView" />
@@ -69,6 +74,8 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
                     android:text="주소"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/subtitleTextView2" />
 
@@ -78,6 +85,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="주소"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/subtitleTextView2"
                     app:layout_constraintTop_toBottomOf="@+id/addressTextView" />
 
@@ -88,6 +97,8 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
                     android:text="오시는 길"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/addressTextView2" />
 
@@ -97,6 +108,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="오시는 길"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/subtitleTextView2"
                     app:layout_constraintTop_toBottomOf="@+id/routeTextView" />
 
@@ -108,6 +121,8 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="24dp"
                     android:text="TextView"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/routeTextView2" />
@@ -116,11 +131,11 @@
                     android:id="@+id/textView18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
                     android:layout_marginTop="16dp"
                     android:text="날짜를 선택해주세요"
                     android:textSize="20sp"
-                    app:layout_constraintEnd_toStartOf="@+id/textView8"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ContentsTextView" />
 
@@ -141,6 +156,7 @@
                     android:layout_marginTop="16dp"
                     android:text="시간을 선택해주세요"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
@@ -270,6 +286,7 @@
                     android:layout_marginTop="24dp"
                     android:text="인원"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
@@ -291,19 +308,9 @@
                     android:layout_marginStart="6dp"
                     android:text="명"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/numOfPeopleEditText"
                     app:layout_constraintTop_toTopOf="@+id/textView22" />
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="32dp"
-                    android:text="선택한 시간"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView18"
-                    app:layout_constraintTop_toTopOf="@+id/textView18" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

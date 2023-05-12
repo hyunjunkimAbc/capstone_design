@@ -1,4 +1,4 @@
-package com.example.capstone_android
+package com.example.place_rental
 
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -73,36 +73,4 @@ class ReservationListAdapter(private val viewModel: ReservationViewModel):
     }
 
     override fun getItemCount() = viewModel.items.size
-/*
-    class CustomViewHolder(private val binding: ItemReservationBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(pos : Int) {
-            binding.placeName.text = data.placeName
-            binding.reservatorName.text = data.reservatorName
-            binding.reserDate.text = data.reserDate
-            binding.reserTime.text = data.reserTime
-            if(data.okCheck) {
-                binding.okcheck.text = "O"
-                //binding.reserOkBtn.setBackgroundColor(Color.RED)
-                binding.reserOkBtn.setText("예약취소")
-            } else {
-                binding.okcheck.text = "X"
-                //binding.reserOkBtn.setBackgroundColor(Color.GREEN)
-                binding.reserOkBtn.setText("예약승인")
-            }
-            
-        }
-        fun changeChecked(data:ReservationListData) {
-            if(data.okCheck) {
-                data.okCheck=false
-                binding.reserOkBtn.setBackgroundColor(Color.GREEN)
-                binding.reserOkBtn.setText("예약승인")
-            }
-            else {
-                data.okCheck=true
-                binding.reserOkBtn.setBackgroundColor(Color.RED)
-                binding.reserOkBtn.setText("예약취소")
-            }
-        }*/
 }
