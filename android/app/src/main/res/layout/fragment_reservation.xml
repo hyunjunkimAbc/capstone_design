@@ -4,30 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReservationFragment">
+    tools:context=".ReservationRequestFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/reservationToolbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#F0F0F0"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ScrollView
-            android:layout_width="407dp"
-            android:layout_height="556dp"
+            android:layout_width="414dp"
+            android:layout_height="683dp"
             app:layout_constraintBottom_toTopOf="@+id/ReservationBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reservationToolbar">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -64,6 +53,54 @@
                     app:layout_constraintTop_toBottomOf="@+id/TitleTextView" />
 
                 <TextView
+                    android:id="@+id/subtitleTextView2"
+                    android:layout_width="360dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="공간 소개 본문"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/subtitleTextView" />
+
+                <TextView
+                    android:id="@+id/addressTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:text="주소"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/subtitleTextView2" />
+
+                <TextView
+                    android:id="@+id/addressTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="주소"
+                    app:layout_constraintStart_toStartOf="@+id/subtitleTextView2"
+                    app:layout_constraintTop_toBottomOf="@+id/addressTextView" />
+
+                <TextView
+                    android:id="@+id/routeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:text="오시는 길"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/addressTextView2" />
+
+                <TextView
+                    android:id="@+id/routeTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="오시는 길"
+                    app:layout_constraintStart_toStartOf="@+id/subtitleTextView2"
+                    app:layout_constraintTop_toBottomOf="@+id/routeTextView" />
+
+                <TextView
                     android:id="@+id/ContentsTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -73,16 +110,17 @@
                     android:text="TextView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/subtitleTextView" />
+                    app:layout_constraintTop_toBottomOf="@+id/routeTextView2" />
 
                 <TextView
                     android:id="@+id/textView18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="32dp"
                     android:layout_marginTop="16dp"
                     android:text="날짜를 선택해주세요"
                     android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@+id/textView8"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ContentsTextView" />
 
@@ -122,7 +160,7 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button"
                             style="@style/Widget.AppCompat.Button.Colored"
                             android:layout_width="wrap_content"
@@ -130,27 +168,29 @@
                             android:layout_weight="1"
                             android:text="8:00~9:00"
                             android:textOff="8:00~9:00"
-                            android:textOn="8:00~9:00" />
+                            android:textOn="8:00~9:00"
+                            app:backgroundTint="#77DC52" />
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button2"
+                            style="@style/Widget.AppCompat.Button.Colored"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="#77DC52"
                             android:text="9:00~10:00"
                             android:textOff="9:00~10:00"
-                            android:textOn="9:00~10:00" />
+                            android:textOn="9:00~10:00"
+                            app:backgroundTint="#77DC52" />
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button3"
                             style="@style/Widget.AppCompat.Button.Colored"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="10:00~11:00"
-                            android:textOn="10:00~11:00"
                             android:textOff="10:00~11:00"
+                            android:textOn="10:00~11:00"
                             app:backgroundTint="#77DC52" />
 
                         <androidx.appcompat.widget.AppCompatButton
@@ -160,8 +200,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="11:00~12:00"
-                            android:textOn="11:00~12:00"
                             android:textOff="11:00~12:00"
+                            android:textOn="11:00~12:00"
                             app:backgroundTint="#77DC52" />
 
                         <androidx.appcompat.widget.AppCompatButton
@@ -171,8 +211,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="12:00~13:00"
-                            android:textOn="12:00~13:00"
                             android:textOff="12:00~13:00"
+                            android:textOn="12:00~13:00"
                             app:backgroundTint="#77DC52" />
 
                         <androidx.appcompat.widget.AppCompatButton
@@ -182,8 +222,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="13:00~14:00"
-                            android:textOn="13:00~14:00"
                             android:textOff="13:00~14:00"
+                            android:textOn="13:00~14:00"
                             app:backgroundTint="#77DC52" />
 
                         <androidx.appcompat.widget.AppCompatButton
@@ -193,9 +233,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="14:00~15:00"
-                            android:textOn="14:00~15:00"
                             android:textOff="14:00~15:00"
-                            app:background="@drawable/schedulebtn" />
+                            android:textOn="14:00~15:00"
+                            app:backgroundTint="#77DC52" />
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button8"
@@ -204,9 +244,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="15:00~16:00"
-                            android:textOn="15:00~16:00"
                             android:textOff="15:00~16:00"
-                            app:background="@drawable/schedulebtn" />
+                            android:textOn="15:00~16:00"
+                            app:backgroundTint="#77DC52" />
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button9"
@@ -215,9 +255,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="16:00~17:00"
-                            android:textOn="16:00~17:00"
                             android:textOff="16:00~17:00"
-                            app:background="@drawable/schedulebtn" />
+                            android:textOn="16:00~17:00"
+                            app:backgroundTint="#77DC52" />
 
                     </LinearLayout>
                 </HorizontalScrollView>
@@ -253,6 +293,17 @@
                     android:textSize="20sp"
                     app:layout_constraintStart_toEndOf="@+id/numOfPeopleEditText"
                     app:layout_constraintTop_toTopOf="@+id/textView22" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:text="선택한 시간"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView18"
+                    app:layout_constraintTop_toTopOf="@+id/textView18" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
