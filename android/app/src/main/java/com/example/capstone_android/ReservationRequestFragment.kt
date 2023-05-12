@@ -61,17 +61,15 @@ class ReservationRequestFragment: Fragment() {
         db.collection("place_rental_room").document(place_id).get().addOnSuccessListener {
             binding.TitleTextView.text = it["title"] as String
             binding.subtitleTextView2.text = it["info_text"] as String
-            binding.ContentsTextView.text = it["sub_info_text"] as String
             binding.addressTextView2.text = it["address"] as String
             binding.routeTextView2.text = it["route"] as String
         }
         var calendarView = binding.calendarView
         val dateFormat:DateFormat = SimpleDateFormat("yyyy-MM-dd")
         val date : Date = Date(calendarView.date)
-        val formatted = if(Build.VERSION.SDK_INT>= 26) { println("check1")
-            LocalDateTime.now().format(DateTimeFormatter.ISO_DATE)}
-        else { println("check2")
-        LocalDate.now().format(DateTimeFormatter.ISO_DATE)}
+        val formatted =
+            if(Build.VERSION.SDK_INT>= 26) LocalDateTime.now().format(DateTimeFormatter.ISO_DATE)
+            else LocalDate.now().format(DateTimeFormatter.ISO_DATE)
 
         var reservationDay:String?=formatted
         binding.textView18.text=dateFormat.format(date)
@@ -130,7 +128,7 @@ class ReservationRequestFragment: Fragment() {
                     reserData.requestTime = time
                     db.collection("reservation").document("${Firebase.auth.uid}${time}").set(reserData)
                     db.collection("place_rental_room").document(place_id)
-                        .update("reservation_id_list", FieldValue.arrayUnion("${Firebase.auth.uid}${time}"))
+                        .update("reservation_uid_list", FieldValue.arrayUnion("${Firebase.auth.uid}${time}"))
                 }
                 Toast.makeText(this.context, "예약신청이 완료되었습니다.", Toast.LENGTH_LONG).show()
                 requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()

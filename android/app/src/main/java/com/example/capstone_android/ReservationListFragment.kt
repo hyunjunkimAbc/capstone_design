@@ -78,17 +78,17 @@ class ReservationListFragment : Fragment() {
 
     private fun initDataAndUI(){
         db.collection("place_rental_room").document(place_id).get().addOnSuccessListener {
-            if(it["reservation_id_list"] == null){
+            if(it["reservation_uid_list"] == null){
                 return@addOnSuccessListener
             }
-            val reservation_id_list = it["reservation_id_list"] as List<String>
+            val reservation_uid_list = it["reservation_uid_list"] as List<String>
             viewModel.items.clear()
             var placeImageRes = stRef.child("place_rental_room/${place_id}.jpg")
             placeImageRes.getBytes(Long.MAX_VALUE).addOnCompleteListener {
                 if (it.isSuccessful) {
                     bmp = BitmapFactory.decodeByteArray(it.result, 0, it.result.size)
                 }
-                for (reservationHistory in reservation_id_list) {
+                for (reservationHistory in reservation_uid_list) {
                     db.collection("reservation").document(reservationHistory).get()
                         .addOnSuccessListener {
                             var reserDocument = it.id
