@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/drawable/edge_of_recycler_view.xml" value="0.1734375" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/drawable/reservation_btn_shape.xml" value="0.1734375" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/drawable/round_button.xml" value="0.1734375" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/drawable/shape_for_circle_button.xml" value="0.1734375" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/activity_clickicon.xml" value="0.264" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/activity_home.xml" value="0.2418478260869565" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/activity_login.xml" value="0.15729166666666666" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/activity_main.xml" value="0.2418478260869565" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/activity_meeting_room.xml" value="0.2418478260869565" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/activity_place_interest.xml" value="0.2418478260869565" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/activity_place_list.xml" value="0.2418478260869565" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/activity_place_rental.xml" value="0.2463768115942029" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/activity_reset_pwactivity.xml" value="0.24947916666666667" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/activity_resetpassword.xml" value="0.24947916666666667" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/activity_select_interest.xml" value="0.4" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/activity_set_google_account.xml" value="0.24947916666666667" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/activity_sign_up.xml" value="0.264" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/fragment_create.xml" value="0.2418478260869565" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/fragment_edit_meeting_info.xml" value="0.23731884057971014" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/fragment_main.xml" value="0.23505434782608695" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_info.xml" value="0.23731884057971014" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_posting_add.xml" value="0.2033514492753623" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_postings.xml" value="0.24947916666666667" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/fragment_reservation.xml" value="0.264" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/fragment_reservationlist.xml" value="0.15729166666666666" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/fragment_selecthobby.xml" value="0.2463768115942029" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/fragment_show_posting.xml" value="0.24947916666666667" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/item_main.xml" value="0.23505434782608695" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/item_reservation.xml" value="0.15729166666666666" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/item_view_place.xml" value="0.2418478260869565" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/meeting_room_info_item_layout.xml" value="0.2368659420289855" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/meeting_room_postings_item_layout.xml" value="0.4" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/order_bottom_dialog.xml" value="0.1265625" />
+        <entry key="..\:/android_project/capstone_design/android/app/src/main/res/layout/profile_signed_in.xml" value="0.24947916666666667" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>
