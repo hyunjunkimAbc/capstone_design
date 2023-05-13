@@ -406,7 +406,7 @@ class ShowPostingFragment : Fragment() {
             if(it.isSuccessful){
                 val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
                 viewModel.updateItem(i, Comment(bmp,nickname,comment.commentText,comment.timePosting
-                    ,comment.writer_uid,comment.document_id))
+                ,comment.writer_uid,comment.document_id))
             }else{
                 var ref = rootRef.child("user_profile_image/default.jpg")
                 ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{

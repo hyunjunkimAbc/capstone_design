@@ -111,7 +111,7 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
                                 println("로그인 성공")
 
                                 // 홈화면으로 이동
-                                val intent = Intent(this, HomeActivity::class.java)
+                                val intent = Intent(this, ConciergeActivity::class.java)
 //                                intent.putExtra("userNickName", myNickName)
                                 startActivity(intent)
 

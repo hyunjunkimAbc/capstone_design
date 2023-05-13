@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Capstone_android">
         <activity
+            android:name=".ConciergeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ClickiconActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"

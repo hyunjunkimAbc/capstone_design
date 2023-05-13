@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_meetingRoomInfoFragment_to_editMeetingInfoFragment"
             app:destination="@id/editMeetingInfoFragment" />
+        <action
+            android:id="@+id/action_meetingRoomInfoFragment_to_reservationRequestFragment"
+            app:destination="@id/reservationRequestFragment" />
     </fragment>
     <fragment
         android:id="@+id/meetingRoomPostingsFragment"
@@ -70,4 +73,16 @@
             android:id="@+id/action_editMeetingInfoFragment_to_meetingRoomInfoFragment"
             app:destination="@id/meetingRoomInfoFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/reservationRequestFragment"
+        android:name="com.example.place_rental.ReservationRequestFragment"
+        android:label="ReservationRequestFragment" >
+        <action
+            android:id="@+id/action_reservationRequestFragment_to_meetingRoomInfoFragment"
+            app:destination="@id/meetingRoomInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reservationListFragment"
+        android:name="com.example.place_rental.ReservationListFragment"
+        android:label="ReservationListFragment" />
 </navigation>

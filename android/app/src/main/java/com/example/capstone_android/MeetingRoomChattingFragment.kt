@@ -2,20 +2,47 @@ package com.example.capstone_android
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone_android.databinding.FragmentMeetingRoomChattingBinding
-import com.example.capstone_android.databinding.FragmentShowPostingBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.tensorflow.lite.Interpreter
+import retrofit2.http.*
+import java.io.*
+import java.lang.Exception
+import java.net.HttpURLConnection
+import java.net.MalformedURLException
+import java.net.URL
+import java.net.URLEncoder
+import android.content.res.AssetFileDescriptor
+
+import android.app.Activity
+import org.json.JSONObject
+import org.tensorflow.lite.Tensor
+import org.tensorflow.lite.support.label.Category
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import java.nio.MappedByteBuffer
+import java.nio.channels.FileChannel
+import org.tensorflow.lite.task.text.nlclassifier.NLClassifier
+
+import org.tensorflow.lite.task.core.BaseOptions
+
+import org.tensorflow.lite.task.text.nlclassifier.NLClassifier.NLClassifierOptions
+
+
+
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,7 +68,8 @@ class MeetingRoomChattingFragment : Fragment() {
     var rootRef = Firebase.storage.reference
     val userCollection = db.collection("user")
     val commentCollection = db.collection("comment")
-    val meetingRoomCollection = db.collection("meeting_room")
+    var meetingRoomCollection = db.collection("lighting_meeting_room")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -77,16 +105,80 @@ class MeetingRoomChattingFragment : Fragment() {
             val i =viewModel.itemClickEvent.value
         }
         registerForContextMenu(recyclerViewCommentChatting)
+        val colName = activity?.intent?.getStringExtra("collectionName")
+        meetingRoomCollection = db.collection(colName!!)
         //데이터 얻어와서 ui에 반영
         initDataAndUI()
 
         println("onViewCreated ${viewModel.items.size}")
     }
+
+
+    private fun post(apiUrl: String, requestHeaders: Map<String, String>, text: String): String {
+        val con: HttpURLConnection = connect(apiUrl)
+        val postParams =
+            "source=ko&target=en&text=$text"
+        return try {
+            con.setRequestMethod("POST")
+            for ((key, value) in requestHeaders) {
+                con.setRequestProperty(key, value)
+            }
+            con.setDoOutput(true)
+            DataOutputStream(con.getOutputStream()).use { wr ->
+                wr.write(postParams.toByteArray())
+                wr.flush()
+            }
+            val responseCode: Int = con.getResponseCode()
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                readBody(con.getInputStream()).toString()
+            } else {
+                readBody(con.getErrorStream()).toString()
+            }
+        } catch (e: IOException) {
+            throw RuntimeException("요청 faild", e)
+        } finally {
+            con.disconnect()
+        }
+    }
+
+    private fun connect(apiUrl: String): HttpURLConnection {
+        return try {
+            val url = URL(apiUrl)
+            url.openConnection() as HttpURLConnection
+        } catch (e: MalformedURLException) {
+            throw RuntimeException("faild1 : $apiUrl", e)
+        } catch (e: IOException) {
+            throw RuntimeException("faild2: $apiUrl", e)
+        }
+    }
+
+    private fun readBody(body: InputStream): String? {
+        val streamReader = InputStreamReader(body)
+        try {
+            BufferedReader(streamReader).use { lineReader ->
+                val responseBody = StringBuilder()
+                var line: String?
+                while (lineReader.readLine().also { line = it } != null) {
+                    responseBody.append(line)
+                }
+                return responseBody.toString()
+            }
+        } catch (e: IOException) {
+            throw RuntimeException("faild3", e)
+        }
+    }
+
     private fun initDataAndUI(){
         document_id = activity?.intent?.getStringExtra("meeting_room_id").toString()
 
         println("document_id ----------- ${document_id}")
         println("uid =-------- ${Firebase.auth.uid}")
+        val colName = activity?.intent?.getStringExtra("collectionName")
+        if(colName == MeetingRoomDataManager.collectionNameOfPlaceRental  ){
+            binding.textView.text = "장소 리뷰"
+        }else if(colName == MeetingRoomDataManager.collectionNameOfCompetition){
+            binding.textView.text = "대회 리뷰"
+        }
         binding.uploadChattingBtn.setOnClickListener {
             //editText 에 있는 거 받아서 comment컬랙션에 add
 
@@ -97,6 +189,59 @@ class MeetingRoomChattingFragment : Fragment() {
                 "upload_time" to time,
                 "writer_uid" to Firebase.auth.uid
             )
+            val colName = activity?.intent?.getStringExtra("collectionName")
+            if(colName == MeetingRoomDataManager.collectionNameOfPlaceRental || colName == MeetingRoomDataManager.collectionNameOfCompetition){
+                val CLIENT_ID = MeetingRoomDataManager.CLIENT_ID
+                val CLIENT_SECRET = MeetingRoomDataManager.CLIENT_SECRET
+                val BASE_URL_NAVER_API = "https://openapi.naver.com/v1/papago/n2mt"
+                val contentType = "application/x-www-form-urlencoded"
+                val charset = "UTF-8"
+                val text = URLEncoder.encode(inputText.toString(),"UTF-8")
+
+                val requestHeaders: MutableMap<String, String> = HashMap()
+                requestHeaders["X-Naver-Client-Id"] = CLIENT_ID
+                requestHeaders["X-Naver-Client-Secret"] = CLIENT_SECRET
+                CoroutineScope(Dispatchers.IO).launch{
+                    val responseBody: String = post(BASE_URL_NAVER_API, requestHeaders, text)
+                    println("성공 ${responseBody}")
+
+                    val testinput ="worst"
+                    val message = JSONObject(responseBody).getJSONObject("message")
+                    println(message)
+                    val result = message.getJSONObject("result")
+                    println(result)
+                    val translatedText = result.getString("translatedText")
+                    println(translatedText)
+                    val options = NLClassifierOptions.builder()
+                        .setBaseOptions(BaseOptions.builder().useNnapi().build())
+                        .setInputTensorName("input")
+                        .setOutputScoreTensorName("output")
+                        .build()
+                    val classifier = NLClassifier.createFromFileAndOptions(context, "text_classification_v2.tflite", options)
+                    println(translatedText)
+
+                    val results = classifier.classify(translatedText)
+                    println("분류 결과 ${results[1].label} ${results[1].score}")
+                    if (results[1].score > 0.65){
+                        println("긍정적 리뷰 입니다.")
+                        meetingRoomCollection.document(document_id).get().addOnSuccessListener {
+                            if (it["num_of_positive"]==null){
+                                val thisdoc =meetingRoomCollection.document(document_id)
+                                thisdoc
+                                    .update("num_of_positive", 1)
+                                    .addOnSuccessListener { println("success")}
+                                    .addOnFailureListener {println("faild") }
+
+                            }else{
+                                val thisdoc = meetingRoomCollection.document(document_id)
+                                thisdoc.update("num_of_positive", FieldValue.increment(1))
+                            }
+                        }
+
+                    }
+
+                }
+            }
 
             commentCollection.add(itemMap).addOnSuccessListener {
                 // posting 컬랙션에 배열 추가해서 적용 set사용
