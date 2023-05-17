@@ -32,23 +32,23 @@ class ConciergeActivity : AppCompatActivity() {
         "competition_room"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.lightingMeetingButton.setOnClickListener {
+        binding.Lightningmeetingbutton.setOnClickListener {
             inputDataAndStartActivity(collectionNameOfLightingMeetingRoom)
         }
-        binding.periodicMeetingButton.setOnClickListener {
+        binding.Mainmeetingbutton.setOnClickListener {
             inputDataAndStartActivity(collectionNameOfPeriodicMeetingRoom)
         }
-        binding.placeRentalButton.setOnClickListener {
+        binding.locationbutton.setOnClickListener {
             inputDataAndStartActivity(collectionNameOfPlaceRental)
         }
-        binding.competitionButton.setOnClickListener {
+        binding.Competitionbutton.setOnClickListener {
             inputDataAndStartActivity(collectionNameOfCompetition)
         }
 
-        setRecyclerView(LightingAdapter(viewModelLightingMeetingRoom),viewModelLightingMeetingRoom,binding.lightingMeetingRecyclerView)
-        setRecyclerView(PeriodicAdapter(viewModelPeriodicMeetingRoom),viewModelPeriodicMeetingRoom,binding.periodicMeetingRecyclerView)
-        setRecyclerView(PlaceRentalAdapter(viewModelPlaceRentalRoom),viewModelPlaceRentalRoom,binding.placeRentalRecyclerView)
-        setRecyclerView(CompetitionAdapter(viewModelCompetitionRoom),viewModelCompetitionRoom,binding.competitionRecyclerView)
+        setRecyclerView(LightingAdapter(viewModelLightingMeetingRoom),viewModelLightingMeetingRoom,binding.Lightningmeetingrecyclerview)
+        setRecyclerView(PeriodicAdapter(viewModelPeriodicMeetingRoom),viewModelPeriodicMeetingRoom,binding.mainhomemeetingrecyclerview )
+        setRecyclerView(PlaceRentalAdapter(viewModelPlaceRentalRoom),viewModelPlaceRentalRoom,binding.placeRantalRecyclerView )
+        setRecyclerView(CompetitionAdapter(viewModelCompetitionRoom),viewModelCompetitionRoom,binding.CompetitionRecyclerView )
 
 
         addToRecyclerView(MeetingRoomDataManager.collectionNameOfLightingMeetingRoom,

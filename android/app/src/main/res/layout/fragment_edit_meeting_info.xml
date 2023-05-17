@@ -64,7 +64,9 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="" />
+                    android:minHeight="48dp"
+                    android:text=""
+                    tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
                 <EditText
                     android:id="@+id/editTextTextEndTime"
@@ -72,7 +74,9 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="" />
+                    android:minHeight="48dp"
+                    android:text=""
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <LinearLayout
                     android:id="@+id/linear_max_horiz"
@@ -177,7 +181,7 @@
             android:id="@+id/uploadPostingBtnMeetingInfoEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#8BC34A"
+            android:backgroundTint="#36DA90"
             android:text="edit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

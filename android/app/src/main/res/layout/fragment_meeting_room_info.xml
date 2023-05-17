@@ -27,7 +27,7 @@
             android:id="@+id/enterMeetingRoomBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#8BC34A"
+            android:backgroundTint="#36DA90"
             android:text="가입하기"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

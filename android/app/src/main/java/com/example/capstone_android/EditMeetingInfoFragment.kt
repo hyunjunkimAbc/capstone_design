@@ -78,6 +78,10 @@ class EditMeetingInfoFragment : Fragment() {
     var positiony = 0.1
     var startTime :Long= 0
     var endTime :Long= 0
+    var startTimeStrGlobal =""
+    var endTimeStrGlobal =""
+    var startTimeCompetition :String= ""
+    var endTimeCompetition :String= ""
     var reservation_uid_list:Any? =null
     var meetingRoomGenerator: MeetingRoomViewGenerator? =null
     var meetingRoomFactory : AbstractMeetingRoomFactory? = null
@@ -258,6 +262,8 @@ class EditMeetingInfoFragment : Fragment() {
                 val endTimeStr = "${SimpleDateFormat("yyyy-MM-dd").format(endTime2)}"
                 startTime = startTime2
                 endTime = endTime2
+                startTimeStrGlobal = startTimeStr
+                endTimeStrGlobal = endTimeStr
 
                 binding.editTextStartTime.hint = "(모임 시작 시간) ${startTimeStr} 형식으로 입력"
                 binding.editTextTextEndTime.hint = "(모임 종료 시간) ${endTimeStr} 형식으로 입력"
@@ -288,7 +294,7 @@ class EditMeetingInfoFragment : Fragment() {
                 return false
             }
             if(!Pattern.matches("^\\d{4}-\\d{2}-\\d{2}$",binding.editTextStartTime.getText())){
-                binding.editTextStartTime.setText("")
+                binding.editTextStartTime.setText(startTimeStrGlobal)
                 Toast.makeText(activity,"시작 날짜는 1999-03-01의 형식으로 입력해주세요", Toast.LENGTH_SHORT).show()
                 return false
             }else{
@@ -300,8 +306,8 @@ class EditMeetingInfoFragment : Fragment() {
 
             }
             if(!Pattern.matches("^\\d{4}-\\d{2}-\\d{2}$",binding.editTextTextEndTime.getText())){
-                binding.editTextTextEndTime.setText("")
-                Toast.makeText(activity,"시작 날짜는 1999-03-01의 형식으로 입력해주세요", Toast.LENGTH_SHORT).show()
+                binding.editTextTextEndTime.setText(endTimeStrGlobal)
+                Toast.makeText(activity,"종료 날짜는 1999-03-01의 형식으로 입력해주세요", Toast.LENGTH_SHORT).show()
                 return false
             }else{
                 val cal = Calendar.getInstance()
@@ -387,20 +393,46 @@ class EditMeetingInfoFragment : Fragment() {
         }
 
         override fun addAdditionerViewAndAssignData(it: DocumentSnapshot) {
-            MeetingRoomController().removeMax()
-            MeetingRoomController().removeStartEndTime()
+
             member_list = it["member_list"] as ArrayList<String>
+            if(it["start_time"] !=null && it["end_time"] !=null){
+                val startTime2 = it["start_time"] as String //view
+                val endTime2 = it["end_time"] as String //view
+
+                startTimeCompetition = startTime2
+                endTimeCompetition = endTime2
+                binding.editTextStartTime.setText(startTime2)
+                binding.editTextTextEndTime.setText(endTime2)
+
+                binding.editTextStartTime.hint = "(대회 시작 시간) ${startTimeCompetition} 형식으로 입력"
+                binding.editTextTextEndTime.hint = "(대회 종료 시간) ${endTimeCompetition} 형식으로 입력"
+                //datepicker로 변경 해야 함
+            }
         }
 
         override fun getViewByEachMeetingRoom(): MeetingRoomData {
             var meetingRoomData = CompetitionRoomData()
             meetingRoomData.positionx = positionx
             meetingRoomData.positiony = positiony
+            meetingRoomData.start_time = startTimeCompetition
+            meetingRoomData.end_time = endTimeCompetition
             meetingRoomData.member_list = member_list as ArrayList<String>
             return meetingRoomData
         }
 
         override fun processEachMeetingRoom() :Boolean{
+            if(!Pattern.matches("^\\d{4}년\\d{2}월\\d{2}일\\d{2}시\\d{2}분$",binding.editTextStartTime.getText())){
+                binding.editTextStartTime.setText(startTimeCompetition)
+                Toast.makeText(activity,"시작 날짜는 1999년03월01일01시00분의 형식으로 입력해주세요", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            if(!Pattern.matches("^\\d{4}년\\d{2}월\\d{2}일\\d{2}시\\d{2}분$",binding.editTextTextEndTime.getText())){
+                binding.editTextStartTime.setText(endTimeCompetition)
+                Toast.makeText(activity,"시작 날짜는 1999년03월01일01시00분의 형식으로 입력해주세요", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            startTimeCompetition = binding.editTextStartTime.getText().toString()
+            endTimeCompetition = binding.editTextTextEndTime.getText().toString()
             return true
         }
     }

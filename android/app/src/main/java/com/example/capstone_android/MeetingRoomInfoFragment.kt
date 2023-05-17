@@ -644,6 +644,7 @@ class MeetingRoomInfoFragment : Fragment() {
             binding.enterMeetingRoomBtn.setOnClickListener {
                 println("대회 참여 화면으로 이동")
             }
+
         }
 
         override fun addAdditionerViewAndAssignData(it: DocumentSnapshot) {
@@ -654,6 +655,29 @@ class MeetingRoomInfoFragment : Fragment() {
             member_list = it["member_list"] as ArrayList<String> //view
 
              */
+            if(it["start_time"] !=null && it["end_time"] !=null){
+                val startTime = it["start_time"] as String //view
+                val endTime = it["end_time"] as String //view
+
+                val TextView = TextView(activity?.applicationContext).apply { // 새로운 버튼 객체 생성
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    text = "모임 시작 시간 : ${startTime}"
+                }
+                val TextView2 = TextView(activity?.applicationContext).apply { // 새로운 버튼 객체 생성
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    text = "모임 종료 시간 : ${endTime}"
+                }
+                //val linearLayout = binding.root.findViewById<LinearLayout>(R.id.linearLayoutForEachInfo)
+
+                binding.linearLayoutForEachInfo.addView(TextView)
+                binding.linearLayoutForEachInfo.addView(TextView2)
+            }
             binding.linearLayoutAreaNumOfPeople.removeView(binding.numOfPeople)
         }
 
