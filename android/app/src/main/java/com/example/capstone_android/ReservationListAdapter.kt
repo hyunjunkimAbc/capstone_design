@@ -1,4 +1,4 @@
-package com.example.place_rental
+package com.example.capstone_android
 
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -16,11 +16,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class ReservationListAdapter(private val viewModel: ReservationViewModel):
-    //(private val reservations: List<ReservationListData>) :
     RecyclerView.Adapter<ReservationListAdapter.ViewHolder>() {
-    //var reservationHistory /*: ArrayList<ReservationListData>*/ = reservations
     inner class ViewHolder(private val binding: ItemReservationBinding):RecyclerView.ViewHolder(binding.root){
-        var txt:String = ""
         val db = Firebase.firestore
         fun setContents(pos : Int){
             with(viewModel.items[pos]){

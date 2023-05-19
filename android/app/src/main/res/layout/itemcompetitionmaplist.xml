@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="330dp"
+    android:id="@+id/competitionmapitemclick"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="40dp"
+    android:layout_marginEnd="40dp"
+    android:background="@drawable/bottomsheetdialog"
+    android:backgroundTint="@color/white"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/competitionmapimg"
+        android:layout_width="wrap_content"
+        android:layout_height="130dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/plusprofileimg" />
+
+    <TextView
+        android:id="@+id/competitionmaptitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/competitionmapimg" />
+    <TextView
+        android:id="@+id/compemaptext1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:text="긍정리뷰 수 :"
+        android:textColor="#36DA90"
+        app:layout_constraintEnd_toStartOf="@+id/competitionmapgoodcount"
+        app:layout_constraintTop_toBottomOf="@+id/competitionmapimg" />
+    <TextView
+        android:id="@+id/competitionmapgoodcount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        android:text="10"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/competitionmapimg" />
+
+    <TextView
+        android:id="@+id/competitionmapexpain"
+        android:layout_width="match_parent"
+        android:layout_marginStart="10dp"
+        app:layout_goneMarginEnd="10dp"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:text="대회 본문 내용"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/competitionmaptitle" />
+
+    <TextView
+        android:id="@+id/competitionmapstart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="5dp"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="시작"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/competitionmapexpain"
+        app:layout_goneMarginEnd="10dp" />
+
+    <TextView
+        android:id="@+id/competitionmapend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="5dp"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:layout_marginTop="5dp"
+        android:text="종료"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/competitionmapstart"
+        app:layout_goneMarginEnd="10dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

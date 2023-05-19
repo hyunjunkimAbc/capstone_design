@@ -1,4 +1,4 @@
-package com.example.place_rental
+package com.example.capstone_android
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -67,22 +67,28 @@ class ReservationRequestFragment: Fragment() {
             binding.TitleTextView.text = it["title"] as String
             binding.subtitleTextView2.text = it["info_text"] as String
             binding.addressTextView2.text = it["address"] as String
-            binding.routeTextView2.text = it["route"] as String
         }
         var calendarView = binding.calendarView
-        val dateFormat:DateFormat = SimpleDateFormat("yyyy-MM-dd")
-        val date : Date = Date(calendarView.date)
         var currTime=  Calendar.getInstance().timeInMillis
+        var selectTime = currTime
         val formatted = "${SimpleDateFormat("yyyy-MM-dd").format(currTime)}"
 
-
         var reservationDay:String?=formatted
-        binding.textView18.text=dateFormat.format(date)
         calendarView.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
-            var month2=if(month<9)"0"+(month+1).toString() else (month+1).toString()
-            var dayOfMonth2=if(dayOfMonth<10) "0"+dayOfMonth.toString() else dayOfMonth.toString()
-            reservationDay = "${year}-${month2}-${dayOfMonth2}"
-            binding.textView18.text = reservationDay
+            selectTime = Calendar.getInstance().apply{
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, month)
+                set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            }.timeInMillis
+            if(currTime>selectTime){
+                Toast.makeText(activity, "해당 날짜는 예약할 수 없습니다.", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                var month2 = if (month < 9) "0" + (month + 1).toString() else (month + 1).toString()
+                var dayOfMonth2 =
+                    if (dayOfMonth < 10) "0" + dayOfMonth.toString() else dayOfMonth.toString()
+                reservationDay = "${year}-${month2}-${dayOfMonth2}"
+            }
         }
 
         binding.button.setOnClickListener(){
@@ -114,33 +120,55 @@ class ReservationRequestFragment: Fragment() {
         }
 
         binding.ReservationBtn.setOnClickListener(){ // 예약신청 버튼 클릭
-            reservationTime()
-            time=System.currentTimeMillis()
-            var reserData= ReservationRequestData()
-            db.collection("user").document(Firebase.auth.uid.toString()).get().addOnSuccessListener {
-                //nickname = it["nickname"].toString()
-                reserData.reservatorName = it["nickname"].toString()
-                //장소 id를 받아야함
-                db.collection("place_rental_room").document(place_id).get().addOnSuccessListener {
-                    reserData.placeName = it["title"].toString()
-                    reserData.placeUid = it.id
-                    reserData.reservatorUid = Firebase.auth.uid.toString()
-                    reserData.requestDate = reservationDay
-                    reserData.startReservedSchedule = reserStart.toString()
-                    reserData.endReservedSchedule = reserEnd.toString()
-                    reserData.numOfPeople = binding.numOfPeopleEditText.getText().toString().toInt()
-                    //reserData.numOfPeople = 5
-                    reserData.requestToday = formatted
-                    reserData.requestTime = time
-                    db.collection("reservation").document("${Firebase.auth.uid}${time}").set(reserData)
-                    db.collection("place_rental_room").document(place_id)
-                        .update("reservation_uid_list", FieldValue.arrayUnion("${Firebase.auth.uid}${time}"))
-                }
-                Toast.makeText(this.context, "예약신청이 완료되었습니다.", Toast.LENGTH_LONG).show()
+            if(currTime>selectTime){
+                Toast.makeText(activity, "날짜를 다시 선택해주세요.", Toast.LENGTH_SHORT).show()
+            }
+            else if(!scheduleBtn.contains(true)){
+                Toast.makeText(activity, "이용시간을 선택해주세요.", Toast.LENGTH_SHORT).show()
+            }
+            else if(binding.numOfPeopleEditText.getText().toString()==""){
+                Toast.makeText(activity, "이용인원을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                reservationTime()
+                time = System.currentTimeMillis()
+                var reserData = ReservationRequestData()
+                db.collection("user").document(Firebase.auth.uid.toString()).get()
+                    .addOnSuccessListener {
+                        //nickname = it["nickname"].toString()
+                        reserData.reservatorName = it["nickname"].toString()
+                        //장소 id를 받아야함
+                        db.collection("place_rental_room").document(place_id).get()
+                            .addOnSuccessListener {
+                                reserData.placeName = it["title"].toString()
+                                reserData.placeUid = it.id
+                                reserData.reservatorUid = Firebase.auth.uid.toString()
+                                reserData.requestDate = reservationDay
+                                reserData.startReservedSchedule = reserStart.toString()
+                                reserData.endReservedSchedule = reserEnd.toString()
+                                reserData.numOfPeople = binding.numOfPeopleEditText.getText().toString().toInt()
+                                //reserData.numOfPeople = 5
+                                reserData.requestToday = formatted
+                                reserData.requestTime = time
+                                db.collection("reservation").document("${Firebase.auth.uid}${time}")
+                                    .set(reserData)
+                                db.collection("place_rental_room").document(place_id)
+                                    .update(
+                                        "reservation_uid_list",
+                                        FieldValue.arrayUnion("${Firebase.auth.uid}${time}")
+                                    )
+                                db.collection("user").document("${Firebase.auth.uid}")
+                                    .update(
+                                        "reservation_list",
+                                        FieldValue.arrayUnion("${Firebase.auth.uid}${time}")
+                                    )
+                            }
+                        Toast.makeText(context, "예약신청이 완료되었습니다.", Toast.LENGTH_SHORT).show()
 
                 findNavController().navigate(R.id.action_reservationRequestFragment_to_meetingRoomInfoFragment )
                 //requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
                 //requireActivity().supportFragmentManager.popBackStack()
+                    }
             }
         }
 
@@ -225,7 +253,7 @@ class ReservationRequestFragment: Fragment() {
     }
 
     private fun SelectedBtn(i:Int){
-        val a="#3B881E"
+        val a="#37837C"
         if(i==0) binding.button.background.setTint(Color.parseColor(a))
         else if(i==1) binding.button2.background.setTint(Color.parseColor(a))
         else if(i==2) binding.button3.background.setTint(Color.parseColor(a))
@@ -237,7 +265,7 @@ class ReservationRequestFragment: Fragment() {
         else if(i==8) binding.button9.background.setTint(Color.parseColor(a))
     }
     private fun notSelectedBtn(i:Int){
-        val a="#77DC52"
+        val a="#36DA90"
         if(i==0) binding.button.background.setTint(Color.parseColor(a))
         else if(i==1) binding.button2.background.setTint(Color.parseColor(a))
         else if(i==2) binding.button3.background.setTint(Color.parseColor(a))

@@ -1,4 +1,4 @@
-package com.example.place_rental
+package com.example.capstone_android
 
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData

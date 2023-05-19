@@ -1,6 +1,5 @@
 package com.example.capstone_android
 
-import android.R
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -9,6 +8,7 @@ import android.provider.MediaStore
 import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.data.SignUpData
 import com.example.capstone_android.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -49,7 +49,6 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
         supportActionBar!!.setDisplayHomeAsUpEnabled(true) // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
         supportActionBar!!.setTitle("회원가입") // 툴바 제목 설정
 
-
         binding.profileImageButton.setOnClickListener(){ // 첨부파일 이미지 버튼 클릭
             println("이미지 버튼 클릭")
             //uploadDialog()
@@ -65,17 +64,23 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
         // 생년월일 선택 DatePicker
         val datePicker : DatePicker = binding.dpSpinner
 
+        binding.setInterestBtn.setOnClickListener(){
+            val intent = Intent(this, SelectHobbyActivity::class.java)
+            intent.putExtra("key", "selecthobby")
+            startActivity(intent)
+        }
+
         // 가입하기 버튼 클릭
         binding.SignUpButton.setOnClickListener(){
             println("가입하기 버튼 클릭")
             // 체크된 관심사 배열에 세팅
-            select_interest_CheckBox()
+            //select_interest_CheckBox()
             if (binding.EmailEditText.getText().toString()==""){     // email을 입력하지 않았을 때
                 println("이메일을 입력하지 않음")
                 Toast.makeText(
                     this,
                     "이메일을 입력하지않았습니다.",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
             }
             else if (binding.PWEditText.getText().toString()==""){     // 비밀번호를 입력하지 않았을 때
@@ -83,7 +88,7 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                 Toast.makeText(
                     this,
                     "비밀번호를 입력하지않았습니다.",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
             }
             else if (binding.PWEditText.getText().toString()!=binding.PWEditText2.getText().toString()){     // 첫번째 적은 비밀번호와 두번째 적은 비밀번호가 같지 않을때
@@ -91,7 +96,7 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                 Toast.makeText(
                     this,
                     "비밀번호가 같지않습니다.",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
             }
             else if(binding.NicknameEditText.getText().toString()==""){    // nickname을 입력하지 않았을 때
@@ -99,7 +104,7 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                 Toast.makeText(
                     this,
                     "닉네임을 입력하지않았습니다.",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
             }
             else if (binding.PWEditText.length()<6){     // 비밀번호 글자수가 6자 미만이면
@@ -107,7 +112,7 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                 Toast.makeText(
                     this,
                     "비밀번호를 6자 이상 입력해주세요.",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
             }
             else if (binding.PWEditText.length()>15){     // 비밀번호 글자수가 15자 초과하면
@@ -115,7 +120,7 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                 Toast.makeText(
                     this,
                     "비밀번호를 15자 이하로 입력해주세요.",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
             }
             else if (binding.NicknameEditText.length()>15){     // 닉네임의 글자수가 15자 초과하면
@@ -123,15 +128,15 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                 Toast.makeText(
                     this,
                     "닉네임 글자수 15자를 초과하였습니다.",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
             }
-            else if (interest_array.isNullOrEmpty()){
-                println("체크된 관심사가 없음")
+            else if (SingleTonData.userInfo?.interest_array==null){
+
                 Toast.makeText(
                     this,
                     "관심사를 선택해주세요.",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
             }
             else {
@@ -151,7 +156,7 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                         signdata.birthday=datePicker.year.toString()+datePicker.month.toString()+datePicker.dayOfMonth.toString()
                         signdata.timestamp=System.currentTimeMillis()
                         signdata.profile_message=""
-                        signdata.interest_array=interest_array
+                        signdata.interest_array=SingleTonData.userInfo?.interest_array!!
                         signdata.edit_time=System.currentTimeMillis()
 
                         // DB postings 컬렉션 레퍼런스 가져오기
@@ -176,7 +181,7 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                         Toast.makeText(
                             this,
                             "회원가입에 성공하였습니다.",
-                            Toast.LENGTH_LONG
+                            Toast.LENGTH_SHORT
                         ).show()
                         finish()
                     }
@@ -189,7 +194,7 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                                     Toast.makeText(
                                         this,
                                         "해당 이메일이 이미 존재합니다.",
-                                        Toast.LENGTH_LONG
+                                        Toast.LENGTH_SHORT
                                     ).show()
                                 }
                             }
@@ -200,7 +205,7 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                         Toast.makeText(
                             this,
                             "이메일 형식이 아닙니다.",
-                            Toast.LENGTH_LONG
+                            Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -210,11 +215,6 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
 
     }
 
-    /*    //액션버튼 메뉴 액션바에 집어 넣기
-        override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-            menuInflater.inflate(R.menu.toolbar_menu, menu)
-            return true
-        }*/
     //액션버튼 클릭 했을 때
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item?.itemId){
@@ -255,48 +255,5 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                 }
             }
         }
-    }
-
-    fun select_interest_CheckBox()/*:Array<String> */{
-        if(binding.sportsCheckBox.isChecked) {
-            interest_array.add("운동")
-        }
-        if(binding.tripCheckBox.isChecked) {
-            interest_array.add("여행")
-        }
-        if(binding.musicCheckBox.isChecked) {
-            interest_array.add("음악")
-        }
-        if(binding.societyCheckBox.isChecked) {
-            interest_array.add("사교")
-        }
-        if(binding.readCheckBox.isChecked) {
-            interest_array.add("독서")
-        }
-        if(binding.cookCheckBox.isChecked) {
-            interest_array.add("요리")
-        }
-        if(binding.photoCheckBox.isChecked) {
-            interest_array.add("사진")
-        }
-        if(binding.gameCheckBox.isChecked) {
-            interest_array.add("게임")
-        }
-        if(binding.danceCheckBox.isChecked) {
-            interest_array.add("댄스")
-        }
-        if(binding.carCheckBox.isChecked) {
-            interest_array.add("차/오토바이")
-        }
-        if(binding.artCheckBox.isChecked) {
-            interest_array.add("공예")
-        }
-        if(binding.volunteerCheckBox.isChecked) {
-            interest_array.add("봉사활동")
-        }
-        if(binding.studyCheckBox.isChecked) {
-            interest_array.add("공부/자기개발")
-        }
-        println("선택한 관심사 카테고리"+ interest_array)
     }
 }

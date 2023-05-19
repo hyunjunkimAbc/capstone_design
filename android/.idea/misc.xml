@@ -3,6 +3,59 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/_checkbox_aerobics.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/_checkbox_bracelet.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/art_art.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/camera_camera.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/check_mark.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/edge_design1.xml" value="0.14270833333333333" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/game_aos.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/ic_baseline_cancel_24.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/icon_art.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/icon_car.xml" value="0.14270833333333333" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/icon_volunteer.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/mainbuttonimg.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/music_band.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/reservation_btn_shape.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/reservation_corner_shape.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/round_button.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/society_beer.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/timecheck.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable/round_button.xml" value="0.22870370370370371" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable/shape_for_circle_button.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable/xml_car.xml" value="0.14270833333333333" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable/xml_read.xml" value="0.14270833333333333" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_addplace.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_address.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_changehobby.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_competitioncreate.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_concierge.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_create.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_home.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_login.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_searchmap.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_select_interest.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_set_google_account.xml" value="0.264" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_sign_up.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/addressitem.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_artfragment.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_create.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_main.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_map.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_reservation.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_reservationlist.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_selecthobby.xml" value="0.1265625" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/item_layout_banner.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/item_main.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/item_main2.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/itemcompetitionmaplist.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/itemlight.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/itemmapfragment.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/itemplacelist.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/itemplacemaplist.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/search_shared_history_item.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/searchaddressitem.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/timedialog.xml" value="0.17300724637681159" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/activity_meeting_room.xml" value="0.1" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_edit_meeting_info.xml" value="0.16666666666666666" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_edit_posting.xml" value="0.1272644927536232" />

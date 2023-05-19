@@ -459,7 +459,7 @@ class EditMeetingInfoFragment : Fragment() {
         //(activity as MeetingRoomActivity).setMeetingRoomId(document_id)
         val colName = activity?.intent?.getStringExtra("collectionName")
         meetingRoomCollection = db.collection(colName!!)
-
+        /*
         if (MeetingRoomDataManager.collectionNameOfLightingMeetingRoom ==colName){
             meetingRoomFactory = LightningMeetingRoomFactory()
         }else if(MeetingRoomDataManager.collectionNameOfPeriodicMeetingRoom == colName){
@@ -469,6 +469,8 @@ class EditMeetingInfoFragment : Fragment() {
         }else if(MeetingRoomDataManager.collectionNameOfPlaceRental ==colName){
             meetingRoomFactory = PlaceRentalRoomFactory()
         }
+
+         */
         meetingRoomGenerator = meetingRoomFactory?.createMeetingRoomViewGenerator()
         meetingRoomGenerator?.initDataAndUI()
 

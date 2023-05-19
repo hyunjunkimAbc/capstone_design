@@ -11,12 +11,16 @@
         android:layout_height="match_parent">
 
         <ScrollView
-            android:layout_width="414dp"
-            android:layout_height="683dp"
+            android:id="@+id/scrollView4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/ReservationBtn"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.676">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -47,10 +51,10 @@
                     android:id="@+id/subtitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
                     android:text="공간 소개"
-                    android:textSize="14dp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/TitleTextView" />
@@ -71,10 +75,10 @@
                     android:id="@+id/addressTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
                     android:text="주소"
-                    android:textSize="14dp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/subtitleTextView2" />
@@ -91,46 +95,25 @@
                     app:layout_constraintTop_toBottomOf="@+id/addressTextView" />
 
                 <TextView
-                    android:id="@+id/routeTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:text="오시는 길"
-                    android:textSize="14dp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/addressTextView2" />
-
-                <TextView
-                    android:id="@+id/routeTextView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="오시는 길"
-                    android:textSize="14dp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/subtitleTextView2"
-                    app:layout_constraintTop_toBottomOf="@+id/routeTextView" />
-
-                <TextView
                     android:id="@+id/textView18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="날짜를 선택해주세요"
+                    android:text="예약 날짜"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/routeTextView2" />
+                    app:layout_constraintTop_toBottomOf="@+id/addressTextView2" />
 
                 <CalendarView
                     android:id="@+id/calendarView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edge_design2"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.492"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
@@ -140,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="시간을 선택해주세요"
+                    android:text="이용시간"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -171,7 +154,7 @@
                             android:text="8:00~9:00"
                             android:textOff="8:00~9:00"
                             android:textOn="8:00~9:00"
-                            app:backgroundTint="#77DC52" />
+                            app:backgroundTint="#36DA90" />
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button2"
@@ -182,7 +165,7 @@
                             android:text="9:00~10:00"
                             android:textOff="9:00~10:00"
                             android:textOn="9:00~10:00"
-                            app:backgroundTint="#77DC52" />
+                            app:backgroundTint="#36DA90" />
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button3"
@@ -193,7 +176,7 @@
                             android:text="10:00~11:00"
                             android:textOff="10:00~11:00"
                             android:textOn="10:00~11:00"
-                            app:backgroundTint="#77DC52" />
+                            app:backgroundTint="#36DA90" />
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button4"
@@ -204,7 +187,7 @@
                             android:text="11:00~12:00"
                             android:textOff="11:00~12:00"
                             android:textOn="11:00~12:00"
-                            app:backgroundTint="#77DC52" />
+                            app:backgroundTint="#36DA90" />
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button5"
@@ -215,7 +198,7 @@
                             android:text="12:00~13:00"
                             android:textOff="12:00~13:00"
                             android:textOn="12:00~13:00"
-                            app:backgroundTint="#77DC52" />
+                            app:backgroundTint="#36DA90" />
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button6"
@@ -226,7 +209,7 @@
                             android:text="13:00~14:00"
                             android:textOff="13:00~14:00"
                             android:textOn="13:00~14:00"
-                            app:backgroundTint="#77DC52" />
+                            app:backgroundTint="#36DA90" />
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button7"
@@ -237,7 +220,7 @@
                             android:text="14:00~15:00"
                             android:textOff="14:00~15:00"
                             android:textOn="14:00~15:00"
-                            app:backgroundTint="#77DC52" />
+                            app:backgroundTint="#36DA90" />
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button8"
@@ -248,7 +231,7 @@
                             android:text="15:00~16:00"
                             android:textOff="15:00~16:00"
                             android:textOn="15:00~16:00"
-                            app:backgroundTint="#77DC52" />
+                            app:backgroundTint="#36DA90" />
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button9"
@@ -259,7 +242,7 @@
                             android:text="16:00~17:00"
                             android:textOff="16:00~17:00"
                             android:textOn="16:00~17:00"
-                            app:backgroundTint="#77DC52" />
+                            app:backgroundTint="#36DA90" />
 
                     </LinearLayout>
                 </HorizontalScrollView>
@@ -270,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
-                    android:text="인원"
+                    android:text="이용인원"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -306,6 +289,9 @@
             android:id="@+id/ReservationBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/round_button"
             android:text="예약신청"
             android:textColor="@color/white"

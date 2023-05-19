@@ -10,6 +10,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.capstone_android.Util.SingleTonData
+import com.example.capstone_android.data.SignUpData
 import com.example.capstone_android.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -30,7 +32,6 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
         ActivityLoginBinding.inflate(layoutInflater)
     }
     val db = Firebase.firestore
-    val st = FirebaseStorage.getInstance()
     var myNickName =""
     val userProfiles = db.collection("user")
     //var timer = Timer()
@@ -77,13 +78,11 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
 
         binding.LoginButton.setOnClickListener(){
             println("로그인 버튼 클릭")
-            if(binding.LoginEmailEditText.getText().toString()=="") {    // nickname을 입력하지 않았을 때
-                println("이메일을 입력하지않음")
+            if(binding.LoginEmailEditText.getText().toString()=="") {    // 이메일을 입력하지않음
                 // email_editText 아래 입력요청 문구를 동적으로 생성
                 dynamicText(0)
             }
-            else if(binding.LoginPWEditText.getText().toString()=="") {    // nickname을 입력하지 않았을 때
-                println("비밀번호를 입력하지않음")
+            else if(binding.LoginPWEditText.getText().toString()=="") {    // 비밀번호를 입력하지않음
                 // PW_editText 아래 입력요청 문구를 동적으로 생성
                 dynamicText(1)
             } else {
@@ -100,6 +99,7 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
                                     if ("${user["email"]}" == binding.LoginEmailEditText.getText()
                                             .toString()
                                     ) {
+                                        SingleTonData.userInfo=user.toObject(SignUpData::class.java)
                                         myNickName = "${user["nickname"]}"
                                         Toast.makeText(
                                             this,
@@ -112,8 +112,8 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
 
                                 // 홈화면으로 이동
                                 val intent = Intent(this, ConciergeActivity::class.java)
-//                                intent.putExtra("userNickName", myNickName)
-                                startActivity(intent)
+                                intent.putExtra("userNickName", myNickName)
+                               startActivity(intent)
 
                             }
                         } else {
