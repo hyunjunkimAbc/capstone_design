@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline62"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline63"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline64"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline65"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8" />
+        <CheckBox
+            android:id="@+id/artcheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/_checkbox_art"
+            android:button="@null"
+            app:layout_constraintEnd_toStartOf="@+id/guideline62"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txt53"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="미술"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/artcheckbox"
+            app:layout_constraintStart_toStartOf="@+id/artcheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/artcheckbox" />
+        <CheckBox
+            android:id="@+id/braceletcheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/_checkbox_bracelet"
+            android:button="@null"
+            app:layout_constraintEnd_toStartOf="@+id/guideline63"
+            app:layout_constraintHorizontal_bias="0.773"
+            app:layout_constraintStart_toStartOf="@+id/guideline62"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txt54"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="공방"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/braceletcheckbox"
+            app:layout_constraintStart_toStartOf="@+id/braceletcheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/braceletcheckbox" />
+        <CheckBox
+            android:id="@+id/porcelaincheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/_checkbox_porcelain"
+            android:button="@null"
+            app:layout_constraintEnd_toStartOf="@+id/guideline64"
+            app:layout_constraintHorizontal_bias="0.773"
+            app:layout_constraintStart_toStartOf="@+id/guideline63"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txt55"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="도예"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/porcelaincheckbox"
+            app:layout_constraintStart_toStartOf="@+id/porcelaincheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/porcelaincheckbox" />
+        <CheckBox
+            android:id="@+id/crosstichcheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/_checkbox_corssstich"
+            android:button="@null"
+            app:layout_constraintEnd_toStartOf="@+id/guideline65"
+            app:layout_constraintHorizontal_bias="0.773"
+            app:layout_constraintStart_toStartOf="@+id/guideline64"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txt56"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="자수"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/crosstichcheckbox"
+            app:layout_constraintStart_toStartOf="@+id/crosstichcheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/crosstichcheckbox" />
+        <CheckBox
+            android:id="@+id/flowercheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/_checkbox_flower"
+            android:button="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.773"
+            app:layout_constraintStart_toStartOf="@+id/guideline65"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txt57"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="꽃"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/flowercheckbox"
+            app:layout_constraintStart_toStartOf="@+id/flowercheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/flowercheckbox" />
+        <CheckBox
+            android:id="@+id/cosmeticscheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/_checkbox_cosmetics"
+            android:button="@null"
+            app:layout_constraintEnd_toStartOf="@+id/guideline62"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt53" />
+        <TextView
+            android:id="@+id/txt58"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="화장품"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/cosmeticscheckbox"
+            app:layout_constraintStart_toStartOf="@+id/cosmeticscheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/cosmeticscheckbox" />
+        <CheckBox
+            android:id="@+id/furniturecheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/_checkbox_furniture"
+            android:button="@null"
+            app:layout_constraintEnd_toStartOf="@+id/guideline63"
+            app:layout_constraintStart_toStartOf="@+id/guideline62"
+            app:layout_constraintTop_toBottomOf="@+id/txt53" />
+        <TextView
+            android:id="@+id/txt59"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가구"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/furniturecheckbox"
+            app:layout_constraintStart_toStartOf="@+id/furniturecheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/furniturecheckbox" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView60"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="세부 카테고리 선택"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

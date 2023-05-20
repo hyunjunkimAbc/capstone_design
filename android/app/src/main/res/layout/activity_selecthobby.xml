@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:theme="@style/toolbar"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_scrollFlags="scroll|enterAlways">
+
+        <TextView
+            android:id="@+id/textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline100"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline101"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline102"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline013"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8" />
+        <ImageButton
+            android:id="@+id/sportsImageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/transparent"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/icon_sports"
+            app:layout_constraintEnd_toStartOf="@+id/guideline100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <ImageButton
+            android:id="@+id/tripImageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/transparent"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_travel"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:layout_constraintEnd_toStartOf="@+id/guideline101"
+            app:layout_constraintStart_toStartOf="@+id/guideline100"
+            app:layout_constraintTop_toTopOf="@+id/sportsImageButton" />
+        <ImageButton
+            android:id="@+id/musicImageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/transparent"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/icon_music"
+            app:layout_constraintEnd_toStartOf="@+id/guideline102"
+            app:layout_constraintStart_toStartOf="@+id/guideline101"
+            app:layout_constraintTop_toTopOf="@+id/sportsImageButton" />
+        <ImageButton
+            android:id="@+id/societyImageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/transparent"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/icon_society"
+            app:layout_constraintEnd_toStartOf="@+id/guideline013"
+            app:layout_constraintStart_toStartOf="@+id/guideline102"
+            app:layout_constraintTop_toTopOf="@+id/sportsImageButton" />
+        <ImageButton
+            android:id="@+id/readImageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/transparent"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/icon_book"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline013"
+            app:layout_constraintTop_toTopOf="@+id/sportsImageButton" />
+        <ImageButton
+            android:id="@+id/cookImageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="40dp"
+            android:background="@color/transparent"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/icon_cook"
+            app:layout_constraintEnd_toStartOf="@+id/guideline100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sportsImageButton" />
+        <ImageButton
+            android:id="@+id/photoImageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/transparent"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/icon_photo"
+            app:layout_constraintEnd_toStartOf="@+id/guideline101"
+            app:layout_constraintStart_toStartOf="@+id/guideline100"
+            app:layout_constraintTop_toTopOf="@+id/cookImageButton" />
+        <ImageButton
+            android:id="@+id/gameImageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/transparent"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/icon_game"
+            app:layout_constraintEnd_toStartOf="@+id/guideline102"
+            app:layout_constraintStart_toStartOf="@+id/guideline101"
+            app:layout_constraintTop_toTopOf="@+id/cookImageButton" />
+        <ImageButton
+            android:id="@+id/danceImageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/transparent"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/icon_dance"
+            app:layout_constraintEnd_toStartOf="@+id/guideline013"
+            app:layout_constraintStart_toStartOf="@+id/guideline102"
+            app:layout_constraintTop_toTopOf="@+id/cookImageButton" />
+        <ImageButton
+            android:id="@+id/carImageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/transparent"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/icon_car"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline013"
+            app:layout_constraintTop_toTopOf="@+id/cookImageButton" />
+        <ImageButton
+            android:id="@+id/petImageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="40dp"
+            android:background="@color/transparent"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/icon_pet"
+            app:layout_constraintEnd_toStartOf="@+id/guideline100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cookImageButton" />
+        <ImageButton
+            android:id="@+id/artImageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/transparent"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/icon_art"
+            app:layout_constraintEnd_toStartOf="@+id/guideline101"
+            app:layout_constraintStart_toStartOf="@+id/guideline100"
+            app:layout_constraintTop_toTopOf="@+id/petImageButton" />
+        <ImageButton
+            android:id="@+id/studyImageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/transparent"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/icon_study"
+            app:layout_constraintEnd_toStartOf="@+id/guideline102"
+            app:layout_constraintStart_toStartOf="@+id/guideline101"
+            app:layout_constraintTop_toTopOf="@+id/petImageButton" />
+
+        <ImageButton
+            android:id="@+id/jobImageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/transparent"
+            android:contentDescription="TODO"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_job"
+            app:layout_constraintEnd_toStartOf="@+id/guideline013"
+            app:layout_constraintStart_toStartOf="@+id/guideline102"
+            app:layout_constraintTop_toTopOf="@+id/petImageButton" />
+        <TextView
+            android:id="@+id/textVie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="직무"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/jobImageButton"
+            app:layout_constraintStart_toStartOf="@+id/jobImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/jobImageButton" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="운동"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/sportsImageButton"
+            app:layout_constraintStart_toStartOf="@+id/sportsImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/sportsImageButton" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="여행"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tripImageButton"
+            app:layout_constraintStart_toStartOf="@+id/tripImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/sportsImageButton" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="음악"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/musicImageButton"
+            app:layout_constraintStart_toStartOf="@+id/musicImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/sportsImageButton" />
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="사교/직업"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/societyImageButton"
+            app:layout_constraintStart_toStartOf="@+id/societyImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/societyImageButton" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="독서"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/readImageButton"
+            app:layout_constraintStart_toStartOf="@+id/readImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/sportsImageButton" />
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="요리"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/cookImageButton"
+            app:layout_constraintStart_toStartOf="@+id/cookImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/cookImageButton" />
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="반려동물"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/petImageButton"
+            app:layout_constraintStart_toStartOf="@+id/petImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/petImageButton" />
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="공예"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/artImageButton"
+            app:layout_constraintStart_toStartOf="@+id/artImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/petImageButton" />
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="공부/자기개발"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/studyImageButton"
+            app:layout_constraintStart_toStartOf="@+id/studyImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/petImageButton" />
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="사진"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/photoImageButton"
+            app:layout_constraintStart_toStartOf="@+id/photoImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/cookImageButton" />
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="게임"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/gameImageButton"
+            app:layout_constraintStart_toStartOf="@+id/gameImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/cookImageButton" />
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="댄스"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/danceImageButton"
+            app:layout_constraintStart_toStartOf="@+id/danceImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/cookImageButton" />
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="차/오토바이"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/carImageButton"
+            app:layout_constraintStart_toStartOf="@+id/carImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/cookImageButton" />
+        <View
+            android:id="@+id/viewline"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginTop="10dp"
+            android:background="#f0f0f0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+        <FrameLayout
+            android:id="@+id/categoryfragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewline"
+            app:layout_constraintVertical_bias="1.0">
+
+        </FrameLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
