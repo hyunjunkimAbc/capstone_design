@@ -183,14 +183,27 @@
                 android:id="@+id/interestTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_marginBottom="4dp"
-                android:text="관심사 설정"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:text="활동할 시 구 선택"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/setInterestBtn"
-                app:layout_constraintStart_toStartOf="@+id/setInterestBtn" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dpSpinner" />
+
+            <TextView
+                android:id="@+id/interestTextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:text="관심사 선택"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signupuseraddress" />
 
             <DatePicker
                 android:id="@+id/dpSpinner"
@@ -220,19 +233,30 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/signupuseraddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/reservation_btn_shape"
+                android:text="활동할 시 구 선택"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/interestTextView" />
+
+            <Button
                 android:id="@+id/setInterestBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/reservation_btn_shape"
                 android:text="원하는 관심사 선택"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dpSpinner" />
+                app:layout_constraintTop_toBottomOf="@+id/interestTextView2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

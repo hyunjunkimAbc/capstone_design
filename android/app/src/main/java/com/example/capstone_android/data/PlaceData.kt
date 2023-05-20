@@ -14,4 +14,5 @@ data class PlaceData (var num_of_positive:Int?=null,
                       var positiony:Double?=null,
                       var reservation_id_list:ArrayList<String>?=ArrayList<String>(),
                       var Uid:String?=null,
-                      var imageUrl: String? = null)
+                      var imageUrl: String? = null,
+                      var addressdetail : String?=null)

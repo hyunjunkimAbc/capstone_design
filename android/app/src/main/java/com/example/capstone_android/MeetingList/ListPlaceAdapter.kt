@@ -38,7 +38,7 @@ class ListPlaceAdapter(var itemlist : List<PlaceData>): RecyclerView.Adapter<Rec
         placeholder.recycleritemplacetitle.text=itemlist[position].title
         placeholder.recycleritemgoodcount.text=itemlist[position].num_of_positive.toString()
         placeholder.recycleritemplaceexplain.text=itemlist[position].info_text
-        placeholder.recycleritemaddress.text=itemlist[position].address
+        placeholder.recycleritemaddress.text=itemlist[position].addressdetail
         placeholder.placeitemcategory.text=itemlist[position].category
         placeholder.placeclickitem.setOnClickListener{
             placeitemClickListener.onClick(it, position)

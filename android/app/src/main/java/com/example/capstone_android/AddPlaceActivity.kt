@@ -1,5 +1,6 @@
 package com.example.capstone_android
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -15,6 +16,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.capstone_android.SearchAddress.SearchMap
+import com.example.capstone_android.Util.getImageResult
 import com.example.capstone_android.data.PlaceRentalRoom
 import com.example.capstone_android.databinding.ActivityAddplaceBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -26,7 +28,7 @@ import com.google.firebase.storage.FirebaseStorage
 
 class AddPlaceActivity : AppCompatActivity() {
     var photoUri:Uri?=null
-
+    var hobby:String ?=null
     private val binding by lazy {
         ActivityAddplaceBinding.inflate(layoutInflater)
     }
@@ -91,7 +93,11 @@ class AddPlaceActivity : AppCompatActivity() {
                     Log.d("ActivityResult","something wrong")
                 }
             }
-
+        binding.changehobby.setOnClickListener{
+            val intent= Intent(this, SelectHobbyActivity::class.java)
+            intent.putExtra("key","select")
+            startActivityForResult(intent,5)
+        }
         binding.placeImageBtn.setOnClickListener() { // 첨부파일 이미지 버튼 클릭
             //uploadDialog()
             // 갤러리로 이동하여 이미지 파일을 이미지뷰에 가져옴
@@ -146,11 +152,11 @@ class AddPlaceActivity : AppCompatActivity() {
 
                 var placeData = PlaceRentalRoom()
                 var placeDocument = db.collection("place_rental_room").document()
-                val storageRef=st.reference.child("lighting_meeting_room").child(placeDocument.id + ".jpg")
+                val storageRef=st.reference.child("place_rental_room").child(placeDocument.id + ".jpg")
                 storageRef.putFile(photoUri!!).addOnSuccessListener {
                     storageRef.downloadUrl.addOnSuccessListener{ uri->
                         placeData.Uid = placeDocument.id
-                        placeData.category = category ?: "운동"
+                        placeData.category = hobby.toString()
                         placeData.title = binding.placeName.getText().toString()
                         placeData.info_text = binding.InfoText.getText().toString()
                         placeData.writer_uid = Firebase.auth.currentUser?.uid.toString()
@@ -175,18 +181,23 @@ class AddPlaceActivity : AppCompatActivity() {
     }
 
     // 갤러리에서 사진을 선택하면 실행되는 함수
+    @SuppressLint("ResourceAsColor")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode ==9&&resultCode== RESULT_OK) {
+        if(requestCode==5&&resultCode== RESULT_OK){
+            hobby= data?.extras?.getString("hobby").toString()
+            binding.changehobby.setImageResource(getImageResult(hobby!!))
+        }
+        if (requestCode ==9&&resultCode== RESULT_OK) {
             address= data?.extras?.getString("address")
             detailaddress= data?.extras?.getString("detailad")
             placeName = data?.extras?.getString("name")
             positionx = data?.extras?.getDouble("disx")
             positiony = data?.extras?.getDouble("disy")
-            binding.useraddress.text=detailaddress
-                }
-            }
-
-
+            binding.useraddress.apply{
+                text=detailaddress
+                setTextColor(R.color.black)
+                             }
+                        }
+                    }
 }

@@ -70,6 +70,9 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
 //        auth = FirebaseAuth.getInstance()
         auth = Firebase.auth
 
+        if(SingleTonData.userInfo==null){
+            SingleTonData.userInfo=SignUpData()
+        }
         //val signInGoogleBtn : SignInButton = binding.googleSignInButton
         binding.googleSignInButton.setOnClickListener {
             println("구글 로그인 버튼 클릭")

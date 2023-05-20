@@ -145,6 +145,7 @@ class AddressActivity:AppCompatActivity() {
                 val data = hashMapOf("address" to ad)
                 if(key=="createuser"){
                     SingleTonData.userInfo?.address = ad
+                    finish()
                 }
                 else {
                     db.collection("user").document(Firebase.auth.currentUser?.uid.toString())

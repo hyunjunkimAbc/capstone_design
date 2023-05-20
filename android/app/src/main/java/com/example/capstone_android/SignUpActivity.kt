@@ -69,6 +69,12 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
             intent.putExtra("key", "selecthobby")
             startActivity(intent)
         }
+        binding.signupuseraddress.setOnClickListener(){
+            val intent = Intent(this, AddressActivity::class.java)
+            intent.putExtra("key", "createuser")
+            startActivity(intent)
+        }
+
 
         // 가입하기 버튼 클릭
         binding.SignUpButton.setOnClickListener(){
@@ -156,6 +162,7 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                         signdata.birthday=datePicker.year.toString()+datePicker.month.toString()+datePicker.dayOfMonth.toString()
                         signdata.timestamp=System.currentTimeMillis()
                         signdata.profile_message=""
+                        signdata.address= SingleTonData.userInfo!!.address
                         signdata.interest_array=SingleTonData.userInfo?.interest_array!!
                         signdata.edit_time=System.currentTimeMillis()
 
