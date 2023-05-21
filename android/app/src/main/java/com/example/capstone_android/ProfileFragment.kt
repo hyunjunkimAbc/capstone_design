@@ -271,51 +271,55 @@ class ProfileFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
-            // 이미지 URI 받기
-            val selectedImageUri = data.data
-            if (selectedImageUri != null) {
-                // Firebase Storage에 사진 업로드
-                val user = auth.currentUser
-                if (user != null) {
-                    val storageRef = storage.reference.child("users/${user.uid}/profile.PNG")
-                    storageRef.putFile(selectedImageUri)
-                        .addOnSuccessListener {
-                            // 유저 프로필 이미지 URL 업로드
-                            storageRef.downloadUrl
-                                .addOnSuccessListener { uri ->
-                                    val profileUpdates = userProfileChangeRequest {
-                                        photoUri = uri
-                                    }
-                                    user.updateProfile(profileUpdates)
-                                        .addOnCompleteListener { task ->
-                                            if (task.isSuccessful) {
-                                                // 새 프로필 이미지
-                                                showProfileImage()
-                                            } else {
-                                                println("Error updating user profile: ${task.exception?.message}")
-                                            }
+        if(resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_IMAGE && data != null) {
+                // 이미지 URI 받기
+                val selectedImageUri = data.data
+                if (selectedImageUri != null) {
+                    // Firebase Storage에 사진 업로드
+                    val user = auth.currentUser
+                    if (user != null) {
+                        val storageRef = storage.reference.child("users/${user.uid}/profile.PNG")
+                        storageRef.putFile(selectedImageUri)
+                            .addOnSuccessListener {
+                                // 유저 프로필 이미지 URL 업로드
+                                storageRef.downloadUrl
+                                    .addOnSuccessListener { uri ->
+                                        val profileUpdates = userProfileChangeRequest {
+                                            photoUri = uri
                                         }
-                                }
-                                .addOnFailureListener { exception ->
-                                    println("Error getting download URL: ${exception.message}")
-                                }
-                        }
-                        .addOnFailureListener { exception ->
-                            println("Error uploading profile image: ${exception.message}")
-                        }
+                                        user.updateProfile(profileUpdates)
+                                            .addOnCompleteListener { task ->
+                                                if (task.isSuccessful) {
+                                                    // 새 프로필 이미지
+                                                    showProfileImage()
+                                                } else {
+                                                    println("Error updating user profile: ${task.exception?.message}")
+                                                }
+                                            }
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        println("Error getting download URL: ${exception.message}")
+                                    }
+                            }
+                            .addOnFailureListener { exception ->
+                                println("Error uploading profile image: ${exception.message}")
+                            }
+                    }
+                }
+            } else if (requestCode == REQUEST_ADDRESS && data != null) {
+                // 주소 변경 액티비티로부터 넘어온 값 받기
+                var address = data?.extras?.getString("address").toString()
+                // 기존 버튼의 text와 넘어온 값이 다르면 갱신 해줘야 됨.
+                if (button_userLocation.text.toString() != address) {
+                    button_userLocation.setText("${address} (변경하려면 클릭하세요)")
+                    button_userLocation.invalidate()
+                    updateProfileInfo()
                 }
             }
-        } else if (requestCode == REQUEST_ADDRESS && resultCode == Activity.RESULT_OK && data != null) {
-            // 주소 변경 액티비티로부터 넘어온 값 받기
-            var address = data?.extras?.getString("address").toString()
-            // 기존 버튼의 text와 넘어온 값이 다르면 갱신 해줘야 됨.
-            if (button_userLocation.text.toString() != address) {
-                button_userLocation.setText("${address} (변경하려면 클릭하세요)")
-                button_userLocation.invalidate()
-                updateProfileInfo()
-            }
         }
+
+
     }
 
 

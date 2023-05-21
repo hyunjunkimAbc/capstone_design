@@ -43,7 +43,7 @@ class ChangeDataTestActivity : AppCompatActivity() {
 
         // 액티비티에서 프래그먼트로 값 전달
         binding.buttonChangeAddress.setOnClickListener(){
-            var txt = binding.editTextChangeAddress.text
+            var txt = binding.editTextChangeAddress.text.toString()
             resultIntent.putExtra("address", txt)
 
             setResult(Activity.RESULT_OK,resultIntent)
