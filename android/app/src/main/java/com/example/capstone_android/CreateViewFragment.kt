@@ -1,6 +1,8 @@
 package com.example.capstone_android
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -16,8 +18,10 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.capstone_android.SearchAddress.SearchMap
+import com.example.capstone_android.Util.App
+import com.example.capstone_android.Util.getImageResult
 import com.example.capstone_android.data.ClubData
-import com.example.capstone_android.R
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,52 +32,32 @@ import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.fragment_create.view.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class CreateViewFragment: Fragment() {
     lateinit var storage: FirebaseStorage
     lateinit var db : FirebaseFirestore
     var photoUri: Uri?=null
     lateinit var hobby:String
+    var disx:Double?=null
+    var disy:Double?=null
+    var bigaddress:String?=null
+    var hobbycheck :Boolean = false
+    var addresscheck:Boolean=false
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view= LayoutInflater.from(activity).inflate(R.layout.fragment_create,container,false)
         storage = Firebase.storage
         db= Firebase.firestore
         var mActivity = activity as CreateActivity
+        view.address.setOnClickListener{
+            Log.d(ContentValues.TAG, App.instance.toString()+"애플리케이션 생성")
+            val intent = Intent(activity, SearchMap::class.java)
+            intent.putExtra("create","hello")
+            startActivityForResult(intent,9)
+        }
         view.changehobby.setOnClickListener{
-            val orderBottomDialogFragment: OrderBottomDialogFragment = OrderBottomDialogFragment {
-                when (it) {
-                    "운동"->{hobby="운동"
-                        view.changehobby.setImageResource(R.drawable.icon_sports)}
-                    "여행"->{hobby="여행"
-                        view.changehobby.setImageResource(R.drawable.icon_trip)}
-                    "음악"->{hobby="음악"
-                        view.changehobby.setImageResource(R.drawable.icon_music)}
-                    "사교"->{hobby="사교"
-                        view.changehobby.setImageResource(R.drawable.icon_job)}
-                    "독서"->{hobby="독서"
-                        view.changehobby.setImageResource(R.drawable.icon_read)}
-                    "요리"->{hobby="요리"
-                        view.changehobby.setImageResource(R.drawable.icon_cook)}
-                    "사진"->{hobby="사진"
-                        view.changehobby.setImageResource(R.drawable.icon_photo)}
-                    "게임"->{hobby="게임"
-                        view.changehobby.setImageResource(R.drawable.icon_game)}
-                    "댄스"->{hobby="댄스"
-                        view.changehobby.setImageResource(R.drawable.icon_dance)}
-                    "자동차"->{hobby="자동차"
-                        view.changehobby.setImageResource(R.drawable.icon_car)}
-                    "애완동물"->{hobby="애완동물"
-                        view.changehobby.setImageResource(R.drawable.icon_pet)}
-                    "공예"->{hobby="공예"
-                        view.changehobby.setImageResource(R.drawable.icon_art)}
-                    "봉사활동"->{hobby="봉사활동"
-                        view.changehobby.setImageResource(R.drawable.icon_volunteer)}
-                    "스터디그룹"->{hobby="스터디그룹"
-                        view.changehobby.setImageResource(R.drawable.icon_study)}
-                }
-            }
-            orderBottomDialogFragment.show(mActivity.supportFragmentManager, orderBottomDialogFragment.tag)
+            val intent=Intent(activity, SelectHobbyActivity::class.java)
+            intent.putExtra("key","select")
+            startActivityForResult(intent,5)
         }
 
 
@@ -115,24 +99,56 @@ class CreateViewFragment: Fragment() {
             filterActivityLauncher.launch(intent)
         }
         view.CreateBtn.setOnClickListener{
-            uploadContent(hobby,view)
+            if(photoUri==null){
+                Toast.makeText(context, "사진을 선택해주세요", Toast.LENGTH_LONG).show();
+            }else if(view.maxnumber.text.toString()==""){
+                Toast.makeText(context, "모임 제한 인원 수를 설정해주세요", Toast.LENGTH_LONG).show();
+            }
+            else if(view.explainclub2.text.toString()==""){
+                Toast.makeText(context, "모임 제한 인원 수를 설정해주세요", Toast.LENGTH_LONG).show();
+            }
+            else if(!hobbycheck){
+                Toast.makeText(context, "모임의 관심사를 설정해주세요", Toast.LENGTH_LONG).show();
+            }
+            else if(!addresscheck){
+                Toast.makeText(context, "모임 지역을 설정해주세요", Toast.LENGTH_LONG).show();
+            }
+            else if(view.club.text.toString()==""){
+                Toast.makeText(context, "모임의 제목을 설정해주세요", Toast.LENGTH_LONG).show();
+            }
+            else {
+                uploadContent(hobby, view)
+            }
         }
         return view
+    }
+    @SuppressLint("ResourceAsColor")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==5){
+            hobby= data?.extras?.getString("hobby").toString()
+            view?.changehobby?.setImageResource(getImageResult(hobby))
+            hobbycheck=true
+        }
+        else if(requestCode==9) {
+            val name = data?.extras?.getString("name")
+            bigaddress = data?.extras?.getString("address")
+            println(bigaddress)
+            disx = data?.extras?.getDouble("disx")
+            disy = data?.extras?.getDouble("disy")
+            view?.useraddress?.text = name
+            view?.useraddress?.setTextColor(R.color.black)
+            addresscheck=true
+        }
     }
     @SuppressLint("SimpleDateFormat")
     fun uploadContent(hobby: String, view: View){
         val s1:String= Firebase.auth.currentUser?.uid.toString()
         val s2:String=SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val makeuid=s1.plus(s2)
-        db.collection("category").document(hobby).update("RoomId",FieldValue.arrayUnion(makeuid)).addOnFailureListener{
-            val data= hashMapOf("RoomId" to ArrayList<String>())
-            println(data)
-            println("테스트")
-            db.collection("category").document(hobby).set(data)
-            db.collection("category").document(hobby).update("RoomId",FieldValue.arrayUnion(makeuid))
-        }
+
         val clubprofileimagename=makeuid
-        val storageRef=storage.reference.child("meeting_info").child("${clubprofileimagename}.jpg")
+        val storageRef=storage.reference.child("periodic_meeting_room").child(clubprofileimagename)
 
         storageRef.putFile(photoUri!!).addOnSuccessListener {
             storageRef.downloadUrl.addOnSuccessListener { uri->
@@ -141,19 +157,23 @@ class CreateViewFragment: Fragment() {
                 clubdata.imageUrl=uri.toString()
                 clubdata.title = view.club.text.toString()
                 clubdata.info_text = view.explainclub2.text.toString()
-                clubdata.max = view.maxnumber.text.toString()
+                clubdata.max = (view.maxnumber.text.toString())
                 clubdata.upload_time = System.currentTimeMillis()
                 clubdata.writer_uid = Firebase.auth.currentUser?.uid.toString()
                 clubdata.Uid=makeuid
-                db.collection("meeting_room").document(makeuid).set(clubdata).addOnSuccessListener {
-                    db.collection("meeting_room").document(makeuid).update("member_list",FieldValue.arrayUnion(Firebase.auth.currentUser?.uid.toString())).addOnSuccessListener {
-                        db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).update("meeting_room_id_list",FieldValue.arrayUnion(makeuid)).addOnSuccessListener {
+                clubdata.positionx=disx
+                clubdata.positiony=disy
+                clubdata.address=bigaddress
+
+                db.collection("periodic_meeting_room").document(makeuid).set(clubdata).addOnSuccessListener{
+                    db.collection("periodic_meeting_room").document(makeuid).update("member_list",FieldValue.arrayUnion(Firebase.auth.currentUser?.uid.toString())).addOnSuccessListener{
+                        db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).update("meeting_room_id_list",FieldValue.arrayUnion(makeuid)).addOnSuccessListener{
+                            activity?.setResult(Activity.RESULT_OK)
                             activity?.finish()
-                            println("모임만들기성공")
+                            println("모임만들기 성공")
                         }
                     }
                 }
-
             }
         }
 

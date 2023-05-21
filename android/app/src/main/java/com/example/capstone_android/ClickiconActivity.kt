@@ -89,9 +89,9 @@ class ClickiconActivity: AppCompatActivity() {
             val viewholder=(holder as CustomViewHolder).itemView
             Glide.with(holder.itemView.context).load(clubdata[position].imageUrl).apply(
                 RequestOptions().circleCrop()).into(viewholder.detailviewitem_imageview_content)
-            viewholder.ClubName.text=clubdata[position].title
-            viewholder.NumberCount.text= clubdata[position].max.toString()
-            viewholder.ClubExplain.text=clubdata[position].info_text
+            //viewholder.ClubName.text=clubdata[position].title
+            //viewholder.NumberCount.text= clubdata[position].max.toString()
+            //viewholder.ClubExplain.text=clubdata[position].info_text
             viewholder.CardView.setOnClickListener{
                 var intent= Intent(applicationContext,MeetingRoomActivity::class.java)
                 intent.putExtra("meeting_room_id",clubdata[position].Uid)

@@ -26,94 +26,107 @@
                 android:id="@+id/userImage1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
 
-            <TextView
+            <EditText
                 android:id="@+id/nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="2"
+                android:minHeight="48dp"
                 android:text="김한성"
+                app:layout_constraintEnd_toStartOf="@+id/button_modifyProfile"
+                app:layout_constraintHorizontal_bias="0.103"
                 app:layout_constraintStart_toEndOf="@+id/userImage1"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <EditText
                 android:id="@+id/birth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:minHeight="48dp"
                 android:text="980505"
                 app:layout_constraintBottom_toTopOf="@+id/phone_number"
                 app:layout_constraintEnd_toStartOf="@+id/button_modifyProfile"
-                app:layout_constraintHorizontal_bias="0.445"
+                app:layout_constraintHorizontal_bias="0.447"
                 app:layout_constraintStart_toEndOf="@+id/nickname"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/nickname"
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
                 android:id="@+id/icon_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="2"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nickname"
-                app:srcCompat="@android:drawable/ic_menu_mapmode"
-                tools:layout_editor_absoluteX="140dp" />
+                app:layout_constraintEnd_toStartOf="@+id/button_mylocation"
+                app:layout_constraintStart_toStartOf="@+id/nickname"
+                app:layout_constraintTop_toTopOf="@+id/button_mylocation"
+                app:srcCompat="@android:drawable/ic_menu_mapmode" />
 
             <Button
                 android:id="@+id/button_modifyProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:backgroundTint="#36DA90"
                 android:text="수정"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/mylocation"
+            <Button
+                android:id="@+id/button_mylocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="8"
+                android:backgroundTint="#36DA90"
                 android:text="성북구"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/phone_number"
                 app:layout_constraintTop_toBottomOf="@+id/phone_number"
-                tools:layout_editor_absoluteX="218dp" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/phone_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:minHeight="48dp"
                 android:text="01012345678"
-                tools:layout_editor_absoluteX="218dp"
-                tools:layout_editor_absoluteY="56dp" />
+                app:layout_constraintStart_toStartOf="@+id/birth"
+                app:layout_constraintTop_toBottomOf="@+id/button_modifyProfile" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
-    <TextView
+    <EditText
         android:id="@+id/introduce_comment"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:text="잘 부탁드립니다."
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         tools:layout_editor_absoluteX="10dp" />
 
     <Button
-        android:id="@+id/button_MyMeetingRoom"
+        android:id="@+id/button_myMeetingRoom"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="#36DA90"
         android:text="내 모임 관리"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,38 +135,35 @@
         app:layout_constraintTop_toBottomOf="@+id/button_myApplyCompetition" />
 
     <Button
-        android:id="@+id/button_logout"
+        android:id="@+id/button_logOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#36DA90"
         android:text="로그아웃"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.782"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_MyMeetingRoom" />
+        app:layout_constraintTop_toBottomOf="@+id/button_myPlaceRental"
+        app:layout_constraintVertical_bias="0.100000024" />
 
     <Button
         android:id="@+id/button_myCompetition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
         android:backgroundTint="#36DA90"
         android:text="나의 개설 대회"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.912"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline16"
         app:layout_constraintTop_toTopOf="@+id/button_myApplyCompetition" />
 
     <Button
         android:id="@+id/button_myApplyCompetition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:backgroundTint="#36DA90"
         android:text="나의 신청 대회"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/introduce_comment" />
 
@@ -161,10 +171,37 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:text="나의 프로필"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/guideline17"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
+        app:layout_constraintHorizontal_bias="0.115"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.086" />
+
+    <Button
+        android:id="@+id/button_myPlaceRental"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#36DA90"
+        android:text="나의 대여 장소"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/button_myCompetition"
+        app:layout_constraintTop_toTopOf="@+id/button_myMeetingRoom" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.500684" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

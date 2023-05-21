@@ -15,18 +15,13 @@ class CreateActivity: AppCompatActivity() {
         binding = ActivityCreateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         val toolbar=binding.toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.textview.text="클럽개설"
-        println(intent.getStringExtra("create"))
+
         supportFragmentManager.beginTransaction().replace(R.id.createfragment,createViewFragment).commit()
-
-
-
-
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
@@ -40,10 +35,10 @@ class CreateActivity: AppCompatActivity() {
     }
     override fun onDestroy() {
         super.onDestroy()
-        println("종료")
         val newintent= Intent()
         newintent.putExtra("result",1)
         setResult(RESULT_OK,newintent)
     }
+
 
 }

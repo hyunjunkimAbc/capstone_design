@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline70"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline71"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline72"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline73"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8" />
+        <CheckBox
+            android:id="@+id/itcheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/_checkbox_it"
+            android:button="@null"
+            app:layout_constraintEnd_toStartOf="@+id/guideline70"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txt65"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IT"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/itcheckbox"
+            app:layout_constraintStart_toStartOf="@+id/itcheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/itcheckbox" />
+        <CheckBox
+            android:id="@+id/designercheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/_checkbox_designer"
+            android:button="@null"
+            app:layout_constraintEnd_toStartOf="@+id/guideline71"
+            app:layout_constraintStart_toStartOf="@+id/guideline70"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt66"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="디자인"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/designercheckbox"
+            app:layout_constraintStart_toStartOf="@+id/designercheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/designercheckbox" />
+        <CheckBox
+            android:id="@+id/medicinecheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/_checkbox_medicine"
+            android:button="@null"
+            app:layout_constraintEnd_toStartOf="@+id/guideline72"
+            app:layout_constraintStart_toStartOf="@+id/guideline71"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txt67"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="의료"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/medicinecheckbox"
+            app:layout_constraintStart_toStartOf="@+id/medicinecheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/medicinecheckbox" />
+        <CheckBox
+            android:id="@+id/chemistrycheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/_checkbox_chemistry"
+            android:button="@null"
+            app:layout_constraintEnd_toStartOf="@+id/guideline73"
+            app:layout_constraintStart_toStartOf="@+id/guideline72"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txt68"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="화학"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/chemistrycheckbox"
+            app:layout_constraintStart_toStartOf="@+id/chemistrycheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/chemistrycheckbox" />
+        <CheckBox
+            android:id="@+id/financecheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/_checkbox_finance"
+            android:button="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline73"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txt69"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="금융"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/financecheckbox"
+            app:layout_constraintStart_toStartOf="@+id/financecheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/financecheckbox" />
+        <CheckBox
+            android:id="@+id/constructorcheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/_checkbox_constructor"
+            android:button="@null"
+            app:layout_constraintEnd_toStartOf="@+id/guideline70"
+            app:layout_constraintHorizontal_bias="0.412"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt65" />
+        <TextView
+            android:id="@+id/txt70"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="건설"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/constructorcheckbox"
+            app:layout_constraintStart_toStartOf="@+id/constructorcheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/constructorcheckbox" />
+        <CheckBox
+            android:id="@+id/lawyercheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/_checkbox_lawer"
+            android:button="@null"
+            app:layout_constraintEnd_toStartOf="@+id/guideline71"
+            app:layout_constraintHorizontal_bias="0.412"
+            app:layout_constraintStart_toStartOf="@+id/guideline70"
+            app:layout_constraintTop_toBottomOf="@+id/txt65" />
+        <TextView
+            android:id="@+id/txt71"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="법"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/lawyercheckbox"
+            app:layout_constraintStart_toStartOf="@+id/lawyercheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/lawyercheckbox" />
+        <CheckBox
+            android:id="@+id/fashioncheckbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/_checkbox_fashion"
+            android:button="@null"
+            app:layout_constraintEnd_toStartOf="@+id/guideline72"
+            app:layout_constraintHorizontal_bias="0.412"
+            app:layout_constraintStart_toStartOf="@+id/guideline71"
+            app:layout_constraintTop_toBottomOf="@+id/txt65" />
+        <TextView
+            android:id="@+id/txt72"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="패션"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/fashioncheckbox"
+            app:layout_constraintStart_toStartOf="@+id/fashioncheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/fashioncheckbox" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -222,7 +222,8 @@ class MeetingRoomChattingFragment : Fragment() {
 
                     val results = classifier.classify(translatedText)
                     println("분류 결과 ${results[1].label} ${results[1].score}")
-                    if (results[1].score > 0.65){
+                    println("분류 결과 ${results[0].label} ${results[0].score}")
+                    if (results[1].score > results[0].score && results[1].score>0.66){
                         println("긍정적 리뷰 입니다.")
                         meetingRoomCollection.document(document_id).get().addOnSuccessListener {
                             if (it["num_of_positive"]==null){

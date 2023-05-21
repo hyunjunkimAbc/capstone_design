@@ -6,15 +6,18 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone_android.SearchAddress.SearchMap
 import com.example.capstone_android.data.*
 import com.example.capstone_android.databinding.FragmentEditMeetingInfoBinding
 import com.example.capstone_android.databinding.FragmentEditPostingBinding
@@ -62,22 +65,31 @@ class EditMeetingInfoFragment : Fragment() {
     var time : Long =0
     var commentsListString :Any? = null
     var writer_uid :Any? =null
-    var category :Any? =null
+    var category =""
     var chatting_id_list :Any? =null
     var member_list :Any? =null
     var posting_id_list :Any? =null
     val categoryItems =
         arrayListOf<String>(
-            "운동", "여행", "음악", "사교/직업", "독서",
-            "요리", "사진", "게임", "댄스", "차/오토바이",
-            "반려동물", "공예", "봉사활동", "공부/자기개발"
+            "농구", "축구", "탁구", "테니스", "배드민턴",
+            "야구", "볼링", "자전거", "골프", "런닝",
+            "수영", "배구", "요가|필라테스", "태권도|유도", "복싱",
+            "무술", "승마", "헬스", "롤러|보드", "스키|보드", "당구","등산","수상레저",
+            "세계여행","국내여행","밴드","피아노","드럼","바이올린","기타","노래","작곡","힙합"
+            ,"버스킹","콘서트","디제잉","런치패드","색소폰","친구","카페","술 한잔","코노","맛집탐방","봉사활동"
+            ,"독서","글쓰기","토론","한식","일식","중식","양식","제과제빵","칵테일","와인","사진","영상제작"
+            ,"AOS","RPG","FPS","카드게임","두뇌심리","스포츠게임","레이싱게임","닌텐도|플스","팝핀","비보잉","락킹"
+            ,"왁킹","힙합댄스","하우스","크럼프","현대무용","한국무용","K-POP","발레","댄스스포츠","발리댄스","재즈","에어로빅"
+            ,"자동차","오토바이","강아지","고양이","고슴도치","햄스터","물고기","앵무새","다람쥐","도마뱀","뱀","거미"
+            ,"미술","공방","도예","자수","꽃","화장품","가구","스터디","언어","동기부여","스피치"
+            ,"IT","디자인","의료","화학","금융","건설","법","패션"
         )
     var address: Any? = null
 
     var positionx = 0.2
     var positiony = 0.1
-    var startTime :Long= 0
-    var endTime :Long= 0
+    var startTime :String= ""
+    var endTime :String= ""
     var startTimeStrGlobal =""
     var endTimeStrGlobal =""
     var startTimeCompetition :String= ""
@@ -85,6 +97,16 @@ class EditMeetingInfoFragment : Fragment() {
     var reservation_uid_list:Any? =null
     var meetingRoomGenerator: MeetingRoomViewGenerator? =null
     var meetingRoomFactory : AbstractMeetingRoomFactory? = null
+    var date:String =""
+
+    var detailad =""
+    var addressname =""
+    var addresscheck = false
+    var placeName =""
+    var detailaddress = "서울 서대문구 가좌로 85"
+    var location =""
+    var imageUrl =""
+    var Uid = ""
 
     inner abstract class AbstractMeetingRoomFactory{
         abstract fun createMeetingRoomViewGenerator():MeetingRoomViewGenerator
@@ -155,7 +177,14 @@ class EditMeetingInfoFragment : Fragment() {
 
                 posting_id_list = it["posting_id_list"]
                 address = "${it["address"]}"
+                positionx = it["positionx"] as Double
+                positiony = it["positiony"] as Double
 
+                category = it["category"] as String
+                var index = categoryItems.indexOf(category)
+                spinnerMeetingRoomCategory.setSelection(index)
+
+                binding.button10.setText("${address} (변경하려면 클릭하세요)")
                 //commentsListString = it["comment_id_list"]
                 //writer_uid = it["writer_uid"] //주석 했지만 나중에는 사용할 수도 있음
                 //변경 테스트 하고 싶으면 if문 조건절에서 positionx 등에 변화를 주면 됨
@@ -193,6 +222,10 @@ class EditMeetingInfoFragment : Fragment() {
                 if(!processEachMeetingRoom()){
                     return@setOnClickListener
                 }
+                if (!addresscheck) {
+                    Toast.makeText(activity, "장소를 정해주세요", Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
 
                 time = System.currentTimeMillis()
 
@@ -213,6 +246,11 @@ class EditMeetingInfoFragment : Fragment() {
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*")
                 startActivityForResult(intent, 1)
             }
+            binding.button10.setOnClickListener {
+                val intent = Intent(activity, SearchMap::class.java)
+                intent.putExtra("create","hello")
+                startActivityForResult(intent,9)
+            }
         }
         private fun upload(){
             val collectionName = activity?.intent?.getStringExtra("collectionName").toString()
@@ -227,6 +265,8 @@ class EditMeetingInfoFragment : Fragment() {
             meetingRoomData.upload_time = time
             meetingRoomData.writer_uid = writer_uid as String
             meetingRoomData.address = address as String
+            meetingRoomData.positionx = positionx
+            meetingRoomData.positiony = positiony
 
             meetingRoomCollection.document("${document_id}").set(meetingRoomData, SetOptions.merge()).addOnSuccessListener {
                 //meetingroom에 배열에도 반영
@@ -256,17 +296,16 @@ class EditMeetingInfoFragment : Fragment() {
             member_list = it["member_list"] as ArrayList<String>
 
             if(it["start_time"] !=null && it["end_time"] !=null){
-                val startTime2 = it["start_time"] as Long //view
-                val endTime2 = it["end_time"] as Long //view
-                val startTimeStr ="${SimpleDateFormat("yyyy-MM-dd").format(startTime2)}"
-                val endTimeStr = "${SimpleDateFormat("yyyy-MM-dd").format(endTime2)}"
+                val startTime2 = it["start_time"] as String //view
+                val endTime2 = it["end_time"] as String //view
+                //val startTimeStr ="${SimpleDateFormat("yyyy-MM-dd").format(startTime2)}"
+                //val endTimeStr = "${SimpleDateFormat("yyyy-MM-dd").format(endTime2)}"
                 startTime = startTime2
                 endTime = endTime2
-                startTimeStrGlobal = startTimeStr
-                endTimeStrGlobal = endTimeStr
+                date = it["date"] as String
 
-                binding.editTextStartTime.hint = "(모임 시작 시간) ${startTimeStr} 형식으로 입력"
-                binding.editTextTextEndTime.hint = "(모임 종료 시간) ${endTimeStr} 형식으로 입력"
+                binding.editTextStartTime.hint = "(모임 시작 시간)${date} ${startTime} 형식으로 입력"
+                binding.editTextTextEndTime.hint = "(모임 종료 시간)${date} ${endTime} 형식으로 입력"
                 //datepicker로 변경 해야 함
             }
             if (it["max"] !=null){
@@ -278,12 +317,12 @@ class EditMeetingInfoFragment : Fragment() {
         override fun getViewByEachMeetingRoom(): MeetingRoomData {
 
             var meetingRoomData = LightingMeetingRoomData()
-            meetingRoomData.positionx = positionx
-            meetingRoomData.positiony =positiony
+            meetingRoomData.addressname = addressname
             meetingRoomData.member_list = member_list as ArrayList<String>
             meetingRoomData.start_time = startTime
             meetingRoomData.end_time = endTime
             meetingRoomData.max = max
+            meetingRoomData.date = date
             return meetingRoomData
         }
 
@@ -293,28 +332,29 @@ class EditMeetingInfoFragment : Fragment() {
                 Toast.makeText(activity,"최대 인원은 숫자만 가능합니다.", Toast.LENGTH_SHORT).show()
                 return false
             }
-            if(!Pattern.matches("^\\d{4}-\\d{2}-\\d{2}$",binding.editTextStartTime.getText())){
+            if(!Pattern.matches("^\\d{8} \\d{2}:\\d{2}$",binding.editTextStartTime.getText())){
                 binding.editTextStartTime.setText(startTimeStrGlobal)
-                Toast.makeText(activity,"시작 날짜는 1999-03-01의 형식으로 입력해주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity,"(모임 시작 시간)${date} 08:30 형식으로 입력", Toast.LENGTH_SHORT).show()
                 return false
             }else{
                 val cal = Calendar.getInstance()
                 val str = binding.editTextStartTime.getText()
-                val split = str.split('-')
-                cal.set(split[0].toInt(),split[1].toInt()-1,split[2].toInt())
-                startTime = cal.timeInMillis
+                val split = str.split(' ')
+                //cal.set(split[0].toInt(),split[1].toInt()-1,split[2].toInt())
+                startTime = split[1]
 
             }
-            if(!Pattern.matches("^\\d{4}-\\d{2}-\\d{2}$",binding.editTextTextEndTime.getText())){
+            if(!Pattern.matches("^\\d{8} \\d{2}:\\d{2}\$",binding.editTextTextEndTime.getText())){
                 binding.editTextTextEndTime.setText(endTimeStrGlobal)
-                Toast.makeText(activity,"종료 날짜는 1999-03-01의 형식으로 입력해주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity,"(모임 시작 시간)${date} 09:30 형식으로 입력", Toast.LENGTH_SHORT).show()
                 return false
             }else{
                 val cal = Calendar.getInstance()
                 val str = binding.editTextTextEndTime.getText()
-                val split = str.split('-')
-                cal.set(split[0].toInt(),split[1].toInt()-1,split[2].toInt())
-                endTime = cal.timeInMillis
+                val split = str.split(' ')
+                //cal.set(split[0].toInt(),split[1].toInt()-1,split[2].toInt())
+                endTime =split[1]
+                date =split[0]
             }
             return true
         }
@@ -344,8 +384,7 @@ class EditMeetingInfoFragment : Fragment() {
 
         override fun getViewByEachMeetingRoom(): MeetingRoomData {
             var meetingRoomData = PeriodicMeetingRoomData()
-            meetingRoomData.positionx = positionx
-            meetingRoomData.positiony = positiony
+
             meetingRoomData.member_list = member_list as ArrayList<String>
             meetingRoomData.max = max
             return meetingRoomData
@@ -371,12 +410,17 @@ class EditMeetingInfoFragment : Fragment() {
             MeetingRoomController().removeMax()
             MeetingRoomController().removeStartEndTime()
             reservation_uid_list = it["reservation_uid_list"] as ArrayList<String>
+            max = it["max"] as String
+            imageUrl = it["imageUrl"] as String
+            Uid = it["uid"] as String
         }
 
         override fun getViewByEachMeetingRoom(): MeetingRoomData {
             var meetingRoomData = PlaceRentalRoom()
-            meetingRoomData.positionx = positionx
-            meetingRoomData.positiony = positiony
+            meetingRoomData.max =max
+            meetingRoomData.addressdetail =detailaddress
+            meetingRoomData.imageUrl = imageUrl
+            meetingRoomData.Uid = Uid
             meetingRoomData.reservation_uid_list = reservation_uid_list as ArrayList<String>
             return meetingRoomData
         }
@@ -412,10 +456,10 @@ class EditMeetingInfoFragment : Fragment() {
 
         override fun getViewByEachMeetingRoom(): MeetingRoomData {
             var meetingRoomData = CompetitionRoomData()
-            meetingRoomData.positionx = positionx
-            meetingRoomData.positiony = positiony
+
             meetingRoomData.start_time = startTimeCompetition
             meetingRoomData.end_time = endTimeCompetition
+            meetingRoomData.location=detailaddress.plus(" ").plus(addressname)
             meetingRoomData.member_list = member_list as ArrayList<String>
             return meetingRoomData
         }
@@ -431,6 +475,7 @@ class EditMeetingInfoFragment : Fragment() {
                 Toast.makeText(activity,"시작 날짜는 1999년03월01일01시00분의 형식으로 입력해주세요", Toast.LENGTH_SHORT).show()
                 return false
             }
+
             startTimeCompetition = binding.editTextStartTime.getText().toString()
             endTimeCompetition = binding.editTextTextEndTime.getText().toString()
             return true
@@ -478,16 +523,31 @@ class EditMeetingInfoFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK) {
-            if(requestCode == 1){
+            if (requestCode == 1) {
                 userInputImgUri = data?.data
-                try{
-                    var bitmapUserSelect = MediaStore.Images.Media.getBitmap(activity?.contentResolver,userInputImgUri)
+                try {
+                    var bitmapUserSelect = MediaStore.Images.Media.getBitmap(
+                        activity?.contentResolver,
+                        userInputImgUri
+                    )
                     binding.imageButtonToPostingMeetingInfoEdit.setImageBitmap(bitmapUserSelect)
 
-                } catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
-            }else{
+            }else if (requestCode==9){
+                addresscheck=true
+
+                address= data?.extras?.getString("address").toString()
+                detailaddress= data?.extras?.getString("detailad").toString()
+                addressname = data?.extras?.getString("name").toString()
+
+                positionx = data?.extras?.getDouble("disx")!!
+                positiony = data?.extras?.getDouble("disy")!!
+
+                binding.button10.setText("${address} (변경하려면 클릭하세요)")
+                binding.button10.invalidate()
+            } else {
                 println("undefined")
             }
         }

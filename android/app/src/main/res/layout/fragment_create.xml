@@ -24,7 +24,7 @@
             android:background="@android:color/transparent"
             android:ems="5"
             android:gravity="top"
-            android:hint="모임 인원수를 설정해주세요"
+            android:hint="모임 인원수를 설정"
             android:inputType="number"
             android:privateImeOptions="defaultInputmode=korean"
             android:scrollHorizontally="false"
@@ -69,11 +69,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
+        android:background="@drawable/shape_for_circle_button"
         app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/profile_default_img" />
+        app:srcCompat="@drawable/plusprofileimg" />
 
     <ImageView
         android:id="@+id/changehobby"
@@ -124,28 +125,26 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
+            android:textStyle="bold"
             android:text="위치 찾기"
             android:textColor="#D3D3D3"
             android:textSize="15dp" />
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        app:cardBackgroundColor="#6524ff"
-        app:cardCornerRadius="15dp"
+
+
+    <Button
+        android:id="@+id/CreateBtn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline183">
+        app:layout_constraintTop_toTopOf="@+id/guideline183"
+        android:text="모임 만들기"
+        android:textSize="20dp" />
 
-        <Button
-            android:id="@+id/CreateBtn"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="모임 만들기"
-            android:textSize="20dp" />
-    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"

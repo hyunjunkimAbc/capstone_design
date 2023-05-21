@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/createlighttoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/AppTheme.Actionbar"
+        app:layout_scrollFlags="scroll|enterAlways"
+        tools:ignore="MissingConstraints" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createlighttoolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/imgtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사진 등록"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+            <ImageView
+                android:id="@+id/lightimg"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_below="@+id/imgtext"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="4dp"
+                android:background="@drawable/shape_for_circle_button"
+                app:srcCompat="@drawable/plusprofileimg" />
+            <ImageView
+                android:id="@+id/lightmeetinghobby"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/lightimg"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/hobby" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_below="@+id/lightimg"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="50dp"
+                android:layout_toEndOf="@id/lightmeetinghobby"
+                app:cardBackgroundColor="#A9A9A9"
+                app:cardCornerRadius="15dp">
+
+                <EditText
+                    android:id="@+id/lightmeetingname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:hint="번개 모임 제목"
+                    android:inputType="text"
+                    android:privateImeOptions="defaultInputmode=korean"
+                    android:textColorHint="   #D3D3D3   "
+                    tools:ignore="TouchTargetSizeCheck"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="70dp" />
+            </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/lightmeetinghobby"
+                app:srcCompat="@drawable/gps2" />
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@id/imageView10"
+                android:layout_below="@id/lightmeetinghobby"
+                android:layout_marginTop="15dp"
+                android:text="지역"
+                android:textColor="#000000"
+                android:textSize="25dp"
+                />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/lightaddress"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                app:cardBackgroundColor="#A9A9A9"
+                app:cardCornerRadius="15dp"
+                android:layout_toRightOf="@+id/text1"
+                android:layout_below="@id/lightmeetinghobby"
+                >
+                <TextView
+                    android:id="@+id/lightaddresstext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold"
+                    android:text="장소 설정"
+                    android:textColor="#D3D3D3"
+                    android:textSize="15dp" />
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:id="@+id/explaindate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:layout_below="@id/lightaddress"
+                android:text="날짜 지정"
+                android:layout_centerHorizontal="true"
+                android:textColor="#D3D3D3"
+                android:textSize="15dp" />
+
+            <DatePicker
+                android:id="@+id/lightmeetingdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/explaindate"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="0dp"
+                android:calendarViewShown="false"
+                android:datePickerMode="calendar"
+                tools:ignore="NotSibling" />
+
+            <HorizontalScrollView
+                android:id="@+id/checktime"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/lightmeetingdate">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal" >
+                    <TextView
+                        android:id="@+id/textView73"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="시작시간 선택 후, 종료시간을 선택해주세요"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text05"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        tools:layout_editor_absoluteY="67dp" />
+                    <CheckBox
+                        android:id="@+id/time05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        android:button="@null"
+                        android:text="05:00"
+                        android:contentDescription="05:30"
+                        android:textColor="@color/transparent"
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:id="@+id/text05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="05:00"
+                        app:layout_constraintStart_toStartOf="@+id/time05"
+                        app:layout_constraintTop_toBottomOf="@+id/time05" />
+                    <CheckBox
+                        android:id="@+id/time053"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        android:button="@null"
+                        android:text="05:30"
+                        android:contentDescription="06:00"
+                        android:textColor="@color/transparent"
+                        app:layout_constraintLeft_toRightOf="@+id/time05"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="05:30"
+                        app:layout_constraintTop_toBottomOf="@+id/time053"
+                        app:layout_constraintStart_toStartOf="@+id/time053" />
+                    <CheckBox
+                        android:id="@+id/time06"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time053"
+                        android:text="06:00"
+                        android:contentDescription="06:30"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="06:00"
+                        app:layout_constraintTop_toBottomOf="@+id/time06"
+                        app:layout_constraintStart_toStartOf="@+id/time06"
+                        />
+                    <CheckBox
+                        android:id="@+id/time063"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time06"
+                        android:text="06:30"
+                        android:contentDescription="07:00"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="06:30"
+                        app:layout_constraintTop_toBottomOf="@+id/time063"
+                        app:layout_constraintStart_toStartOf="@+id/time063"
+                        />
+                    <CheckBox
+                        android:id="@+id/time07"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time063"
+                        android:text="07:00"
+                        android:contentDescription="07:30"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="07:00"
+                        app:layout_constraintTop_toBottomOf="@+id/time07"
+                        app:layout_constraintStart_toStartOf="@+id/time07"
+                        />
+                    <CheckBox
+                        android:id="@+id/time073"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time07"
+                        android:text="07:30"
+                        android:contentDescription="08:00"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="07:30"
+                        app:layout_constraintTop_toBottomOf="@+id/time073"
+                        app:layout_constraintStart_toStartOf="@+id/time073" />
+                    <CheckBox
+                        android:id="@+id/time08"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time073"
+                        android:text="08:00"
+                        android:contentDescription="08:30"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="08:00"
+                        app:layout_constraintTop_toBottomOf="@+id/time08"
+                        app:layout_constraintStart_toStartOf="@+id/time08"
+                        />
+                    <CheckBox
+                        android:id="@+id/time083"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time08"
+                        android:text="08:30"
+                        android:contentDescription="09:00"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="08:30"
+                        app:layout_constraintTop_toBottomOf="@+id/time083"
+                        app:layout_constraintStart_toStartOf="@+id/time083" />
+                    <CheckBox
+                        android:id="@+id/time09"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time083"
+                        android:text="09:00"
+                        android:contentDescription="09:30"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="09:00"
+                        app:layout_constraintTop_toBottomOf="@+id/time09"
+                        app:layout_constraintStart_toStartOf="@+id/time09" />
+                    <CheckBox
+                        android:id="@+id/time093"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time09"
+                        android:text="09:30"
+                        android:contentDescription="10:00"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="09:30"
+                        app:layout_constraintTop_toBottomOf="@+id/time093"
+                        app:layout_constraintStart_toStartOf="@+id/time093" />
+                    <CheckBox
+                        android:id="@+id/time10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time093"
+                        android:text="10:00"
+                        android:contentDescription="10:30"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10:00"
+                        app:layout_constraintTop_toBottomOf="@+id/time10"
+                        app:layout_constraintStart_toStartOf="@+id/time10"
+                        />
+                    <CheckBox
+                        android:id="@+id/time103"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time10"
+                        android:text="10:30"
+                        android:contentDescription="11:00"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10:30"
+                        app:layout_constraintTop_toBottomOf="@+id/time103"
+                        app:layout_constraintStart_toStartOf="@+id/time103" />
+                    <CheckBox
+                        android:id="@+id/time11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time103"
+                        android:text="11:00"
+                        android:contentDescription="11:30"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="11:00"
+                        app:layout_constraintTop_toBottomOf="@+id/time11"
+                        app:layout_constraintStart_toStartOf="@+id/time11"
+                        />
+                    <CheckBox
+                        android:id="@+id/time113"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time11"
+                        android:text="11:30"
+                        android:contentDescription="12:00"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="11:30"
+                        app:layout_constraintTop_toBottomOf="@+id/time113"
+                        app:layout_constraintStart_toStartOf="@+id/time113"
+                        />
+                    <CheckBox
+                        android:id="@+id/time12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time113"
+                        android:text="12:00"
+                        android:contentDescription="12:30"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12:00"
+                        app:layout_constraintTop_toBottomOf="@+id/time12"
+                        app:layout_constraintStart_toStartOf="@+id/time12"
+                        />
+                    <CheckBox
+                        android:id="@+id/time123"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time12"
+                        android:text="12:30"
+                        android:contentDescription="13:00"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12:30"
+                        app:layout_constraintTop_toBottomOf="@+id/time123"
+                        app:layout_constraintStart_toStartOf="@+id/time123"
+                        />
+                    <CheckBox
+                        android:id="@+id/time13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time123"
+                        android:text="13:00"
+                        android:contentDescription="13:30"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="13:00"
+                        app:layout_constraintTop_toBottomOf="@+id/time13"
+                        app:layout_constraintStart_toStartOf="@+id/time13"
+                        />
+                    <CheckBox
+                        android:id="@+id/time133"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time13"
+                        android:text="13:30"
+                        android:contentDescription="14:00"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="13:00"
+                        app:layout_constraintTop_toBottomOf="@+id/time133"
+                        app:layout_constraintStart_toStartOf="@+id/time133"
+                        />
+                    <CheckBox
+                        android:id="@+id/time14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time133"
+                        android:text="14:00"
+                        android:contentDescription="14:30"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="14:00"
+                        app:layout_constraintTop_toBottomOf="@+id/time14"
+                        app:layout_constraintStart_toStartOf="@+id/time14"
+                        />
+                    <CheckBox
+                        android:id="@+id/time143"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time14"
+                        android:text="14:30"
+                        android:contentDescription="15:00"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="14:30"
+                        app:layout_constraintTop_toBottomOf="@+id/time143"
+                        app:layout_constraintStart_toStartOf="@+id/time143"
+                        />
+                    <CheckBox
+                        android:id="@+id/time15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time143"
+                        android:text="15:00"
+                        android:contentDescription="15:30"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="15:00"
+                        app:layout_constraintTop_toBottomOf="@+id/time15"
+                        app:layout_constraintStart_toStartOf="@+id/time15"
+                        />
+                    <CheckBox
+                        android:id="@+id/time153"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time15"
+                        android:text="15:30"
+                        android:contentDescription="16:00"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="15:30"
+                        app:layout_constraintTop_toBottomOf="@+id/time153"
+                        app:layout_constraintStart_toStartOf="@+id/time153"
+                        />
+                    <CheckBox
+                        android:id="@+id/time16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time153"
+                        android:text="16:00"
+                        android:contentDescription="16:30"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="16:00"
+                        app:layout_constraintTop_toBottomOf="@+id/time16"
+                        app:layout_constraintStart_toStartOf="@+id/time16"
+                        />
+                    <CheckBox
+                        android:id="@+id/time163"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time16"
+                        android:text="16:30"
+                        android:contentDescription="17:00"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="16:30"
+                        app:layout_constraintTop_toBottomOf="@+id/time163"
+                        app:layout_constraintStart_toStartOf="@+id/time163"
+                        />
+                    <CheckBox
+                        android:id="@+id/time17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time163"
+                        android:text="17:00"
+                        android:contentDescription="17:30"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="17:00"
+                        app:layout_constraintTop_toBottomOf="@+id/time17"
+                        app:layout_constraintStart_toStartOf="@+id/time17"
+                        />
+                    <CheckBox
+                        android:id="@+id/time173"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/_checkbox_time"
+                        app:layout_constraintLeft_toRightOf="@+id/time17"
+                        android:text="17:30"
+                        android:contentDescription="18:00"
+                        android:textColor="@color/transparent"
+                        android:button="@null"
+                        tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="17:30"
+                        app:layout_constraintTop_toBottomOf="@+id/time173"
+                        app:layout_constraintStart_toStartOf="@+id/time173"
+                        />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </HorizontalScrollView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/expaincard"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_below="@id/checktime"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:cardBackgroundColor="#A9A9A9"
+                app:cardCornerRadius="10dp">
+
+                <EditText
+                    android:id="@+id/lightexplain"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:ems="5"
+                    android:gravity="top"
+                    android:hint="번개모임 장소와 시간 조건에 대해 기술해주세요"
+                    android:inputType="textMultiLine"
+                    android:privateImeOptions="defaultInputmode=korean"
+                    android:scrollHorizontally="false"
+                    android:textColorHint="   #D3D3D3   "
+                    tools:ignore="TouchTargetSizeCheck"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="10dp" />
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/expaincard"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:text="모집 정원"
+                />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/numbercard"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/expaincard"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="#A9A9A9"
+                app:cardCornerRadius="10dp"
+                android:layout_marginEnd="50dp"
+                android:layout_alignParentRight="true">
+                <EditText
+                    android:id="@+id/lightnumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:ems="5"
+                    android:gravity="center"
+                    android:hint="10"
+                    android:inputType="number"
+                    android:privateImeOptions="defaultInputmode=korean"
+                    android:scrollHorizontally="false"
+                    android:textColorHint="   #D3D3D3   "
+                    tools:ignore="TouchTargetSizeCheck"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="10dp" />
+            </androidx.cardview.widget.CardView>
+            <Button
+                android:id="@+id/CreateLightButton"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_button"
+                android:contextClickable="false"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_below="@+id/number"
+                android:text="모임 생성"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                />
+
+            <ProgressBar
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/lightprogressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

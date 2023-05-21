@@ -391,7 +391,10 @@ class MeetingRoomInfoFragment : Fragment() {
 
 
             addEnterMeetingListener()
+
+            println("5 21 colName ${colName} meeting_room_id ${meetingRoomId}")
             //미팅룸 정보 얻어오기
+            println("meetingRoomId ${meetingRoomId}")
             meetingRoomCollection.document(meetingRoomId).get().addOnSuccessListener {
                 val maxTemp = "${it["max"]}"
                 binding.meetingRoomText.text = "${it["info_text"]}"
@@ -525,24 +528,26 @@ class MeetingRoomInfoFragment : Fragment() {
             member_list = it["member_list"] as ArrayList<String> //view
              */
             if(it["start_time"] !=null && it["end_time"] !=null){
-                val startTime = it["start_time"] as Long //view
-                val endTime = it["end_time"] as Long //view
-                val startTimeStr ="${SimpleDateFormat("yyyy-MM-dd").format(startTime)}"
-                val endTimeStr = "${SimpleDateFormat("yyyy-MM-dd").format(endTime)}"
+                val date = it["date"] as String
+                var startTime = it["start_time"] as String //view
+                var endTime = it["end_time"] as String //view
+                startTime = "${date} ${startTime}"
+                endTime = "${date} ${endTime}"
+
 
                 val TextView = TextView(activity?.applicationContext).apply { // 새로운 버튼 객체 생성
                     layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
-                    text = "모임 시작 시간 : ${startTimeStr}"
+                    text = "모임 시작 시간 : ${startTime}"
                 }
                 val TextView2 = TextView(activity?.applicationContext).apply { // 새로운 버튼 객체 생성
                     layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
-                    text = "모임 종료 시간 : ${endTimeStr}"
+                    text = "모임 종료 시간 : ${endTime}"
                 }
                 //val linearLayout = binding.root.findViewById<LinearLayout>(R.id.linearLayoutForEachInfo)
 

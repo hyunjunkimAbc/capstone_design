@@ -68,7 +68,7 @@ class SetGoogleAccountActivity : AppCompatActivity()  {
         // 가입하기 버튼 클릭
         binding.InitButton.setOnClickListener(){
             println("저장하기 버튼 클릭")
-            select_interest_CheckBox()
+
             if(binding.NicknameEditText.getText().toString()==""){    // nickname을 입력하지 않았을 때
                 println("닉네임을 입력하지않음")
                 Toast.makeText(
@@ -166,46 +166,5 @@ class SetGoogleAccountActivity : AppCompatActivity()  {
         }
     }
 
-    fun select_interest_CheckBox()/*:Array<String> */{
-        if(binding.sportsCheckBox.isChecked) {
-            interest_array.add("운동")
-        }
-        if(binding.tripCheckBox.isChecked) {
-            interest_array.add("여행")
-        }
-        if(binding.musicCheckBox.isChecked) {
-            interest_array.add("음악")
-        }
-        if(binding.societyCheckBox.isChecked) {
-            interest_array.add("사교/직업")
-        }
-        if(binding.readCheckBox.isChecked) {
-            interest_array.add("독서")
-        }
-        if(binding.cookCheckBox.isChecked) {
-            interest_array.add("요리")
-        }
-        if(binding.photoCheckBox.isChecked) {
-            interest_array.add("사진")
-        }
-        if(binding.gameCheckBox.isChecked) {
-            interest_array.add("게임")
-        }
-        if(binding.danceCheckBox.isChecked) {
-            interest_array.add("댄스")
-        }
-        if(binding.carCheckBox.isChecked) {
-            interest_array.add("차/오토바이")
-        }
-        if(binding.artCheckBox.isChecked) {
-            interest_array.add("공예")
-        }
-        if(binding.volunteerCheckBox.isChecked) {
-            interest_array.add("봉사활동")
-        }
-        if(binding.studyCheckBox.isChecked) {
-            interest_array.add("공부/자기개발")
-        }
-        println("선택한 관심사 카테고리"+ interest_array)
-    }
+
 }

@@ -73,7 +73,9 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#f0f0f0">
+                android:background="#f0f0f0"
+                android:id = "@+id/constraint_contain_prograss"
+                >
                 <ProgressBar
                     android:id="@+id/mainhomeprogressbar"
                     style="?android:attr/progressBarStyle"
