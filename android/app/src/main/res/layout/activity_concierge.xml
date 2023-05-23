@@ -360,7 +360,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/mainhomemeetingview"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="300dp"
                     android:layout_marginTop="25dp"
                     app:layout_constraintTop_toBottomOf="@+id/homeadviewpagercardview">
 
@@ -369,23 +369,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="30dp"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        />
 
                     <TextView
                         android:id="@+id/textView64"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
                         android:layout_marginStart="15dp"
-                        android:textStyle="bold"
+                        android:layout_marginTop="15dp"
+
+                        android:text="우리 동네 모임"
                         android:textColor="@color/black"
                         android:textSize="20sp"
-                        android:text="우리 동네 모임" />
+                        android:textStyle="bold" />
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/Lightningmeetingview"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="300dp"
                     android:layout_marginTop="25dp"
                     app:layout_constraintTop_toBottomOf="@+id/mainhomemeetingview">
 
@@ -393,24 +396,25 @@
                         android:id="@+id/Lightningmeetingrecyclerview"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="30dp"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:layout_marginTop="30dp" />
 
                     <TextView
                         android:id="@+id/textView100"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
                         android:layout_marginStart="15dp"
-                        android:textStyle="bold"
+                        android:layout_marginTop="15dp"
+                        android:text="번개모임"
                         android:textColor="@color/black"
                         android:textSize="20sp"
-                        android:text="번개모임" />
+                        android:textStyle="bold" />
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/placeRantalView"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="300dp"
                     android:layout_marginTop="25dp"
                     app:layout_constraintTop_toBottomOf="@+id/Lightningmeetingview">
 
@@ -418,25 +422,25 @@
                         android:id="@+id/placeRantalRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="30dp"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:layout_marginTop="30dp" />
 
                     <TextView
                         android:id="@+id/textView101"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
                         android:layout_marginStart="15dp"
-                        android:textStyle="bold"
+                        android:layout_marginTop="15dp"
+                        android:text="장소 대여"
                         android:textColor="@color/black"
                         android:textSize="20sp"
-                        android:text="장소 대여" />
+                        android:textStyle="bold" />
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/CompetitionView"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="300dp"
                     android:layout_marginTop="25dp"
                     app:layout_constraintTop_toBottomOf="@+id/placeRantalView">
 
@@ -444,19 +448,19 @@
                         android:id="@+id/CompetitionRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="30dp"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:layout_marginTop="30dp" />
 
                     <TextView
                         android:id="@+id/textView102"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
                         android:layout_marginStart="15dp"
-                        android:textStyle="bold"
+                        android:layout_marginTop="15dp"
+                        android:text="대회"
                         android:textColor="@color/black"
                         android:textSize="20sp"
-                        android:text="대회" />
+                        android:textStyle="bold" />
                 </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

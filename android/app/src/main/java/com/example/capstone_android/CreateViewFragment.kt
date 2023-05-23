@@ -148,7 +148,7 @@ class CreateViewFragment: Fragment() {
         val makeuid=s1.plus(s2)
 
         val clubprofileimagename=makeuid
-        val storageRef=storage.reference.child("periodic_meeting_room").child(clubprofileimagename)
+        val storageRef=storage.reference.child("periodic_meeting_room").child("${clubprofileimagename}.jpg")
 
         storageRef.putFile(photoUri!!).addOnSuccessListener {
             storageRef.downloadUrl.addOnSuccessListener { uri->

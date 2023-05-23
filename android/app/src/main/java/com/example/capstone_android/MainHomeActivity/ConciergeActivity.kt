@@ -17,6 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone_android.databinding.ActivityConciergeBinding
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.example.capstone_android.*
 import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.data.BannerItem
@@ -26,6 +31,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
+import kotlinx.android.synthetic.main.itemlight.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -214,29 +221,36 @@ class ConciergeActivity : AppCompatActivity() {
         var meetingRoomCollection=db.collection(collectionName)
         println("test-----------------------")
         println(collectionName)
-        meetingRoomCollection.get().addOnSuccessListener {
+        meetingRoomCollection.limit(10).get().addOnSuccessListener {
             for (meetingRoom in it){
                 println(meetingRoom)
+                viewModel.addItem(
+                    MeetingRoom(
+                        meetingRoom.data["title"] as String,meetingRoom.id,collectionName,meetingRoom.data["info_text"] as String,meetingRoom.data["imageUrl"] as String, applicationContext,
+                        meetingRoom.data["category"] as String)
+                )
+                /*
+
                 var meetingInfoImage = rootRef.child("${collectionName}/${meetingRoom.id}.jpg")
                 meetingInfoImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                     if(it.isSuccessful){
                         val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
                         viewModel.addItem(
                             MeetingRoom(bmp,
-                            meetingRoom.data["title"] as String,meetingRoom.id,collectionName)
+                            meetingRoom.data["title"] as String,meetingRoom.id,collectionName,meetingRoom.data["info_text"] as String,meetingRoom.data["imageUrl"] as String)
                         )
                     }else{
                         var ref = rootRef.child("${collectionName}/default.jpg")
                         ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                             if(it.isSuccessful){
                                 val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
-                                viewModel.addItem(MeetingRoom(bmp,meetingRoom.data["title"] as String,meetingRoom.id,collectionName))
+                                viewModel.addItem(MeetingRoom(bmp,meetingRoom.data["title"] as String,meetingRoom.id,collectionName,meetingRoom.data["info_text"] as String,meetingRoom.data["imageUrl"] as String))
                             }else{
                                 println("undefined err")
                             }
                         }
                     }
-                }
+                }*/
 
             }
         }

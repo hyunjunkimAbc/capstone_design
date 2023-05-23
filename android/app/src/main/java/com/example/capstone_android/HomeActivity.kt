@@ -27,6 +27,7 @@ class HomeActivity: AppCompatActivity() {
     var detailViewFragment:DetailViewFragment?=null
     var mapFragment: MapFragment?=null
     var profileFragment :ProfileFragment? = null
+    var UserReservationListFragment :UserReservationListFragment? = null
     var openkey:String?=null
     private lateinit var viewModel: MeetingViewModel
     private lateinit var binding: ActivityHomeBinding
@@ -70,6 +71,8 @@ class HomeActivity: AppCompatActivity() {
                         supportFragmentManager.beginTransaction().hide(mapFragment!!).commit()
                     if(profileFragment!=null)
                         supportFragmentManager.beginTransaction().hide(profileFragment!!).commit()
+                    if(UserReservationListFragment!= null)
+                        supportFragmentManager.beginTransaction().hide(UserReservationListFragment!!).commit()
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_gps ->{
@@ -86,6 +89,8 @@ class HomeActivity: AppCompatActivity() {
                         supportFragmentManager.beginTransaction().hide(detailViewFragment!!).commit()
                     if(profileFragment!=null)
                         supportFragmentManager.beginTransaction().hide(profileFragment!!).commit()
+                    if(UserReservationListFragment!= null)
+                        supportFragmentManager.beginTransaction().hide(UserReservationListFragment!!).commit()
                 }
 
                 R.id.action_account ->{
@@ -99,7 +104,8 @@ class HomeActivity: AppCompatActivity() {
                         supportFragmentManager.beginTransaction().hide(detailViewFragment!!).commit()
                     if(mapFragment!=null)
                         supportFragmentManager.beginTransaction().hide(mapFragment!!).commit()
-
+                    if(UserReservationListFragment!= null)
+                        supportFragmentManager.beginTransaction().hide(UserReservationListFragment!!).commit()
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_more ->{
@@ -165,9 +171,22 @@ class HomeActivity: AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
     fun gotoReservationListFragment(){
+        /*
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.search_content, UserReservationListFragment())
-            .commit()
+            .commit()*/
+        if(UserReservationListFragment ==null){
+            UserReservationListFragment= UserReservationListFragment()
+            supportFragmentManager.beginTransaction().add(R.id.search_content,UserReservationListFragment!!).commit()
+        }
+        if(UserReservationListFragment!=null)
+            supportFragmentManager.beginTransaction().show(UserReservationListFragment!!).commit()
+        if(detailViewFragment!=null)
+            supportFragmentManager.beginTransaction().hide(detailViewFragment!!).commit()
+        if(mapFragment!=null)
+            supportFragmentManager.beginTransaction().hide(mapFragment!!).commit()
+        if(profileFragment!= null)
+            supportFragmentManager.beginTransaction().hide(profileFragment!!).commit()
     }
 }

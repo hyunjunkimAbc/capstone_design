@@ -43,7 +43,7 @@ class MeetingRoomPostingAddFragment : Fragment() {
     val postingCollection = db.collection("posting")
     val userCollection = db.collection("user")
     val commentCollection = db.collection("comment")
-    val meetingRoomCollection = db.collection("meeting_room")
+    var meetingRoomCollection = db.collection("periodic_meeting_room")
     var title =""
     var text =""
     var userInputImgUri : Uri? = null
@@ -69,6 +69,8 @@ class MeetingRoomPostingAddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         document_id = arguments?.getString("meeting_room_document_id").toString()
+        val colName = activity?.intent?.getStringExtra("collectionName")
+        meetingRoomCollection = db.collection(colName!!)
         initDataAndUI()
     }
     private fun initDataAndUI(){
@@ -102,6 +104,7 @@ class MeetingRoomPostingAddFragment : Fragment() {
             "upload_time" to time,
             "writer_uid" to (Firebase.auth.uid)
         )
+        println()
         postingCollection.document("${Firebase.auth.uid}${time}").set(docData).addOnSuccessListener {
             //meetingroom에 배열에도 반영
             meetingRoomCollection.document(document_id).update("posting_id_list" , FieldValue.arrayUnion("${Firebase.auth.uid}${time}")).addOnSuccessListener {
