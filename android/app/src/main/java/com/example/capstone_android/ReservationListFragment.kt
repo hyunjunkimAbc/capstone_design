@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone_android.databinding.FragmentReservationlistBinding
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -26,6 +27,7 @@ class ReservationListFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var _binding: FragmentReservationlistBinding? = null
+
     private val binding get() = _binding!!
 
     lateinit var auth: FirebaseAuth
@@ -34,6 +36,7 @@ class ReservationListFragment : Fragment() {
     val db = Firebase.firestore
     var stRef = Firebase.storage.reference
     var bmp: Bitmap? = null
+    var placeImage: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +63,7 @@ class ReservationListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeViews()
-        binding.textView.text = "예약신청내역"
+        binding.textView.text = "장소대여내역"
     }
 
     private fun initializeViews() {
@@ -92,8 +95,8 @@ class ReservationListFragment : Fragment() {
     private fun initDataAndUI() {
         db.collection("user").document(auth.currentUser?.uid.toString()).get()
             .addOnSuccessListener {
-                var place_id_list = it["place_id_list"] as List<String>
                 viewModel.items.clear()
+                var place_id_list = it["place_id_list"] as List<String>
                 for (places in place_id_list) {
                     db.collection("place_rental_room").document(places).get()
                         .addOnSuccessListener {
@@ -103,57 +106,84 @@ class ReservationListFragment : Fragment() {
                             var reservation_uid_list =
                                 it["reservation_uid_list"] as List<String>
                             var placeImageRes =
-                                stRef.child("place_rental_room/${it["document_id"]}.jpg")
-                            placeImageRes.getBytes(Long.MAX_VALUE).addOnCompleteListener {
-                                if (it.isSuccessful) {
-                                    bmp = BitmapFactory.decodeByteArray(
-                                        it.result,
-                                        0,
-                                        it.result.size
-                                    )
-                                    for (reservationHistory in reservation_uid_list) {
-                                        db.collection("reservation")
-                                            .document(reservationHistory)
-                                            .get()
-                                            .addOnSuccessListener {
-                                                var reserDocument = it.id
-                                                var placeImage = bmp!!
-                                                var placeName = it["placeName"].toString()
-                                                var reservatorName =
-                                                    it["reservatorName"].toString()
-                                                var requestDate = it["requestDate"].toString()
-                                                var startReservedSchedule =
-                                                    it["startReservedSchedule"].toString()
-                                                var endReservedSchedule =
-                                                    it["endReservedSchedule"].toString()
-                                                var numOfPeople =
-                                                    it["numOfPeople"].toString().toInt()
-                                                var okCheck =
-                                                    it["okCheck"].toString().toBoolean()
-                                                var requestToday = it["requestToday"].toString()
-                                                var requestTime =
-                                                    it["requestTime"].toString().toLong()
-
-                                                viewModel.addItem(
-                                                    ReservationData(
-                                                        reserDocument,
-                                                        placeImage,
-                                                        placeName,
-                                                        reservatorName,
-                                                        requestDate,
-                                                        startReservedSchedule,
-                                                        endReservedSchedule,
-                                                        numOfPeople,
-                                                        okCheck,
-                                                        requestToday,
-                                                        requestTime
+                                stRef.child("place_rental_room/${it["Uid"]}.jpg")
+                            for (reservationHistory in reservation_uid_list) {
+                                db.collection("reservation")
+                                    .document(reservationHistory)
+                                    .get()
+                                    .addOnSuccessListener {
+                                        var reserDocument = it.id
+                                        var placeName = it["placeName"].toString()
+                                        var reservatorName =
+                                            it["reservatorName"].toString()
+                                        var requestDate = it["requestDate"].toString()
+                                        var startReservedSchedule =
+                                            it["startReservedSchedule"].toString()
+                                        var endReservedSchedule =
+                                            it["endReservedSchedule"].toString()
+                                        var numOfPeople =
+                                            it["numOfPeople"].toString().toInt()
+                                        var okCheck =
+                                            it["okCheck"].toString().toBoolean()
+                                        var requestToday = it["requestToday"].toString()
+                                        var requestTime =
+                                            it["requestTime"].toString().toLong()
+                                        placeImageRes.getBytes(Long.MAX_VALUE)
+                                            .addOnCompleteListener {
+                                                if (it.isSuccessful) {
+                                                    bmp = BitmapFactory.decodeByteArray(
+                                                        it.result,
+                                                        0,
+                                                        it.result.size
                                                     )
-                                                )
-                                            }.addOnFailureListener {
-                                                println("recycler view 요소 한개 얻어오는 것 실패 변수 조정")
+                                                    placeImage = bmp!!
+                                                    viewModel.addItem(
+                                                        ReservationData(
+                                                            reserDocument,
+                                                            placeImage,
+                                                            placeName,
+                                                            reservatorName,
+                                                            requestDate,
+                                                            startReservedSchedule,
+                                                            endReservedSchedule,
+                                                            numOfPeople,
+                                                            okCheck,
+                                                            requestToday,
+                                                            requestTime
+                                                        )
+                                                    )
+                                                } else { //recycler view 요소 한개 이미지 얻어오는 것 실패
+                                                    placeImageRes =
+                                                        stRef.child("place_rental_room/default.jpg")
+                                                    placeImageRes.getBytes(Long.MAX_VALUE)
+                                                        .addOnCompleteListener {
+                                                            if (it.isSuccessful) {
+                                                                bmp = BitmapFactory.decodeByteArray(
+                                                                    it.result,
+                                                                    0,
+                                                                    it.result.size
+                                                                )
+                                                                placeImage = bmp!!
+                                                                viewModel.addItem(
+                                                                    ReservationData(
+                                                                        reserDocument,
+                                                                        placeImage,
+                                                                        placeName,
+                                                                        reservatorName,
+                                                                        requestDate,
+                                                                        startReservedSchedule,
+                                                                        endReservedSchedule,
+                                                                        numOfPeople,
+                                                                        okCheck,
+                                                                        requestToday,
+                                                                        requestTime
+                                                                    )
+                                                                )
+                                                            }
+                                                        }
+                                                }
                                             }
                                     }
-                                }
                             }
                         }
                 }

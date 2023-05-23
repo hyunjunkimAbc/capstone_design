@@ -15,7 +15,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.example.capstone_android.R
 import com.example.capstone_android.data.ReservationRequestData
-import com.example.capstone_android.databinding.FragmentReservationBinding
+import com.example.capstone_android.databinding.FragmentReservationRequestBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
@@ -41,6 +41,7 @@ class ReservationRequestFragment: Fragment() {
 
     var reserStart:Int=100
     var reserEnd:Int=0
+    var max : Int? = null
     val placeUid:String=""
 
     //var place_id = activity?.intent?.getStringExtra("place_rental_room_id") ?: "9cAZZmIcuNFcGfoK5oen"
@@ -52,7 +53,7 @@ class ReservationRequestFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentReservationBinding.inflate(inflater,container,false)
+        _binding = FragmentReservationRequestBinding.inflate(inflater,container,false)
         return binding.root
     }
 
@@ -90,6 +91,12 @@ class ReservationRequestFragment: Fragment() {
                 reservationDay = "${year}-${month2}-${dayOfMonth2}"
             }
         }
+
+        db.collection("place_rental_room").document(place_id).get()
+            .addOnSuccessListener {
+                max = it["max"].toString().toInt()
+                binding.maxTextView.setText(max.toString())
+            }
 
         binding.button.setOnClickListener(){
             setScheduleBtn(0)
@@ -129,6 +136,9 @@ class ReservationRequestFragment: Fragment() {
             else if(binding.numOfPeopleEditText.getText().toString()==""){
                 Toast.makeText(activity, "이용인원을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
+            else if(binding.numOfPeopleEditText.getText().toString().toInt()>max!!){
+                Toast.makeText(activity, "최대 인원을 초과했습니다.", Toast.LENGTH_SHORT).show()
+            }
             else {
                 reservationTime()
                 time = System.currentTimeMillis()
@@ -165,9 +175,10 @@ class ReservationRequestFragment: Fragment() {
                             }
                         Toast.makeText(context, "예약신청이 완료되었습니다.", Toast.LENGTH_SHORT).show()
 
-                findNavController().navigate(R.id.action_reservationRequestFragment_to_meetingRoomInfoFragment )
-                //requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
-                //requireActivity().supportFragmentManager.popBackStack()
+                        findNavController().navigate(R.id.action_reservationRequestFragment_to_meetingRoomInfoFragment )
+                        //requireActivity().supportFragmentManager.beginTransaction().remove(this)
+                            .commit()
+                        //requireActivity().supportFragmentManager.popBackStack()
                     }
             }
         }
@@ -179,7 +190,7 @@ class ReservationRequestFragment: Fragment() {
             if(it.isSuccessful){
                 val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
                 binding.PlaceImageView.setImageBitmap(bmp)
-            }/*else{
+            }else{
                 var ref = stRef.child("place_rental_room/default.jpg")
                 ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                     if(it.isSuccessful){
@@ -189,7 +200,7 @@ class ReservationRequestFragment: Fragment() {
                         println("undefined err")
                     }
                 }
-            }*/
+            }
         }
     }
 

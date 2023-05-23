@@ -21,8 +21,10 @@
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/round_button.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/society_beer.xml" value="0.23796296296296296" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable-v24/timecheck.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable/ic_baseline_notifications_24.xml" value="0.22314814814814815" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable/round_button.xml" value="0.22870370370370371" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable/shape_for_circle_button.xml" value="0.23796296296296296" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable/trophy.xml" value="0.22314814814814815" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable/xml_car.xml" value="0.14270833333333333" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/drawable/xml_read.xml" value="0.14270833333333333" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_addplace.xml" value="0.17300724637681159" />
@@ -48,6 +50,7 @@
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/item_layout_banner.xml" value="0.17300724637681159" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/item_main.xml" value="0.17300724637681159" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/item_main2.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/item_user_reservation.xml" value="0.245018115942029" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/itemcompetitionmaplist.xml" value="0.17300724637681159" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/itemlight.xml" value="0.17300724637681159" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/itemmapfragment.xml" value="0.17300724637681159" />

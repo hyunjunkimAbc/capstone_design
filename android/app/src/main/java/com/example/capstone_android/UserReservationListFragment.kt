@@ -28,13 +28,13 @@ class UserReservationListFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentReservationlistBinding? = null
     private val binding get() = _binding!!
-    private val viewModel : ReservationViewModel by viewModels<ReservationViewModel>()
+    private val viewModel: ReservationViewModel by viewModels<ReservationViewModel>()
 
     val db = Firebase.firestore
     var stRef = Firebase.storage.reference
-    lateinit var auth : FirebaseAuth
-    var place_id : String? = null //activity?.intent?.getStringExtra("place_rental_room_id") ?: "x8cKgIg4R0UuZmhRAwOH" //"9cAZZmIcuNFcGfoK5oen"
+    lateinit var auth: FirebaseAuth
     var bmp: Bitmap? = null
+    var placeImage: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +60,8 @@ class UserReservationListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeViews()
         binding.textView.text = "내 예약목록"
+        initializeViews()
     }
 
     private fun initializeViews() {
@@ -72,7 +72,7 @@ class UserReservationListFragment : Fragment() {
                     Toast.makeText(this.activity, "예약한 장소 없습니다.", Toast.LENGTH_LONG).show()
                     return@addOnSuccessListener
                 } else {
-                    val adapter = ReservationListAdapter(viewModel)
+                    val adapter = UserReservationListAdapter(viewModel)
                     binding.reserlist.adapter = adapter
                     binding.reserlist.layoutManager = LinearLayoutManager(activity)
                     binding.reserlist.setHasFixedSize(true)
@@ -90,36 +90,34 @@ class UserReservationListFragment : Fragment() {
             }
     }
 
-     private fun initDataAndUI(){
-        db.collection("user").document(auth.currentUser?.uid.toString()).get().addOnSuccessListener {
-            if(it["reservation_list"] == null){
-                return@addOnSuccessListener
-            }
-            val reservation_list = it["reservation_list"] as List<String>
-            viewModel.items.clear()
-            for (reservation in reservation_list) {
-                db.collection("reservation").document(reservation).get()
-                    .addOnSuccessListener {
-                        place_id = it["placeUid"].toString()
-                        var placeImageRes = stRef.child("place_rental_room/${place_id}.jpg")
-                        placeImageRes.getBytes(Long.MAX_VALUE).addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                bmp = BitmapFactory.decodeByteArray(it.result, 0, it.result.size)
-                            }
-                            db.collection("reservation").document(reservation).get()
-                                .addOnSuccessListener {
-                                    var reserDocument = it.id
-                                    var placeImage = bmp!!
-                                    var placeName = it["placeName"].toString()
-                                    var reservatorName = it["reservatorName"].toString()
-                                    var requestDate = it["requestDate"].toString()
-                                    var startReservedSchedule = it["startReservedSchedule"].toString()
-                                    var endReservedSchedule = it["endReservedSchedule"].toString()
-                                    var numOfPeople = it["numOfPeople"].toString().toInt()
-                                    var okCheck = it["okCheck"].toString().toBoolean()
-                                    var requestToday = it["requestToday"].toString()
-                                    var requestTime = it["requestTime"].toString().toLong()
-
+    private fun initDataAndUI() {
+        db.collection("user").document(auth.currentUser?.uid.toString()).get()
+            .addOnSuccessListener {
+                if (it["reservation_list"] == null) {
+                    return@addOnSuccessListener
+                }
+                val reservation_list = it["reservation_list"] as List<String>
+                viewModel.items.clear()
+                for (reservation in reservation_list) {
+                    db.collection("reservation").document(reservation).get()
+                        .addOnSuccessListener {
+                            var place_id = it["placeUid"].toString()
+                            var reserDocument = it.id
+                            var placeName = it["placeName"].toString()
+                            var reservatorName = it["reservatorName"].toString()
+                            var requestDate = it["requestDate"].toString()
+                            var startReservedSchedule = it["startReservedSchedule"].toString()
+                            var endReservedSchedule = it["endReservedSchedule"].toString()
+                            var numOfPeople = it["numOfPeople"].toString().toInt()
+                            var okCheck = it["okCheck"].toString().toBoolean()
+                            var requestToday = it["requestToday"].toString()
+                            var requestTime = it["requestTime"].toString().toLong()
+                            var placeImageRes = stRef.child("place_rental_room/${place_id}.jpg")
+                            placeImageRes.getBytes(Long.MAX_VALUE).addOnCompleteListener {
+                                if (it.isSuccessful) {
+                                    bmp =
+                                        BitmapFactory.decodeByteArray(it.result, 0, it.result.size)
+                                    placeImage = bmp!!
                                     viewModel.addItem(
                                         ReservationData(
                                             reserDocument,
@@ -135,12 +133,38 @@ class UserReservationListFragment : Fragment() {
                                             requestTime
                                         )
                                     )
-                                }.addOnFailureListener {
-                                    println("recycler view 요소 한개 얻어오는 것 실패 변수 조정")
+                                } else { //recycler view 요소 한개 이미지 얻어오는 것 실패
+                                    placeImageRes =
+                                        stRef.child("place_rental_room/default.jpg")
+                                    placeImageRes.getBytes(Long.MAX_VALUE).addOnCompleteListener {
+                                        if (it.isSuccessful) {
+                                            bmp = BitmapFactory.decodeByteArray(
+                                                it.result,
+                                                0,
+                                                it.result.size
+                                            )
+                                            placeImage = bmp!!
+                                            viewModel.addItem(
+                                                ReservationData(
+                                                    reserDocument,
+                                                    placeImage,
+                                                    placeName,
+                                                    reservatorName,
+                                                    requestDate,
+                                                    startReservedSchedule,
+                                                    endReservedSchedule,
+                                                    numOfPeople,
+                                                    okCheck,
+                                                    requestToday,
+                                                    requestTime
+                                                )
+                                            )
+                                        }
+                                    }
                                 }
+                            }
                         }
-                    }
+                }
             }
-        }
     }
 }

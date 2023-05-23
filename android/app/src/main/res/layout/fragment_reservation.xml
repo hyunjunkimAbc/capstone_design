@@ -274,12 +274,34 @@
                     android:id="@+id/textView23"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginStart="4dp"
                     android:text="명"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/numOfPeopleEditText"
+                    app:layout_constraintStart_toEndOf="@+id/maxTextView"
                     app:layout_constraintTop_toTopOf="@+id/textView22" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="/"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/numOfPeopleEditText"
+                    app:layout_constraintStart_toEndOf="@+id/numOfPeopleEditText"
+                    app:layout_constraintTop_toTopOf="@+id/numOfPeopleEditText" />
+
+                <TextView
+                    android:id="@+id/maxTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView8"
+                    app:layout_constraintStart_toEndOf="@+id/textView8"
+                    app:layout_constraintTop_toTopOf="@+id/textView8" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
