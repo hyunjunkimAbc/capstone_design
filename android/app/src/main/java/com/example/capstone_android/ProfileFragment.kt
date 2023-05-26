@@ -1,14 +1,16 @@
 package com.example.capstone_android
 
+//import com.example.capstone_android.SearchAddress.SearchMap
 import android.app.Activity
-import android.os.Bundle
-import android.view.View
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
@@ -44,7 +46,7 @@ class ProfileFragment : Fragment() {
     private lateinit var nickName : EditText
     private lateinit var birth : EditText
     private lateinit var userMessage : EditText
-    private lateinit var userPhoneNumber: EditText
+    private lateinit var userPhoneNumber: TextView
 
     private lateinit var button_ModifyProfile : Button
     private lateinit var button_userLocation : Button
@@ -77,7 +79,7 @@ class ProfileFragment : Fragment() {
         var address: String = "나의 위치", // 위치정보
         var locationx: Long = 0, // 위도
         var locationy: Long = 0, // 경도
-        var phone_number: String = "전화번호", // 전화번호
+        var email: String = "이메일", // 전화번호
         var profile_message: String = "자기소개", // 자기소개글
         var edit_time: Long = 0 // 회원정보수정시간
     )
@@ -208,7 +210,7 @@ class ProfileFragment : Fragment() {
                         nickName.setText(it.nickname)
                         birth.setText(it.birthday)
                         button_userLocation.setText(it.address)
-                        userPhoneNumber.setText(it.phone_number)
+                        userPhoneNumber.setText(it.email)
                         userMessage.setText(it.profile_message)
                         editTimeForUpload
                     }
@@ -244,11 +246,13 @@ class ProfileFragment : Fragment() {
 
     private fun updateProfileInfo() { //
         editTimeForUpload = System.currentTimeMillis()
-
+        var temp = button_userLocation.text.toString()
+        var tempSplit = temp.split(" ")
+        var uploadAddress = "${tempSplit[0]} ${tempSplit[1]}"
         val updatedProfile = UserProfile(
             nickName.text.toString(),
             birth.text.toString(),
-            button_userLocation.text.toString(),
+            uploadAddress,
             locationxForUpload, // 위도 받아오기
             locationyForUpload, // 경도 받아오기
             userPhoneNumber.text.toString(),
@@ -279,7 +283,7 @@ class ProfileFragment : Fragment() {
                     // Firebase Storage에 사진 업로드
                     val user = auth.currentUser
                     if (user != null) {
-                        val storageRef = storage.reference.child("users/${user.uid}/profile.PNG")
+                        val storageRef = storage.reference.child("user_profile_image/${currentUserUid}.jpg")
                         storageRef.putFile(selectedImageUri)
                             .addOnSuccessListener {
                                 // 유저 프로필 이미지 URL 업로드
@@ -314,7 +318,7 @@ class ProfileFragment : Fragment() {
                 if (button_userLocation.text.toString() != address) {
                     button_userLocation.setText("${address} (변경하려면 클릭하세요)")
                     button_userLocation.invalidate()
-                    updateProfileInfo()
+                    //updateProfileInfo()
                 }
             }
         }
@@ -326,29 +330,45 @@ class ProfileFragment : Fragment() {
     inner class ButtonListener : View.OnClickListener{ // 로그아웃, 회원가입, 모임 관리 버튼
 
         override fun onClick(v: View?) {
+            val mActivity = activity as HomeActivity
 
             when(v?.id){
                 // 나의 신청 대회 버튼 클릭 시 신청 대회 목록 확인하는 프래그먼트로 이동
-                /*R.id.button_myApplyCompetition -> {
-                    activity.changeFragment(1)
-                }*/
+                R.id.button_myApplyCompetition -> {
+                    val detailViewFragment=MyApplyCompetitionFragment()
+                    mActivity.supportFragmentManager.beginTransaction().replace(R.id.main_content,detailViewFragment).commit()
+                }
 
                 // 나의 개설 대회 버튼 클릭 시 개설 대회 목록 확인하는 프래그먼트로 이동
                 /*R.id.button_myCompetition -> {
-                    activity.changeFragment(2)
+                    val detailViewFragment=MyCompetitionFragment()
+                    mActivity.supportFragmentManager.beginTransaction().replace(R.id.main_content,detailViewFragment).commit()
                 }*/
 
                 // 내 모임 버튼 클릭 시 가입한 모임 목록 확인하는 프래그먼트로 이동
                 /*R.id.button_myMeetingRoom -> {
-                    activity.changeFragment(3)
+                    val detailViewFragment=MyMeetingRoomFragment()
+                    mActivity.supportFragmentManager.beginTransaction().replace(R.id.main_content,detailViewFragment).commit()
                 }*/
 
+
                 // 나의 장소 대여 버튼 클릭 시 대여한 장소 목록 확인하는 프래그먼트로 이동
-                /*R.id.button_myPlaceRental -> {
-                    activity.changeFragment(4)
+                R.id.button_myPlaceRental -> {
+                    (activity as HomeActivity).gotoReservationListFragment()
                 }
-*/
+
                 // 내 주소 버튼 클릭 시 주소 변경 화면으로 이동
+                R.id.button_mylocation -> {
+                    val intent = Intent(requireActivity(), SearchMap::class.java)
+                    intent.apply {
+                        this.putExtra("create","hello")
+                    }
+                    //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION) // 액티비티 애니메이션 없앰
+                    startActivityForResult(intent, 101)
+                }
+
+                /*
+                // 내 주소 버튼 클릭 시 주소 변경 화면으로 이동 (범학 테스트용)
                 R.id.button_mylocation -> {
                     val intent = Intent(requireActivity(), ChangeDataTestActivity::class.java)
                     intent.apply {
@@ -356,7 +376,8 @@ class ProfileFragment : Fragment() {
                     }
                     //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION) // 액티비티 애니메이션 없앰
                     startActivityForResult(intent, 101)
-                }
+                }*/
+
                 // 로그아웃하고 로그인 화면으로 이동
                 R.id.button_logOut -> logOut()
             }
