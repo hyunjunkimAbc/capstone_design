@@ -9,8 +9,11 @@ import android.view.MenuItem
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.capstone_android.Util.SingleTonData
+import com.example.capstone_android.data.SignUpData
 import com.example.capstone_android.databinding.ActivitySetGoogleAccountBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -32,12 +35,8 @@ class SetGoogleAccountActivity : AppCompatActivity()  {
 
     companion object {
         const val REQUEST_CODE = 1
-        const val UPLOAD_FOLDER = "upload_images/"
+        const val UPLOAD_FOLDER = "user_profile_image"
     }
-    var selected_interest = ""
-
-    // 선택된 관심사를 담는 배열 (DB 필드 이름: interest_array)
-    var interest_array = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,17 +57,17 @@ class SetGoogleAccountActivity : AppCompatActivity()  {
             startActivityForResult(intent, OPEN_GALLERY)
         }
 
-        // 이메일 중복 검사를 하기위함
-        val user_data = db.collection("user")
-
         // 생년월일 선택 DatePicker
         val datePicker : DatePicker = binding.dpSpinner
 
+        binding.setInterestBtn.setOnClickListener(){
+            val intent = Intent(this, SelectHobbyActivity::class.java)
+            intent.putExtra("key", "selecthobby")
+            startActivity(intent)
+        }
 
         // 가입하기 버튼 클릭
         binding.InitButton.setOnClickListener(){
-            println("저장하기 버튼 클릭")
-
             if(binding.NicknameEditText.getText().toString()==""){    // nickname을 입력하지 않았을 때
                 println("닉네임을 입력하지않음")
                 Toast.makeText(
@@ -85,41 +84,39 @@ class SetGoogleAccountActivity : AppCompatActivity()  {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            else if (interest_array.isNullOrEmpty()){
-                println("체크된 관심사가 없음")
-                Toast.makeText(
-                    this,
-                    "관심사를 선택해주세요.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+//            else if (SingleTonData.userInfo?.interest_array==null){
+//                Toast.makeText(
+//                    this,
+//                    "관심사를 선택해주세요.",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
             else {
-                println("구글계정 개인정보 설정완료")
-
-                val user = FirebaseAuth.getInstance().currentUser
-
-                val col = db.collection("user").document("${user?.uid}")
-                val itemMap = hashMapOf(
-                    "email" to user?.email,
-                    "nickname" to binding.NicknameEditText.getText().toString(),
-                    "uid" to user?.uid,
-                    "edit_time" to System.currentTimeMillis(),
-                    "profile_message" to "",
-                    "birthday" to datePicker.year.toString()+datePicker.month.toString()+datePicker.dayOfMonth.toString(),
-                    "interest_array" to interest_array
-                )
-                col.set(itemMap)
+                var user = FirebaseAuth.getInstance().currentUser
+                var signdata= SignUpData()
+                signdata.email=Firebase.auth.currentUser?.email
+                signdata.nickname= binding.NicknameEditText.getText().toString()
+                signdata.uid=Firebase.auth.currentUser?.uid
+                signdata.birthday=datePicker.year.toString()+datePicker.month.toString()+datePicker.dayOfMonth.toString()
+                signdata.timestamp=System.currentTimeMillis()
+                signdata.profile_message=""
+//                signdata.interest_array=SingleTonData.userInfo?.interest_array!!
+                signdata.edit_time=System.currentTimeMillis()
+                db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).set(signdata)
 
                 // 프로필 이미지가 선택되었으면
                 if (selected_profile_img==1){
                     // Firebase Storage로 이미지 전송
-                    imgName = "${user?.uid}"
+                    imgName = "${user?.uid ?: String}"
                     var storageReference =
-                        st?.reference?.child("user_profile_image")?.child(imgName!!)
+                        st?.reference?.child(UPLOAD_FOLDER)?.child(imgName!!)
 
                     storageReference?.putFile(image!!)?.addOnSuccessListener {
                         println("이미지 업로드 성공")
                     }
+                }
+                else {
+                    // 프로필 이미지 설정X
                 }
                 // 스낵바(토스트) 메시지
                 Toast.makeText(
@@ -127,11 +124,9 @@ class SetGoogleAccountActivity : AppCompatActivity()  {
                     "개인정보 설정을 완료하였습니다.",
                     Toast.LENGTH_SHORT
                 ).show()
-                sleep(3000)
-                startActivity(Intent(this, HomeActivity::class.java))
-                finish()
+                val intent = Intent(this, ConciergeActivity::class.java)
+                startActivity(intent)
             }
-
         }
     }
 

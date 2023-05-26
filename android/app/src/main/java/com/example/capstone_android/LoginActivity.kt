@@ -112,8 +112,7 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
 
                                 // 홈화면으로 이동
                                 val intent = Intent(this, ConciergeActivity::class.java)
-                                intent.putExtra("userNickName", myNickName)
-                               startActivity(intent)
+                                startActivity(intent)
 
                             }
                         } else {
@@ -166,8 +165,7 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if (account !== null) { // 이미 로그인 되어있을시 바로 홈 액티비티로 이동
-//            MainActivity(firebaseAuth.currentUser)
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, ConciergeActivity::class.java)
             startActivity(intent)
         }
     }
