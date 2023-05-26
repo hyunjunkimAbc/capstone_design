@@ -17,7 +17,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import java.lang.Thread.sleep
 
 // 구글계정 개인정보 설정
 class SetGoogleAccountActivity : AppCompatActivity()  {
@@ -59,7 +58,11 @@ class SetGoogleAccountActivity : AppCompatActivity()  {
 
         // 생년월일 선택 DatePicker
         val datePicker : DatePicker = binding.dpSpinner
-
+        binding.signupuseraddress.setOnClickListener(){
+            val intent = Intent(this, AddressActivity::class.java)
+            intent.putExtra("key", "createuser")
+            startActivity(intent)
+        }
         binding.setInterestBtn.setOnClickListener(){
             val intent = Intent(this, SelectHobbyActivity::class.java)
             intent.putExtra("key", "selecthobby")
@@ -84,13 +87,20 @@ class SetGoogleAccountActivity : AppCompatActivity()  {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-//            else if (SingleTonData.userInfo?.interest_array==null){
-//                Toast.makeText(
-//                    this,
-//                    "관심사를 선택해주세요.",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }
+            else if (SingleTonData.userInfo!!.address==null){
+                Toast.makeText(
+                    this,
+                    "활동 지역을 선택해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else if (SingleTonData.userInfo?.interest_array==null){
+                Toast.makeText(
+                    this,
+                    "관심사를 선택해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
             else {
                 var user = FirebaseAuth.getInstance().currentUser
                 var signdata= SignUpData()
@@ -100,7 +110,8 @@ class SetGoogleAccountActivity : AppCompatActivity()  {
                 signdata.birthday=datePicker.year.toString()+datePicker.month.toString()+datePicker.dayOfMonth.toString()
                 signdata.timestamp=System.currentTimeMillis()
                 signdata.profile_message=""
-//                signdata.interest_array=SingleTonData.userInfo?.interest_array!!
+                signdata.address= SingleTonData.userInfo!!.address
+                signdata.interest_array=SingleTonData.userInfo?.interest_array!!
                 signdata.edit_time=System.currentTimeMillis()
                 db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).set(signdata)
 

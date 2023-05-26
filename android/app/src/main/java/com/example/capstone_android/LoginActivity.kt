@@ -57,7 +57,9 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
 
         listView1 = binding.container1
         listView2 = binding.container2
-
+        if(SingleTonData.userInfo==null){
+            SingleTonData.userInfo=SignUpData()
+        }
         // 구글 로그인 버튼 텍스트 세팅
         setGoogleButtonText(binding.googleSignInButton,"Google 계정으로 로그인")
 
