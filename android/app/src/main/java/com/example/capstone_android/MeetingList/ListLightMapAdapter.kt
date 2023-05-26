@@ -74,7 +74,7 @@ class ListLightMapAdapter(var itemlist: List<lightData>): RecyclerView.Adapter<R
         viewholder.lightmapitemstarttime.text=itemlist[position].start_time
         viewholder.lightmapitemend.text=itemlist[position].end_time
         viewholder.lightmapclick.setOnClickListener{
-            println("클릭")
+            lightMapItemClickListener.onClick(it,position)
         }
     }
     @SuppressLint("NotifyDataSetChanged")

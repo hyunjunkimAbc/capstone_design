@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat"></style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bottomsheetdialog</item>
     </style>
@@ -10,6 +14,8 @@
 
 
     <style name="toolbar" parent="">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:backgroundTint">@color/black</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:titleTextColor">@color/black</item>

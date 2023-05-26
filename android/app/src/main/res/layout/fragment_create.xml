@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
         app:cardBackgroundColor="#A9A9A9"
+        android:layout_toRightOf="@+id/clubprofile"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         app:cardCornerRadius="15dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline14"
-        app:layout_constraintStart_toStartOf="@+id/guideline13"
-        app:layout_constraintTop_toTopOf="parent">
+      >
 
         <EditText
             android:id="@+id/maxnumber"
@@ -25,6 +33,7 @@
             android:ems="5"
             android:gravity="top"
             android:hint="모임 인원수를 설정"
+            android:textSize="20sp"
             android:inputType="number"
             android:privateImeOptions="defaultInputmode=korean"
             android:scrollHorizontally="false"
@@ -38,14 +47,16 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toRightOf="@+id/changehobby"
+        android:layout_below="@+id/mainclubecxplaincard"
         app:cardBackgroundColor="#A9A9A9"
         app:cardCornerRadius="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline182"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline141"
-        app:layout_constraintTop_toTopOf="@+id/guideline181">
+     >
 
         <EditText
             android:id="@+id/club"
@@ -56,6 +67,7 @@
             android:ems="10"
             android:hint="모임 이름"
             android:inputType="text"
+            android:textSize="25sp"
             android:privateImeOptions="defaultInputmode=korean"
             android:textColorHint="	#D3D3D3	"
             tools:ignore="TouchTargetSizeCheck"
@@ -66,36 +78,29 @@
 
     <ImageView
         android:id="@+id/clubprofile"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="4dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="10dp"
         android:background="@drawable/shape_for_circle_button"
-        app:layout_constraintBottom_toTopOf="@+id/guideline11"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
         app:srcCompat="@drawable/plusprofileimg" />
 
     <ImageView
         android:id="@+id/changehobby"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline182"
-        app:layout_constraintEnd_toStartOf="@+id/guideline15"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline181"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/hobby" />
+        app:srcCompat="@drawable/hobby"
+        android:layout_below="@+id/mainclubecxplaincard"/>
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline182"
+
+
         app:srcCompat="@drawable/gps2" />
 
     <TextView
@@ -106,8 +111,7 @@
         android:text="지역"
         android:textColor="#000000"
         android:textSize="25dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/guideline182" />
+      />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/address"
@@ -116,8 +120,7 @@
         android:layout_marginEnd="20dp"
         app:cardBackgroundColor="#A9A9A9"
         app:cardCornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline182">
+>
 
         <TextView
             android:id="@+id/useraddress"
@@ -139,26 +142,21 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:background="@drawable/round_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline183"
         android:text="모임 만들기"
         android:textSize="20dp" />
 
 
     <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:id="@+id/mainclubecxplaincard"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="20dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         app:cardBackgroundColor="#A9A9A9"
         app:cardCornerRadius="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline18"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline1">
-
+        android:layout_below="@+id/clubprofile"
+     >
         <EditText
             android:id="@+id/explainclub2"
             android:layout_width="match_parent"
@@ -176,72 +174,6 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="10dp" />
     </androidx.cardview.widget.CardView>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline181"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline182"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline183"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.4" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.18" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline141"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

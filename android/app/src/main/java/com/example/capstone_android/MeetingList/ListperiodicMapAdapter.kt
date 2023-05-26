@@ -39,7 +39,7 @@ class ListperiodicMapAdapter(var itemlist : List<ClubData>): RecyclerView.Adapte
         viewholder.category.text= itemlist[position].category
         viewholder.mapexplain.text= itemlist[position].info_text
         viewholder.mapclick.setOnClickListener{
-            println("클릭")
+            periodicMapItemClickListener.onClick(it,position)
         }
     }
     @SuppressLint("NotifyDataSetChanged")
