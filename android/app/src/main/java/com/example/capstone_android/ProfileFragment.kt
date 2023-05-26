@@ -55,6 +55,8 @@ class ProfileFragment : Fragment() {
     private lateinit var button_MyPlaceRental : Button
     private lateinit var button_LogOut : Button
     private lateinit var button_LogIn : Button
+    private lateinit var button_allowplace : Button
+
 
     companion object {
         const val REQUEST_IMAGE = 100
@@ -136,6 +138,7 @@ class ProfileFragment : Fragment() {
         button_MyMeetingRoom = rootView.findViewById(R.id.button_myMeetingRoom)
         button_MyPlaceRental = rootView.findViewById(R.id.button_myPlaceRental)
         button_LogOut = rootView.findViewById(R.id.button_logOut)
+        button_allowplace = rootView.findViewById(R.id.allowPlaceBtn)
 
 
         button_ModifyProfile.setOnClickListener(ButtonListener())
@@ -144,6 +147,7 @@ class ProfileFragment : Fragment() {
         button_MyCompetition.setOnClickListener(ButtonListener())
         button_MyMeetingRoom.setOnClickListener(ButtonListener())
         button_MyPlaceRental.setOnClickListener(ButtonListener())
+        button_allowplace.setOnClickListener(ButtonListener())
         button_LogOut.setOnClickListener(ButtonListener())
 
     }
@@ -329,6 +333,7 @@ class ProfileFragment : Fragment() {
     inner class ButtonListener : View.OnClickListener{ // 로그아웃, 회원가입, 모임 관리 버튼
 
         override fun onClick(v: View?) {
+            val mActivity = activity as HomeActivity
 
             when(v?.id){
                 // 나의 신청 대회 버튼 클릭 시 신청 대회 목록 확인하는 프래그먼트로 이동
@@ -345,10 +350,15 @@ class ProfileFragment : Fragment() {
                 /*R.id.button_myMeetingRoom -> {
                     activity.changeFragment(3)
                 }*/
-
+                R.id.button_myApplyCompetition -> {
+                    (activity as HomeActivity).gotoCompetitionFragment()
+                }
                 // 나의 장소 대여 버튼 클릭 시 대여한 장소 목록 확인하는 프래그먼트로 이동
                 R.id.button_myPlaceRental -> {
                     (activity as HomeActivity).gotoReservationListFragment()
+                }
+                R.id.allowPlaceBtn->{
+                    (activity as HomeActivity).gotoReservationAllowFragment()
                 }
 
                 // 내 주소 버튼 클릭 시 주소 변경 화면으로 이동

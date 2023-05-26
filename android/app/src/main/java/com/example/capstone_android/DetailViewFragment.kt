@@ -284,6 +284,7 @@ class DetailViewFragment: Fragment() {
     fun gotoMeetingRoomActivity(colName:String,meetingRoomUid:String){
         println("5 21 collectionName ${colName} meeting_room_id ${meetingRoomUid}")
         var intent= Intent(context, MeetingRoomActivity::class.java)
+        println("5-26-1 ${meetingRoomUid}")
         intent.putExtra("collectionName",colName)
         intent.putExtra("meeting_room_id", meetingRoomUid)
         startActivity(intent)

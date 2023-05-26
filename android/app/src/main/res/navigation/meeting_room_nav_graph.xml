@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_meetingRoomInfoFragment_to_reservationRequestFragment"
             app:destination="@id/reservationRequestFragment" />
+        <action
+            android:id="@+id/action_meetingRoomInfoFragment_to_competitionUserApplicationFragment"
+            app:destination="@id/competitionUserApplicationFragment" />
     </fragment>
     <fragment
         android:id="@+id/meetingRoomPostingsFragment"
@@ -84,6 +87,14 @@
         tools:layout="@layout/fragment_reservation_request" >
         <action
             android:id="@+id/action_reservationRequestFragment_to_meetingRoomInfoFragment"
+            app:destination="@id/meetingRoomInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/competitionUserApplicationFragment"
+        android:name="com.example.capstone_android.CompetitionUserApplicationFragment"
+        android:label="CompetitionUserApplicationFragment" >
+        <action
+            android:id="@+id/action_competitionUserApplicationFragment_to_meetingRoomInfoFragment"
             app:destination="@id/meetingRoomInfoFragment" />
     </fragment>
 </navigation>

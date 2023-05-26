@@ -33,6 +33,16 @@
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             />
         <activity
+            android:name=".SearchResult.MainSearchView"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            />
+        <activity
+            android:name=".SearchResult.MainSearchResult"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            />
+        <activity
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity

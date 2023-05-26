@@ -409,6 +409,7 @@ class MeetingRoomInfoFragment : Fragment() {
 
                 meetingRoomId = activity?.intent?.getStringExtra("meeting_room_id") ?: ""
                 var meetingInfoImage = rootRef.child("${colName}/${meetingRoomId}.jpg")
+                println("5-26-2 ${colName} ${meetingRoomId}")
                 meetingInfoImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                     if(it.isSuccessful){
                         val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
@@ -648,6 +649,7 @@ class MeetingRoomInfoFragment : Fragment() {
             binding.enterMeetingRoomBtn.text ="대회 참여 하기"
             binding.enterMeetingRoomBtn.setOnClickListener {
                 println("대회 참여 화면으로 이동")
+                findNavController().navigate(R.id.action_meetingRoomInfoFragment_to_competitionUserApplicationFragment)
             }
 
         }

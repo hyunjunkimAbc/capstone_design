@@ -11,6 +11,8 @@ object SingleTonData{
     val placemapdata:ArrayList<PlaceData> = arrayListOf()
     val competitiondata:ArrayList<CompetitionData> = arrayListOf()
     val competitionmapdata:ArrayList<CompetitionData> = arrayListOf()
+    val searchhpopulardata : ArrayList<SearchPopularData> = arrayListOf()
+    val searchhpopulardata2 : ArrayList<SearchPopularData> = arrayListOf()
     var userInfo :SignUpData ?=null
 }
 

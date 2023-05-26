@@ -14,6 +14,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
 
 class ReservationListAdapter(private val viewModel: ReservationViewModel):
     RecyclerView.Adapter<ReservationListAdapter.ViewHolder>() {
@@ -23,7 +24,7 @@ class ReservationListAdapter(private val viewModel: ReservationViewModel):
             with(viewModel.items[pos]){
                 binding.placeImage.setImageBitmap(this.placeImage)
                 binding.placeName.text = this.placeName
-                binding.requestTodayText.text = this.requestToday
+                binding.requestTodayText.text = SimpleDateFormat("yyyy-MM-dd HH:mm").format(this.requestTime)
                 binding.reservatorName.text = this.reservatorName
                 binding.numOfPeopleText.text = this.numOfPeople.toString()+"명"
                 binding.reservationDate.text = this.requestDate

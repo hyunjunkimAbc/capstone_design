@@ -23,6 +23,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.capstone_android.*
+import com.example.capstone_android.SearchResult.MainSearchView
 import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.data.BannerItem
 import com.example.capstone_android.data.ClubData
@@ -91,7 +92,19 @@ class ConciergeActivity : AppCompatActivity() {
             intent.putExtra("openkey","competition")
             startActivity(intent)
         }
+        binding.mainsearchview.clearFocus()
+        binding.mainsearchview.setOnQueryTextFocusChangeListener { _, hasExpaned ->
+            when(hasExpaned) {
+                true -> {
+                    binding.mainsearchview.clearFocus()
+                    var intent= Intent(this, MainSearchView::class.java)
+                    startActivity(intent)
+                }
+                false ->{
 
+                }
+            }
+        }
         setRecyclerView(LightingAdapter(viewModelLightingMeetingRoom),viewModelLightingMeetingRoom,binding.Lightningmeetingrecyclerview)
         setRecyclerView(PeriodicAdapter(viewModelPeriodicMeetingRoom),viewModelPeriodicMeetingRoom,binding.mainhomemeetingrecyclerview )
         setRecyclerView(PlaceRentalAdapter(viewModelPlaceRentalRoom),viewModelPlaceRentalRoom,binding.placeRantalRecyclerView )

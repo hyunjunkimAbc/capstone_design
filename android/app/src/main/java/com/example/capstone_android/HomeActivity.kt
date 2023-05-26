@@ -28,6 +28,9 @@ class HomeActivity: AppCompatActivity() {
     var mapFragment: MapFragment?=null
     var profileFragment :ProfileFragment? = null
     var UserReservationListFragment :UserReservationListFragment? = null
+    var ReservationListFragment :ReservationListFragment? =null
+    var myApplyCompetitionFragment: MyApplyCompetitionFragment? =null
+
     var openkey:String?=null
     private lateinit var viewModel: MeetingViewModel
     private lateinit var binding: ActivityHomeBinding
@@ -73,6 +76,10 @@ class HomeActivity: AppCompatActivity() {
                         supportFragmentManager.beginTransaction().hide(profileFragment!!).commit()
                     if(UserReservationListFragment!= null)
                         supportFragmentManager.beginTransaction().hide(UserReservationListFragment!!).commit()
+                    if(ReservationListFragment!= null)
+                        supportFragmentManager.beginTransaction().hide(ReservationListFragment!!).commit()
+                    if(myApplyCompetitionFragment!=null)
+                        supportFragmentManager.beginTransaction().hide(myApplyCompetitionFragment!!).commit()
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_gps ->{
@@ -91,6 +98,10 @@ class HomeActivity: AppCompatActivity() {
                         supportFragmentManager.beginTransaction().hide(profileFragment!!).commit()
                     if(UserReservationListFragment!= null)
                         supportFragmentManager.beginTransaction().hide(UserReservationListFragment!!).commit()
+                    if(ReservationListFragment!= null)
+                        supportFragmentManager.beginTransaction().hide(ReservationListFragment!!).commit()
+                    if(myApplyCompetitionFragment!=null)
+                        supportFragmentManager.beginTransaction().hide(myApplyCompetitionFragment!!).commit()
                 }
 
                 R.id.action_account ->{
@@ -106,6 +117,10 @@ class HomeActivity: AppCompatActivity() {
                         supportFragmentManager.beginTransaction().hide(mapFragment!!).commit()
                     if(UserReservationListFragment!= null)
                         supportFragmentManager.beginTransaction().hide(UserReservationListFragment!!).commit()
+                    if(ReservationListFragment!= null)
+                        supportFragmentManager.beginTransaction().hide(ReservationListFragment!!).commit()
+                    if(myApplyCompetitionFragment!=null)
+                        supportFragmentManager.beginTransaction().hide(myApplyCompetitionFragment!!).commit()
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_more ->{
@@ -188,5 +203,55 @@ class HomeActivity: AppCompatActivity() {
             supportFragmentManager.beginTransaction().hide(mapFragment!!).commit()
         if(profileFragment!= null)
             supportFragmentManager.beginTransaction().hide(profileFragment!!).commit()
+        if(ReservationListFragment!= null)
+            supportFragmentManager.beginTransaction().hide(ReservationListFragment!!).commit()
+        if(myApplyCompetitionFragment!=null)
+            supportFragmentManager.beginTransaction().hide(myApplyCompetitionFragment!!).commit()
+    }
+    fun gotoReservationAllowFragment(){
+        /*
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.search_content, UserReservationListFragment())
+            .commit()*/
+        if(ReservationListFragment ==null){
+            ReservationListFragment= ReservationListFragment()
+            supportFragmentManager.beginTransaction().add(R.id.search_content,ReservationListFragment!!).commit()
+        }
+        if(ReservationListFragment!=null)
+            supportFragmentManager.beginTransaction().show(ReservationListFragment!!).commit()
+        if(detailViewFragment!=null)
+            supportFragmentManager.beginTransaction().hide(detailViewFragment!!).commit()
+        if(mapFragment!=null)
+            supportFragmentManager.beginTransaction().hide(mapFragment!!).commit()
+        if(profileFragment!= null)
+            supportFragmentManager.beginTransaction().hide(profileFragment!!).commit()
+        if(UserReservationListFragment!=null)
+            supportFragmentManager.beginTransaction().hide(UserReservationListFragment!!).commit()
+        if(myApplyCompetitionFragment!=null)
+            supportFragmentManager.beginTransaction().hide(myApplyCompetitionFragment!!).commit()
+    }
+    fun gotoCompetitionFragment(){
+        /*
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.search_content, UserReservationListFragment())
+            .commit()*/
+        if(myApplyCompetitionFragment ==null){
+            myApplyCompetitionFragment= MyApplyCompetitionFragment()
+            supportFragmentManager.beginTransaction().add(R.id.search_content,myApplyCompetitionFragment!!).commit()
+        }
+        if(myApplyCompetitionFragment!=null)
+            supportFragmentManager.beginTransaction().show(myApplyCompetitionFragment!!).commit()
+        if(detailViewFragment!=null)
+            supportFragmentManager.beginTransaction().hide(detailViewFragment!!).commit()
+        if(mapFragment!=null)
+            supportFragmentManager.beginTransaction().hide(mapFragment!!).commit()
+        if(profileFragment!= null)
+            supportFragmentManager.beginTransaction().hide(profileFragment!!).commit()
+        if(UserReservationListFragment!=null)
+            supportFragmentManager.beginTransaction().hide(UserReservationListFragment!!).commit()
+        if(ReservationListFragment!=null)
+            supportFragmentManager.beginTransaction().hide(ReservationListFragment!!).commit()
     }
 }

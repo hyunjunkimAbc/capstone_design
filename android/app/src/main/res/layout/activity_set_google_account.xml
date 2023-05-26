@@ -10,7 +10,7 @@
         android:id="@+id/initToolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#F0F0F0"
+        android:background="#36DA90"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,6 +21,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/InitButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,9 +57,9 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="16dp"
-                android:background="#E1E1E1"
                 android:ems="10"
                 android:hint="닉네임을 입력해주세요"
+                android:background="@drawable/edge_design1"
                 android:inputType="textPersonName"
                 android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -91,18 +92,6 @@
                 app:layout_constraintBottom_toTopOf="@+id/dpSpinner"
                 app:layout_constraintStart_toStartOf="@+id/NicknameEditText" />
 
-            <TextView
-                android:id="@+id/interestTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="관심사"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/BirthdayTextView"
-                app:layout_constraintTop_toBottomOf="@+id/dpSpinner" />
-
             <DatePicker
                 android:id="@+id/dpSpinner"
                 android:layout_width="wrap_content"
@@ -116,19 +105,60 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/NicknameEditText" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="120dp"
-                android:layout_marginEnd="120dp"
-                android:layout_marginBottom="8dp"
-                android:orientation="vertical"
+            <TextView
+                android:id="@+id/addressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="활동할 시 구 선택"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/BirthdayTextView"
+                app:layout_constraintTop_toBottomOf="@+id/dpSpinner" />
+
+            <Button
+                android:id="@+id/signupuseraddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/reservation_btn_shape"
+                android:text="활동할 시 구 선택"
+                app:backgroundTint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addressTextView" />
+
+
+            <TextView
+                android:id="@+id/interestTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="관심사 설정"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/BirthdayTextView"
+                app:layout_constraintTop_toBottomOf="@+id/signupuseraddress" />
+
+            <Button
+                android:id="@+id/setInterestBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/reservation_btn_shape"
+                android:text="원하는 관심사 선택"
+                app:backgroundTint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-            </LinearLayout>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/interestTextView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
@@ -137,11 +167,15 @@
         android:id="@+id/InitButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/round_button"
         android:text="저장하기"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:backgroundTint="#36DA90"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

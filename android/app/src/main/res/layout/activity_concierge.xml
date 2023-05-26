@@ -48,12 +48,13 @@
             app:cardCornerRadius="15dp">
 
             <SearchView
+                android:id="@+id/mainsearchview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:iconifiedByDefault="false"
+
                 android:queryBackground="@null"
                 android:queryHint="찾고싶은 모임을 검색해보세요"
-                app:iconifiedByDefault="false" />
+                 />
         </androidx.cardview.widget.CardView>
     </com.google.android.material.appbar.AppBarLayout>
 

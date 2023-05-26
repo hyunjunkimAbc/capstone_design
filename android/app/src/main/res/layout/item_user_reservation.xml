@@ -35,10 +35,11 @@
             android:id="@+id/okcheck"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:text="O, X"
             android:textSize="14dp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/textView5"
             app:layout_constraintStart_toEndOf="@+id/textView5"
             app:layout_constraintTop_toTopOf="@+id/textView5" />
 
@@ -65,22 +66,10 @@
             app:layout_constraintStart_toEndOf="@+id/placeImage"
             app:layout_constraintTop_toTopOf="@+id/placeImage" />
 
-        <Button
-            android:id="@+id/reserOkBtn"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="-12dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/reservation_btn_shape"
-            android:text="예약승인"
-            app:backgroundTint="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reservationSchedule" />
-
         <ImageView
             android:id="@+id/placeImage"
             android:layout_width="150dp"
-            android:layout_height="0dp"
+            android:layout_height="150dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
@@ -108,6 +97,7 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView3"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
 
         <TextView
             android:id="@+id/reservationTime"

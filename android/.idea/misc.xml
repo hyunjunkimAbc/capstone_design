@@ -20,12 +20,30 @@
         <entry key="..\:/capstone_design2/app/src/main/res/layout/meeting_room_posting_comment_item_layout.xml" value="0.1" />
         <entry key="..\:/capstone_design2/app/src/main/res/layout/meeting_room_posting_comment_item_right.xml" value="0.1" />
         <entry key="..\:/capstone_design2/app/src/main/res/menu/meeting_room_navigation_menu.xml" value="0.1" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/drawable-v24/reservation_corner_shape.xml" value="0.1796875" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/drawable-v24/round_button.xml" value="0.1796875" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/drawable/reservation_btn_shape.xml" value="0.15833333333333333" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/drawable/reservation_corner_shape.xml" value="0.1796875" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/drawable/round_button.xml" value="0.128125" />
         <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/activity_competitioncreate.xml" value="0.3209700427960057" />
         <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/activity_concierge.xml" value="0.15438950554994954" />
         <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/activity_meeting_room.xml" value="0.10190217391304347" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/activity_searchopenview.xml" value="0.13541666666666666" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/activity_set_google_account.xml" value="0.14673913043478262" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/competition_room_item.xml" value="0.1" />
         <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/concierge_item_layout.xml" value="0.25" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/fragment_competition_user_application.xml" value="0.22" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/fragment_edit_meeting_info.xml" value="0.13994565217391305" />
         <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/fragment_meeting_room_info.xml" value="0.10190217391304347" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/fragment_profile_signed_in.xml" value="0.22" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/fragment_reservation.xml" value="0.1" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/fragment_reservation_request.xml" value="0.1" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/fragment_reservationlist.xml" value="0.1" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/fragment_searchcompetition.xml" value="0.13541666666666666" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/item_reservation.xml" value="0.1" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/item_user_reservation.xml" value="0.1" />
         <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/itemlight.xml" value="0.16666666666666666" />
+        <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/itemsearchitem.xml" value="0.13541666666666666" />
         <entry key="..\:/capstone_design_final2/capstone_design_main/android/app/src/main/res/layout/meeting_room_info_item_layout.xml" value="0.10190217391304347" />
         <entry key="..\:/capstone_design_main/android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/capstone_design_main/android/app/src/main/res/drawable/bottomsheetdialog.xml" value="0.1609375" />
