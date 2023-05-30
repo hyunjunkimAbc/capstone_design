@@ -1,4 +1,4 @@
 /build
 
 google-services.json
-MeetingRoomDataManager.kt
+src/main/java/com/example/capstone_android/MeetingRoomDataManager.kt

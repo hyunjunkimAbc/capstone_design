@@ -23,23 +23,16 @@ import com.example.capstone_android.MeetingList.*
 import com.example.capstone_android.Util.MainMenuId
 import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.Util.getImageResult
+import com.example.capstone_android.com.example.capstone_android.MeetingRoomDataManager
 import com.example.capstone_android.data.ClubData
-import com.example.capstone_android.data.lightData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_main.*
 
 import kotlinx.android.synthetic.main.fragment_main.view.*
-import kotlinx.android.synthetic.main.fragment_meeting_room_info.*
-import kotlinx.android.synthetic.main.item_main.view.*
 import kotlinx.android.synthetic.main.item_main2.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import org.apache.log4j.chainsaw.Main
 
 
 class DetailViewFragment: Fragment() {
@@ -131,9 +124,7 @@ class DetailViewFragment: Fragment() {
             PeriodiclistAdapter.setItemClickListener(object:ListperiodicAdapter.MeetingItemClickListener{
                 override fun onClick(v: View, position: Int) {
                     SingleTonData.clubdata[position].Uid?.let {
-                        gotoMeetingRoomActivity(MeetingRoomDataManager.collectionNameOfPeriodicMeetingRoom,
-                            it
-                        )
+                        gotoMeetingRoomActivity(MeetingRoomDataManager.collectionNameOfPeriodicMeetingRoom,it)
                     }
                     println(SingleTonData.clubdata[position].Uid)
                 }
@@ -154,7 +145,8 @@ class DetailViewFragment: Fragment() {
                 override fun onClick(v: View, position: Int) {
                     Log.d(TAG,"번개모임 아이템 클릭")
                     SingleTonData.lightdata[position].uid?.let {
-                        gotoMeetingRoomActivity(MeetingRoomDataManager.collectionNameOfLightingMeetingRoom,
+                        gotoMeetingRoomActivity(
+                            MeetingRoomDataManager.collectionNameOfLightingMeetingRoom,
                             it
                         )
                     }
@@ -177,7 +169,8 @@ class DetailViewFragment: Fragment() {
                 override fun onClick(v: View, position: Int) {
                     Log.d(TAG,"장소아이템 클릭")
                     SingleTonData.placedata[position].Uid?.let {
-                        gotoMeetingRoomActivity(MeetingRoomDataManager.collectionNameOfPlaceRental,
+                        gotoMeetingRoomActivity(
+                            MeetingRoomDataManager.collectionNameOfPlaceRental,
                             it
                         )
                     }
@@ -200,7 +193,8 @@ class DetailViewFragment: Fragment() {
                 override fun onClick(v: View, position: Int) {
                     Log.d(TAG,"대회 아이템 클릭")
                     SingleTonData.competitiondata[position].Uid?.let {
-                        gotoMeetingRoomActivity(MeetingRoomDataManager.collectionNameOfCompetition,
+                        gotoMeetingRoomActivity(
+                            MeetingRoomDataManager.collectionNameOfCompetition,
                             it
                         )
                     }

@@ -28,6 +28,7 @@ import java.net.URLEncoder
 import android.content.res.AssetFileDescriptor
 
 import android.app.Activity
+import com.example.capstone_android.com.example.capstone_android.MeetingRoomDataManager
 import org.json.JSONObject
 import org.tensorflow.lite.Tensor
 import org.tensorflow.lite.support.label.Category
@@ -115,56 +116,55 @@ class MeetingRoomChattingFragment : Fragment() {
 
 
     private fun post(apiUrl: String, requestHeaders: Map<String, String>, text: String): String {
-        val con: HttpURLConnection = connect(apiUrl)
-        val postParams =
-            "source=ko&target=en&text=$text"
+        val connection: HttpURLConnection = connect(apiUrl)
+        val paramsOfPost ="source=ko&target=en&text=$text"
         return try {
-            con.setRequestMethod("POST")
+            connection.setRequestMethod("POST")
             for ((key, value) in requestHeaders) {
-                con.setRequestProperty(key, value)
+                connection.setRequestProperty(key, value)
             }
-            con.setDoOutput(true)
-            DataOutputStream(con.getOutputStream()).use { wr ->
-                wr.write(postParams.toByteArray())
+            connection.setDoOutput(true)
+            DataOutputStream(connection.getOutputStream()).use { wr ->
+                wr.write(paramsOfPost.toByteArray())
                 wr.flush()
             }
-            val responseCode: Int = con.getResponseCode()
+            val responseCode: Int = connection.getResponseCode()
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                readBody(con.getInputStream()).toString()
+                readBody(connection.getInputStream()).toString()
             } else {
-                readBody(con.getErrorStream()).toString()
+                readBody(connection.getErrorStream()).toString()
             }
         } catch (e: IOException) {
             throw RuntimeException("요청 faild", e)
         } finally {
-            con.disconnect()
+            connection.disconnect()
         }
     }
 
-    private fun connect(apiUrl: String): HttpURLConnection {
+    private fun connect(uriOfApi: String): HttpURLConnection {
         return try {
-            val url = URL(apiUrl)
+            val url = URL(uriOfApi)
             url.openConnection() as HttpURLConnection
         } catch (e: MalformedURLException) {
-            throw RuntimeException("faild1 : $apiUrl", e)
+            throw RuntimeException("faild1 : MalformedURLException $uriOfApi", e)
         } catch (e: IOException) {
-            throw RuntimeException("faild2: $apiUrl", e)
+            throw RuntimeException("faild2: IOException $uriOfApi", e)
         }
     }
 
     private fun readBody(body: InputStream): String? {
-        val streamReader = InputStreamReader(body)
+        val inputStreamReader = InputStreamReader(body)
         try {
-            BufferedReader(streamReader).use { lineReader ->
-                val responseBody = StringBuilder()
-                var line: String?
-                while (lineReader.readLine().also { line = it } != null) {
-                    responseBody.append(line)
+            BufferedReader(inputStreamReader).use { lineReader ->
+                val responseSumStr = StringBuilder()
+                var lineFromInputStream: String?
+                while (lineReader.readLine().also { lineFromInputStream = it } != null) {
+                    responseSumStr.append(lineFromInputStream)
                 }
-                return responseBody.toString()
+                return responseSumStr.toString()
             }
         } catch (e: IOException) {
-            throw RuntimeException("faild3", e)
+            throw RuntimeException("faild3: IOException", e)
         }
     }
 

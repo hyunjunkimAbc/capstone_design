@@ -3,6 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_create.xml" value="0.12132725430597771" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_profile.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/competition_room_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_competition_user_application.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_create.xml" value="0.12132725430597771" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_edit_meeting_info.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_profile_signed_in.xml" value="0.12132725430597771" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_searchlight.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/item_reservation.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/item_user_reservation.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/meeting_room_info_item_layout.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/meeting_room_posting_comment_item_layout.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/meeting_room_posting_comment_item_right.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/meeting_room_postings_item_layout.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/timedialog.xml" value="0.24947916666666667" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/activity_meeting_room.xml" value="0.1" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_edit_meeting_info.xml" value="0.16666666666666666" />
         <entry key="..\:/capstone_design/android/app/src/main/res/layout/fragment_edit_posting.xml" value="0.1272644927536232" />

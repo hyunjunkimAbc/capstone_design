@@ -18,6 +18,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone_android.SearchAddress.SearchMap
+import com.example.capstone_android.com.example.capstone_android.MeetingRoomDataManager
 import com.example.capstone_android.data.*
 import com.example.capstone_android.databinding.FragmentEditMeetingInfoBinding
 import com.example.capstone_android.databinding.FragmentEditPostingBinding
@@ -304,8 +305,12 @@ class EditMeetingInfoFragment : Fragment() {
                 endTime = endTime2
                 date = it["date"] as String
 
-                binding.editTextStartTime.hint = "(모임 시작 시간)${date} ${startTime} 형식으로 입력"
-                binding.editTextTextEndTime.hint = "(모임 종료 시간)${date} ${endTime} 형식으로 입력"
+                //binding.editTextStartTime.hint = "(모임 시작 시간)${date} ${startTime} 형식으로 입력"
+                //binding.editTextTextEndTime.hint = "(모임 종료 시간)${date} ${endTime} 형식으로 입력"
+                startTimeStrGlobal = "${date} ${startTime}"
+                endTimeStrGlobal = "${date} ${endTime}"
+                binding.editTextStartTime.setText("${date} ${startTime}")
+                binding.editTextTextEndTime.setText("${date} ${endTime}")
                 //datepicker로 변경 해야 함
             }
             if (it["max"] !=null){

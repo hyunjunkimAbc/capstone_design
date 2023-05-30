@@ -7,210 +7,222 @@
     tools:context=".EditMeetingInfoFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="SpeakableTextPresentCheck">
 
-        <TextView
-            android:id="@+id/textViewMeetingInfoEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1dp"
-            android:text="모임 정보 수정"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/postingTitleEditTextMeetingInfoEdit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Spinner
-            android:id="@+id/spinnerMeetingRoomCategory"
-            android:layout_width="330dp"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textViewEditTextMeetingInfospinnerMeetingRoomCategory"
-            app:layout_constraintTop_toBottomOf="@+id/postingTitleEditTextMeetingInfoEdit"
-            tools:ignore="SpeakableTextPresentCheck" />
-
-        <TextView
-            android:id="@+id/textViewEditTextMeetingInfospinnerMeetingRoomCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="카테고리 선택"
-            app:layout_constraintBottom_toBottomOf="@+id/spinnerMeetingRoomCategory"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitleEditTextMeetingInfo"
-            app:layout_constraintVertical_bias="0.477" />
-
-        <ScrollView
-            android:id="@+id/scrollView6"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerMeetingRoomCategory">
+            android:orientation="vertical" >
 
-            <LinearLayout
-                android:id="@+id/edit_meeting_room_linear_additional"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewMeetingInfoEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:text="모임 정보 수정"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toTopOf="@+id/postingTitleEditTextMeetingInfoEdit"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/spinnerMeetingRoomCategory"
+                    android:layout_width="330dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textViewEditTextMeetingInfospinnerMeetingRoomCategory"
+                    app:layout_constraintTop_toBottomOf="@+id/postingTitleEditTextMeetingInfoEdit"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/textViewEditTextMeetingInfospinnerMeetingRoomCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="카테고리 선택"
+                    app:layout_constraintBottom_toBottomOf="@+id/spinnerMeetingRoomCategory"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewTitleEditTextMeetingInfo"
+                    app:layout_constraintVertical_bias="0.477" />
+
+                <ScrollView
+                    android:id="@+id/scrollView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="30dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spinnerMeetingRoomCategory">
+
+                    <LinearLayout
+                        android:id="@+id/edit_meeting_room_linear_additional"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/button10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#36DA90"
+                            android:text="장소 수정" />
+
+                        <EditText
+                            android:id="@+id/editTextStartTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:minHeight="48dp"
+                            android:text=""
+                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+                        <EditText
+                            android:id="@+id/editTextTextEndTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:minHeight="48dp"
+                            android:text=""
+                            tools:ignore="SpeakableTextPresentCheck" />
+
+                        <LinearLayout
+                            android:id="@+id/linear_max_horiz"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/maxMeetingInfoEdit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:inputType="textPersonName"
+                                android:minHeight="48dp"
+                                android:text=""
+                                tools:ignore="SpeakableTextPresentCheck" />
+
+                            <TextView
+                                android:id="@+id/textViewEditTextMeetingInfoMaxMeetingInfoEdit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="최대 인원수" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </ScrollView>
+
+                <ScrollView
+                    android:id="@+id/scrollView4MeetingInfoEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/guideline7MeetingInfoEdit">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/postingTextMultilineMeetingInfoEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:gravity="start|top"
+                            android:inputType="textMultiLine"
+                            android:minHeight="48dp"
+                            tools:ignore="SpeakableTextPresentCheck" />
+                    </LinearLayout>
+                </ScrollView>
+
+                <EditText
+                    android:id="@+id/postingTitleEditTextMeetingInfoEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:text=""
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@id/textViewTitleEditTextMeetingInfo"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.077"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/textViewTitleEditTextMeetingInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="제목"
+                    app:layout_constraintBottom_toBottomOf="@+id/postingTitleEditTextMeetingInfoEdit"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewMeetingInfoEdit" />
+
+                <ScrollView
+                    android:id="@+id/scrollView3MeetingInfoEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toTopOf="@+id/scrollView4MeetingInfoEdit"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/scrollView6">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/imageButtonToPostingMeetingInfoEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="postingImg"
+                            android:src="@drawable/ic_launcher_foreground" />
+                    </LinearLayout>
+                </ScrollView>
 
                 <Button
-                    android:id="@+id/button10"
-                    android:layout_width="match_parent"
+                    android:id="@+id/uploadPostingBtnMeetingInfoEdit"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#36DA90"
-                    android:text="장소 수정" />
+                    android:text="edit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
 
-                <EditText
-                    android:id="@+id/editTextStartTime"
-                    android:layout_width="match_parent"
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline7MeetingInfoEdit"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:minHeight="48dp"
-                    android:text=""
-                    tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.7" />
 
-                <EditText
-                    android:id="@+id/editTextTextEndTime"
-                    android:layout_width="match_parent"
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline9MeetingInfoEdit"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:minHeight="48dp"
-                    android:text=""
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.4" />
 
-                <LinearLayout
-                    android:id="@+id/linear_max_horiz"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/maxMeetingInfoEdit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:minHeight="48dp"
-                        android:text=""
-                        tools:ignore="SpeakableTextPresentCheck" />
-
-                    <TextView
-                        android:id="@+id/textViewEditTextMeetingInfoMaxMeetingInfoEdit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="최대 인원수" />
-
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
-
-        <ScrollView
-            android:id="@+id/scrollView4MeetingInfoEdit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline7MeetingInfoEdit">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/postingTextMultilineMeetingInfoEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:gravity="start|top"
-                    android:inputType="textMultiLine"
-                    android:minHeight="48dp"
-                    tools:ignore="SpeakableTextPresentCheck" />
-            </LinearLayout>
-        </ScrollView>
-
-        <EditText
-            android:id="@+id/postingTitleEditTextMeetingInfoEdit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text=""
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/textViewTitleEditTextMeetingInfo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.077"
-            tools:ignore="SpeakableTextPresentCheck" />
-
-        <TextView
-            android:id="@+id/textViewTitleEditTextMeetingInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="제목"
-            app:layout_constraintBottom_toBottomOf="@+id/postingTitleEditTextMeetingInfoEdit"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewMeetingInfoEdit" />
-
-        <ScrollView
-            android:id="@+id/scrollView3MeetingInfoEdit"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/scrollView4MeetingInfoEdit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scrollView6">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/imageButtonToPostingMeetingInfoEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="postingImg"
-                    android:src="@drawable/ic_launcher_foreground" />
-            </LinearLayout>
-        </ScrollView>
-
-        <Button
-            android:id="@+id/uploadPostingBtnMeetingInfoEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#36DA90"
-            android:text="edit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline7MeetingInfoEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.7" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline9MeetingInfoEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.4" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

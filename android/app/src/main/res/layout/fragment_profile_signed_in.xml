@@ -14,6 +14,7 @@
         android:layout_marginTop="80dp"
         android:layout_marginEnd="15dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/introduce_comment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -117,22 +118,21 @@
         android:id="@+id/introduce_comment"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="10dp"
         android:text="잘 부탁드립니다."
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/guideline17"
         tools:layout_editor_absoluteX="10dp" />
 
     <Button
         android:id="@+id/button_myMeetingRoom"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
         android:backgroundTint="#36DA90"
         android:text="내 모임 관리"
+        app:layout_constraintBottom_toTopOf="@+id/button_logOut"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button_myApplyCompetition"
-        app:layout_constraintTop_toBottomOf="@+id/button_myApplyCompetition" />
+        app:layout_constraintHorizontal_bias="0.181"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_logOut"
@@ -142,10 +142,10 @@
         android:text="로그아웃"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.155"
+        app:layout_constraintHorizontal_bias="0.198"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_myPlaceRental"
-        app:layout_constraintVertical_bias="0.042" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8" />
 
     <Button
         android:id="@+id/button_myCompetition"
@@ -153,9 +153,11 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#36DA90"
         android:text="나의 개설 대회"
+        app:layout_constraintBottom_toTopOf="@+id/button_myPlaceRental"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline16"
-        app:layout_constraintTop_toTopOf="@+id/button_myApplyCompetition" />
+        app:layout_constraintTop_toTopOf="@+id/button_myApplyCompetition"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/button_myApplyCompetition"
@@ -164,9 +166,12 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="#36DA90"
         android:text="나의 신청 대회"
+        app:layout_constraintBottom_toTopOf="@+id/button_myMeetingRoom"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/introduce_comment" />
+        app:layout_constraintTop_toBottomOf="@+id/introduce_comment"
+        app:layout_constraintVertical_bias="0.326" />
 
     <TextView
         android:id="@+id/textView"
@@ -186,10 +191,12 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#36DA90"
         android:text="나의 대여 장소"
+        app:layout_constraintBottom_toTopOf="@+id/allowPlaceBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/button_myCompetition"
-        app:layout_constraintTop_toTopOf="@+id/button_myMeetingRoom" />
+        app:layout_constraintTop_toTopOf="@+id/button_myMeetingRoom"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline16"
@@ -214,9 +221,9 @@
         android:text="장소 승인 내역(관리자 용)"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.995"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_myPlaceRental"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.797" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

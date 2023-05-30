@@ -123,7 +123,6 @@ class SetGoogleAccountActivity : AppCompatActivity()  {
                 signdata.address= SingleTonData.userInfo!!.address
                 signdata.interest_array=SingleTonData.userInfo?.interest_array!!
                 signdata.edit_time=System.currentTimeMillis()
-                db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).set(signdata)
 
                 // 프로필 이미지가 선택되었으면
                 if (selected_profile_img==1){
@@ -145,8 +144,11 @@ class SetGoogleAccountActivity : AppCompatActivity()  {
                     "개인정보 설정을 완료하였습니다.",
                     Toast.LENGTH_SHORT
                 ).show()
-                val intent = Intent(this, ConciergeActivity::class.java)
-                startActivity(intent)
+                db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).set(signdata).addOnSuccessListener {
+                    SingleTonData.userInfo=signdata
+                    val intent = Intent(this, ConciergeActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
     }

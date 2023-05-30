@@ -1,8 +1,6 @@
 package com.example.capstone_android.SearchResult
 
-import android.content.ContentValues
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +8,10 @@ import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.MeetingList.ListperiodicAdapter
 import com.example.capstone_android.MeetingList.MeetingViewModel
-import com.example.capstone_android.MeetingRoomDataManager
 import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.data.ClubData
 import com.example.capstone_android.databinding.FragmentSearchmeetingBinding

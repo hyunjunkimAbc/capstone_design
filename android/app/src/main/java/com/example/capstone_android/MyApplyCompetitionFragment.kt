@@ -1,5 +1,6 @@
 package com.example.capstone_android
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -14,6 +15,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import okhttp3.internal.notify
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,15 +82,15 @@ class MyApplyCompetitionFragment : Fragment(){
 
         val adapter = MyApplyCompetitionAdapter(viewModel)
 
-        val RecyclerView = binding.applyRecyclerView
-        RecyclerView.adapter = adapter
-        RecyclerView.layoutManager = LinearLayoutManager(activity)
-        RecyclerView.setHasFixedSize(true)
+
+        binding.applyRecyclerView.adapter = adapter
+        binding.applyRecyclerView.layoutManager = LinearLayoutManager(activity as HomeActivity)
+        binding.applyRecyclerView.setHasFixedSize(true)
         viewModel.itemsListData.observe(viewLifecycleOwner ){
             adapter.notifyDataSetChanged()
         }
 
-        viewModel.itemClickEvent.observe(viewLifecycleOwner){
+        viewModel.itemClickEvent.observe(viewLifecycleOwner ){
             //ItemDialog(it).show
             //val i =viewModel.itemClickEvent.value
             //val bundle = bundleOf("document_id" to viewModel.items[i!!].document_id)
@@ -101,11 +103,11 @@ class MyApplyCompetitionFragment : Fragment(){
             val intent = Intent(requireActivity(), MeetingRoomActivity::class.java)
 
             intent.putExtra("collectionName", "competition_room")
-            intent.putExtra("competition_room_id",viewModel.items[i!!].document_id)
+            intent.putExtra("meeting_room_id",viewModel.items[i!!].document_id)
             startActivity(intent)
         }
 
-        registerForContextMenu(RecyclerView)
+        registerForContextMenu(binding.applyRecyclerView)
 
         //val colName = activity?.intent?.getStringExtra("collectionName")
         //val colName = activity?.intent?.getStringExtra("competition_room")
@@ -116,14 +118,14 @@ class MyApplyCompetitionFragment : Fragment(){
 
     private fun initDataAndUI(){
         //document_id = activity?.intent?.getStringExtra("document_id").toString()
-
+        viewModel.addItem(Apply(null,"dasf","dafsd",1,"dasfasd"))
         currentUserUid?.let {
             userCollection.document(it).get().addOnSuccessListener {
                 if(it["competition_id_list"] ==null){
                     return@addOnSuccessListener
                 }
                 val competition_id_list = it["competition_id_list"] as List<String>
-
+                println("05 29 - competition_id_list ${competition_id_list}")
                 for (competition_id in competition_id_list){
                     competitionCollection.document(competition_id).get().addOnSuccessListener {
                         val title =it["title"]
@@ -131,6 +133,7 @@ class MyApplyCompetitionFragment : Fragment(){
                         val upload_time = it["upload_time"]
                         //val writer_uid = it["writer_uid"]
                         val document_id = it.id
+                        println("05 29 it[title] ${it["title"]}")
 
                         addPostingToRecyclerView(title as String, info_text as String, upload_time as Long,document_id)
                     }.addOnFailureListener {
@@ -145,50 +148,47 @@ class MyApplyCompetitionFragment : Fragment(){
 
     }
 
-    fun addPostingToRecyclerView(title:String, info_text: String, timePosting:Long,document_id:String){
 
-        currentUserUid?.let {
-            userCollection.document(it).get().addOnSuccessListener {
-                //val nickname = it.data?.get("nickname")
-                var competitionImage = rootRef.child("competition_room/${document_id}.jpg")
-                competitionImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
+    fun addPostingToRecyclerView(title:String, info_text: String, timePosting:Long, document_id:String){
+        var competitionImage = rootRef.child("competition_room/${document_id}.jpg")
+        competitionImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
+            if(it.isSuccessful){
+                val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
+
+                viewModel.addItem(Apply(bmp,
+                    title, info_text, timePosting,document_id))
+                binding.applyRecyclerView.adapter?.notifyDataSetChanged()
+                println("05 29 성공")
+                //updateInitCnt(true)
+                //addUserSnapShot(writer_uid)
+            }else{
+                var ref = rootRef.child("competition_room/default.jpg")
+                ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                     if(it.isSuccessful){
                         val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
-                        for(posting in viewModel.items){//중복 검사
-                            if (posting.document_id == document_id){
-                                return@addOnCompleteListener
-                            }
-                        }
                         viewModel.addItem(Apply(bmp,
                             title, info_text, timePosting,document_id))
+                        binding.applyRecyclerView.adapter?.notifyDataSetChanged()
+                        println("05 29 실패")
                         //updateInitCnt(true)
                         //addUserSnapShot(writer_uid)
                     }else{
-                        var ref = rootRef.child("competition_room/default.jpg")
-                        ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
-                            if(it.isSuccessful){
-                                val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
-                                for(Apply in viewModel.items){
-                                    if (Apply.document_id == document_id){
-                                        return@addOnCompleteListener
-                                    }
-                                }
-                                viewModel.addItem(Apply(bmp,
-                                    title, info_text, timePosting,document_id))
-                                //updateInitCnt(true)
-                                //addUserSnapShot(writer_uid)
-                            }else{
-                                println("undefined err")
-                            }
-                        }
+                        println("undefined err")
                     }
                 }
+            }
+        }
+        /*
+        currentUserUid?.let {
+            userCollection.document(it).get().addOnSuccessListener {
+                //val nickname = it.data?.get("nickname")
+
 
             }.addOnFailureListener {
                 print("recycler view 요소 한개 얻어오는 것 실패 변수 조정")
                 //updateInitCnt(false)
             }
-        }
+        }*/
 
     }
 

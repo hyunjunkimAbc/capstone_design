@@ -137,8 +137,14 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            else if (SingleTonData.userInfo?.interest_array==null){
-
+            else if (SingleTonData.userInfo?.address==null){
+                Toast.makeText(
+                    this,
+                    "지역을 설정해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else if (SingleTonData.userInfo?.interest_array.isNullOrEmpty()){
                 Toast.makeText(
                     this,
                     "관심사를 선택해주세요.",

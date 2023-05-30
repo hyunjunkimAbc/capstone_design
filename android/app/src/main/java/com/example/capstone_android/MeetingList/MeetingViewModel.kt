@@ -117,7 +117,7 @@ class MeetingViewModel:ViewModel() {
             val address= SingleTonData.userInfo?.address
             val hobbydata= SingleTonData.userInfo?.interest_array!!
             for(data in hobbydata) {
-                val roominfo = db.collection("meeting_room").whereEqualTo("category", data).whereEqualTo("address", address).get().await()
+                val roominfo = db.collection("periodic_meeting_room").whereEqualTo("category", data).whereEqualTo("address", address).get().await()
                 for(data2 in roominfo){
                     SingleTonData.clubdata.add(data2.toObject(ClubData::class.java))
                     SingleTonData.clubdata.sortByDescending { it.positionx }
@@ -149,7 +149,7 @@ class MeetingViewModel:ViewModel() {
             val address= SingleTonData.userInfo?.address
             val hobbydata= SingleTonData.userInfo?.interest_array!!
             for(data in hobbydata) {
-                val roominfo = db.collection("meeting_room").whereEqualTo("category", data).whereEqualTo("address", address).get().await()
+                val roominfo = db.collection("periodic_meeting_room").whereEqualTo("category", data).whereEqualTo("address", address).get().await()
                 for(data2 in roominfo){
                     SingleTonData.clubmapdata.add(data2.toObject(ClubData::class.java))
                     SingleTonData.clubmapdata.sortByDescending { it.positionx }
