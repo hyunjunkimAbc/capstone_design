@@ -15,8 +15,8 @@ class MeetingRoomInfoAdapter (private val viewModel: MeetingRoomInfoViewModel):R
                 if(this.icon!=null)
                     binding.profileImage.setImageBitmap(this.icon)
                 //null들어가면 작동 안함 주의
-                binding.nickname.text = "이름:${this.nickname}"
-                binding.profileMessage.text = "프로필 메시지:${this.profileMessage}"
+                binding.nickname.text = "이름 : ${this.nickname}"
+                binding.profileMessage.text = "프로필 메시지 : ${this.profileMessage}"
                 //친구 기능 추가 하고 싶으면  지난 학기에 코딩한 github 참고
                 Log.d("","${ this.nickname}")
 
