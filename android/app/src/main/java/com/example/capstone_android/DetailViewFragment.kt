@@ -23,7 +23,6 @@ import com.example.capstone_android.MeetingList.*
 import com.example.capstone_android.Util.MainMenuId
 import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.Util.getImageResult
-import com.example.capstone_android.com.example.capstone_android.MeetingRoomDataManager
 import com.example.capstone_android.data.ClubData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore

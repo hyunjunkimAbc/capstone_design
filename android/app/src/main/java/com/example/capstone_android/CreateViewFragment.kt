@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -47,6 +48,7 @@ class CreateViewFragment: Fragment() {
         val view= LayoutInflater.from(activity).inflate(R.layout.fragment_create,container,false)
         storage = Firebase.storage
         db= Firebase.firestore
+        view?.createpg?.visibility= View.GONE
         var mActivity = activity as CreateActivity
         view.address.setOnClickListener{
             Log.d(ContentValues.TAG, App.instance.toString()+"애플리케이션 생성")
@@ -143,6 +145,7 @@ class CreateViewFragment: Fragment() {
     }
     @SuppressLint("SimpleDateFormat")
     fun uploadContent(hobby: String, view: View){
+        RoadData()
         val s1:String= Firebase.auth.currentUser?.uid.toString()
         val s2:String=SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val makeuid=s1.plus(s2)
@@ -171,11 +174,22 @@ class CreateViewFragment: Fragment() {
                             activity?.setResult(Activity.RESULT_OK)
                             activity?.finish()
                             println("모임만들기 성공")
+                            ClearData()
                         }
                     }
                 }
             }
         }
 
+    }
+    private fun RoadData(){
+        view?.createpg?.visibility= View.VISIBLE
+        activity?.window?.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
+    private fun ClearData(){
+        view?.createpg?.visibility= View.GONE
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 }

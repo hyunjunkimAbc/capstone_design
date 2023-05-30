@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.capstone_android.MeetingRoomActivity
-import com.example.capstone_android.com.example.capstone_android.MeetingRoomDataManager
+import com.example.capstone_android.MeetingRoomDataManager
 import com.example.capstone_android.R
 import com.example.capstone_android.Util.MainMenuId
 import com.example.capstone_android.Util.SingleTonData

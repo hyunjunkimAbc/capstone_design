@@ -55,6 +55,7 @@ class CreateLightMeeting:AppCompatActivity() {
     var disx:Double?=null
     var disy:Double?=null
     var date:String?=null
+    var date2:String?=null
     lateinit var storage: FirebaseStorage
     lateinit var db : FirebaseFirestore
     @RequiresApi(Build.VERSION_CODES.O)
@@ -81,11 +82,14 @@ class CreateLightMeeting:AppCompatActivity() {
                 val pmonth=if(monthOfYear<9)"0"+(monthOfYear+1).toString() else (monthOfYear+1).toString()
                 val pdayOfMonth=if(dayOfMonth<10) "0"+dayOfMonth.toString() else dayOfMonth.toString()
                 date="$year$pmonth$pdayOfMonth"
+                date2="${year}년${pmonth}월${pdayOfMonth}일"
                 Log.d(TAG,date!!)
             }
 
         })
-
+        val timetest="07:30"
+        var after_string = timetest.split(":")
+        Log.d(TAG,after_string[0]+after_string[1])
         for((index,checkbox) in TimeCheck.withIndex()){
             checkbox.setOnClickListener{
                 Log.d(TAG,"TIMECHECK=${LightTimeCheck.timecheck}")
@@ -248,6 +252,8 @@ class CreateLightMeeting:AppCompatActivity() {
         storageRef.putFile(photoUri!!).addOnSuccessListener {
             storageRef.downloadUrl.addOnSuccessListener { uri ->
                 val lightdata = lightData()
+                val starttimediv=StartTime?.split(":")
+                val endtimediv=EndTime?.split(":")
                 lightdata.title= binding.lightmeetingname.text.toString()
                 lightdata.max=binding.lightnumber.text.toString()
                 lightdata.info_text=binding.lightexplain.text.toString()
@@ -256,8 +262,10 @@ class CreateLightMeeting:AppCompatActivity() {
                 lightdata.addressname=addressname
                 lightdata.category=hobby
                 lightdata.upload_time=System.currentTimeMillis()
-                lightdata.start_time=StartTime
-                lightdata.end_time=EndTime
+                lightdata.start_time=date2?.plus(starttimediv?.get(0)).plus("시").plus(starttimediv?.get(1)).plus("분")
+                lightdata.end_time=date2?.plus(endtimediv?.get(0)).plus("시").plus(endtimediv?.get(1)).plus("분")
+                lightdata.start_time2=StartTime
+                lightdata.end_time2=EndTime
                 lightdata.date=date
                 lightdata.imageUrl=uri.toString()
                 lightdata.positionx=disx
@@ -266,7 +274,7 @@ class CreateLightMeeting:AppCompatActivity() {
                 db.collection("lighting_meeting_room").document(makeuid).set(lightdata).addOnSuccessListener{
                     db.collection("lighting_meeting_room").document(makeuid).update("member_list",
                         FieldValue.arrayUnion(Firebase.auth.currentUser?.uid.toString())).addOnSuccessListener{
-                        db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).update("meeting_room_id_list",FieldValue.arrayUnion(makeuid)).addOnSuccessListener{
+                        db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).update("lightmeeting_room_id_list",FieldValue.arrayUnion(makeuid)).addOnSuccessListener{
                             ClearData()
                             setResult(Activity.RESULT_OK)
                             finish()

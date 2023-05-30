@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
@@ -234,7 +235,7 @@ class CreateCompetition: AppCompatActivity() {
                 db.collection("competition_room").document(makeuid).set(competitiondata).addOnSuccessListener{
                     db.collection("competition_room").document(makeuid).update("member_list",
                         FieldValue.arrayUnion(Firebase.auth.currentUser?.uid.toString())).addOnSuccessListener{
-                        db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).update("meeting_room_id_list",
+                        db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).update("competition_id_list",
                             FieldValue.arrayUnion(makeuid)).addOnSuccessListener{
                             ClearData()
                             setResult(Activity.RESULT_OK)
@@ -254,5 +255,15 @@ class CreateCompetition: AppCompatActivity() {
     private fun ClearData(){
         binding.competitionpgb.visibility= View.GONE
         this.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

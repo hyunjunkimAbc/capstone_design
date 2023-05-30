@@ -71,8 +71,8 @@ class ListLightMapAdapter(var itemlist: List<lightData>): RecyclerView.Adapter<R
             strWeek = "토"
         }
         viewholder.lightmapitemdday.text="D-".plus(dday).plus(strWeek)
-        viewholder.lightmapitemstarttime.text=itemlist[position].start_time
-        viewholder.lightmapitemend.text=itemlist[position].end_time
+        viewholder.lightmapitemstarttime.text=itemlist[position].start_time2
+        viewholder.lightmapitemend.text=itemlist[position].end_time2
         viewholder.lightmapclick.setOnClickListener{
             println("클릭")
         }
