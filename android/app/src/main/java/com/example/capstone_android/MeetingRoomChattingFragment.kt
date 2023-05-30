@@ -27,7 +27,7 @@ import java.net.URL
 import java.net.URLEncoder
 import android.content.res.AssetFileDescriptor
 
-
+import android.app.Activity
 import org.json.JSONObject
 import org.tensorflow.lite.Tensor
 import org.tensorflow.lite.support.label.Category
@@ -93,10 +93,10 @@ class MeetingRoomChattingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val adapter = MeetingRoomChattingAdapter(viewModel)
         //val meetingMembersRecyclerView = v.findViewById<RecyclerView>(R.id.meetingMembersRecyclerView)
-        val recyclerViewCommentChatting = binding.chattingRecyclerView
-        recyclerViewCommentChatting.adapter = adapter
-        recyclerViewCommentChatting.layoutManager = LinearLayoutManager(activity)
-        recyclerViewCommentChatting.setHasFixedSize(true)
+        //val recyclerViewCommentChatting = binding.chattingRecyclerView
+        binding.chattingRecyclerView.adapter = adapter
+        binding.chattingRecyclerView.layoutManager = LinearLayoutManager(activity)
+        binding.chattingRecyclerView.setHasFixedSize(true)
         viewModel.itemsListData.observe(viewLifecycleOwner ){
             adapter.notifyDataSetChanged()
         }
@@ -104,7 +104,7 @@ class MeetingRoomChattingFragment : Fragment() {
             //ItemDialog(it).show
             val i =viewModel.itemClickEvent.value
         }
-        registerForContextMenu(recyclerViewCommentChatting)
+        registerForContextMenu(binding.chattingRecyclerView)
         val colName = activity?.intent?.getStringExtra("collectionName")
         meetingRoomCollection = db.collection(colName!!)
         //데이터 얻어와서 ui에 반영
