@@ -85,10 +85,10 @@ class MeetingRoomPostingsFragment : Fragment() {
 
         val adapter = MeetingRoomPostingsAdapter(viewModel)
         //val meetingMembersRecyclerView = v.findViewById<RecyclerView>(R.id.meetingMembersRecyclerView)
-        val meetingMembersRecyclerView = binding.postingRecyclerView
-        meetingMembersRecyclerView.adapter = adapter
-        meetingMembersRecyclerView.layoutManager = LinearLayoutManager(activity)
-        meetingMembersRecyclerView.setHasFixedSize(true)
+        //val meetingMembersRecyclerView = binding.postingRecyclerView
+        binding.postingRecyclerView.adapter = adapter
+        binding.postingRecyclerView.layoutManager = LinearLayoutManager(activity)
+        binding.postingRecyclerView.setHasFixedSize(true)
         viewModel.itemsListData.observe(viewLifecycleOwner ){
             adapter.notifyDataSetChanged()
         }
@@ -99,7 +99,7 @@ class MeetingRoomPostingsFragment : Fragment() {
             findNavController().navigate(R.id.action_meetingRoomPostingsFragment_to_showPostingFragment,bundle)
         }
 
-        registerForContextMenu(meetingMembersRecyclerView)
+        registerForContextMenu(binding.postingRecyclerView)
         //viewModel.addItem(Posting(null,"asdf","asddfgdf",1000,"","adsf"))
         //viewModel.addItem(Posting(null,"asdf","fdsgfh",100002,"","asdf"))
         val colName = activity?.intent?.getStringExtra("collectionName")
@@ -199,6 +199,7 @@ class MeetingRoomPostingsFragment : Fragment() {
         userCollection.document(writer_uid).get().addOnSuccessListener {
             val nickname = it.data?.get("nickname")
             var userProfileImage = rootRef.child("user_profile_image/${writer_uid}.jpg")
+
             userProfileImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                 if(it.isSuccessful){
                     val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)

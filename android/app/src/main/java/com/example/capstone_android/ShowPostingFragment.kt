@@ -71,10 +71,10 @@ class ShowPostingFragment : Fragment() {
 
         val adapter = ShowPostingAdapter(viewModel)
         //val meetingMembersRecyclerView = v.findViewById<RecyclerView>(R.id.meetingMembersRecyclerView)
-        val recyclerViewCommentPosting = binding.recyclerViewCommentPosting
-        recyclerViewCommentPosting.adapter = adapter
-        recyclerViewCommentPosting.layoutManager = LinearLayoutManager(activity)
-        recyclerViewCommentPosting.setHasFixedSize(true)
+        //val recyclerViewCommentPosting = binding.recyclerViewCommentPosting
+        binding.recyclerViewCommentPosting.adapter = adapter
+        binding.recyclerViewCommentPosting.layoutManager = LinearLayoutManager(activity)
+        binding.recyclerViewCommentPosting.setHasFixedSize(true)
         viewModel.itemsListData.observe(viewLifecycleOwner ){
             adapter.notifyDataSetChanged()
         }
@@ -84,7 +84,7 @@ class ShowPostingFragment : Fragment() {
             //findNavController().navigate(R.id.action_meetingRoomPostingsFragment_to_showPostingFragment)
         }
 
-        registerForContextMenu(recyclerViewCommentPosting)
+        registerForContextMenu(binding.recyclerViewCommentPosting)
         //viewModel.addItem(Comment(null,"asdf","asddfgdf",1000,"","adsf"))
         //viewModel.addItem(Comment(null,"asdf","fdsgfh",100002,"","asdf"))
         //viewModel.addItem(Comment(null,"asdf","asddfgdf",1000,"jx2EKi4ed9hoy73X0LTI7TcZd8B2","adsf"))
@@ -406,7 +406,7 @@ class ShowPostingFragment : Fragment() {
             if(it.isSuccessful){
                 val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
                 viewModel.updateItem(i, Comment(bmp,nickname,comment.commentText,comment.timePosting
-                ,comment.writer_uid,comment.document_id))
+                    ,comment.writer_uid,comment.document_id))
             }else{
                 var ref = rootRef.child("user_profile_image/default.jpg")
                 ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
