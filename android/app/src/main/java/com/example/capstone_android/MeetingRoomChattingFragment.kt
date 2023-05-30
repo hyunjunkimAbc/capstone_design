@@ -27,8 +27,7 @@ import java.net.URL
 import java.net.URLEncoder
 import android.content.res.AssetFileDescriptor
 
-import android.app.Activity
-import com.example.capstone_android.com.example.capstone_android.MeetingRoomDataManager
+
 import org.json.JSONObject
 import org.tensorflow.lite.Tensor
 import org.tensorflow.lite.support.label.Category

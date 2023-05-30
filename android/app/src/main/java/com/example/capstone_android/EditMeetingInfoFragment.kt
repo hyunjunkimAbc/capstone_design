@@ -18,7 +18,6 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone_android.SearchAddress.SearchMap
-import com.example.capstone_android.com.example.capstone_android.MeetingRoomDataManager
 import com.example.capstone_android.data.*
 import com.example.capstone_android.databinding.FragmentEditMeetingInfoBinding
 import com.example.capstone_android.databinding.FragmentEditPostingBinding

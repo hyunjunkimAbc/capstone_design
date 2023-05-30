@@ -25,7 +25,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.capstone_android.*
 import com.example.capstone_android.SearchResult.MainSearchView
 import com.example.capstone_android.Util.SingleTonData
-import com.example.capstone_android.com.example.capstone_android.MeetingRoomDataManager
 import com.example.capstone_android.data.BannerItem
 import com.example.capstone_android.data.ClubData
 import com.example.capstone_android.data.SignUpData
@@ -94,12 +93,6 @@ class ConciergeActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.mainsearchview.clearFocus()
-        binding.mainsearchview.setOnClickListener {
-            binding.mainsearchview.clearFocus()
-            var intent= Intent(this, MainSearchView::class.java)
-            startActivity(intent)
-        }
-        /*
         binding.mainsearchview.setOnQueryTextFocusChangeListener { _, hasExpaned ->
             when(hasExpaned) {
                 true -> {
@@ -111,7 +104,7 @@ class ConciergeActivity : AppCompatActivity() {
 
                 }
             }
-        }*/
+        }
         setRecyclerView(LightingAdapter(viewModelLightingMeetingRoom),viewModelLightingMeetingRoom,binding.Lightningmeetingrecyclerview)
         setRecyclerView(PeriodicAdapter(viewModelPeriodicMeetingRoom),viewModelPeriodicMeetingRoom,binding.mainhomemeetingrecyclerview )
         setRecyclerView(PlaceRentalAdapter(viewModelPlaceRentalRoom),viewModelPlaceRentalRoom,binding.placeRantalRecyclerView )
@@ -143,29 +136,9 @@ class ConciergeActivity : AppCompatActivity() {
         initViewPager2()
         subscribeObservers()
         autoScrollViewPager()
-        lifecycleScope.launch(Dispatchers.Main){
-            try{
-                RoadData()
-                val userinfo=db.collection("user").document(Firebase.auth.currentUser?.uid.toString())
+        address=SingleTonData.userInfo?.address
+        viewModel.setuseraddress(address!!)
 
-                val userhobby=userinfo.get().await().toObject(SignUpData::class.java)
-                println("flag7 userhobby ${userhobby}")
-                SingleTonData.userInfo=userhobby
-                address=userhobby?.address
-                hobbydata=userhobby?.interest_array!!
-                viewModel.setuseraddress(address!!)
-                for(data in hobbydata){
-                    val roominfo=db.collection("meeting_room").whereEqualTo("category",data).whereEqualTo("address",address).get().await()
-                    for(data2 in roominfo){
-                        SingleTonData.clubdata.add(data2.toObject(ClubData::class.java))
-                        SingleTonData.clubdata.sortByDescending { it.positionx }
-                    }
-                }
-                ClearData()
-            }catch (e:Exception){
-                Log.e(ContentValues.TAG,"Firebase Error : ${e.message}")
-            }
-        }
     }
     private fun initViewPager2() {
         binding.adviewpager.apply {

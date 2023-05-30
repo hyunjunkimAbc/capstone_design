@@ -20,6 +20,8 @@ import com.example.capstone_android.data.lightData
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.item_main.view.*
 import kotlinx.android.synthetic.main.itemlight.view.*
+import java.lang.Math.abs
+import java.lang.Math.floor
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -33,6 +35,7 @@ class ListLightAdapter(var itemlist:List<lightData>):RecyclerView.Adapter<Recycl
     inner class CustomViewHolder2(view: View) : RecyclerView.ViewHolder(view) {
 
     }
+
     @SuppressLint("CheckResult", "SimpleDateFormat")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewholder=(holder as CustomViewHolder2).itemView
@@ -76,10 +79,10 @@ class ListLightAdapter(var itemlist:List<lightData>):RecyclerView.Adapter<Recycl
         } else if (nWeek == 7) {
             strWeek = "토"
         }
-
-        viewholder.lightitemdday.text= "D-".plus(dday).plus(strWeek)
-        viewholder.lightitemstart.text= itemlist[position].start_time
-        viewholder.lightitemend.text=itemlist[position].end_time
+        var diff=calculateDateDifference(meetingtime,nowtime)
+        viewholder.lightitemdday.text= "D-".plus(diff).plus(strWeek)
+        viewholder.lightitemstart.text= itemlist[position].start_time2
+        viewholder.lightitemend.text=itemlist[position].end_time2
         viewholder.lightitemaddress.text=itemlist[position].address
         viewholder.lightitemaddressname.text=itemlist[position].addressname
         viewholder.lightclick.setOnClickListener{
@@ -105,4 +108,27 @@ class ListLightAdapter(var itemlist:List<lightData>):RecyclerView.Adapter<Recycl
     }
 
     private lateinit var lightmeetingitemClickListener : LightMeetingItemClickListener
+    fun calculateDateDifference(date1: Int, date2: Int): String {
+        val day1=date1.toString()
+        val day2=date2.toString()
+        val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+        val parsedDate1 = dateFormat.parse(day1)
+        val parsedDate2 = dateFormat.parse(day2)
+
+        val calendar1 = Calendar.getInstance()
+        calendar1.time = parsedDate1
+
+        val calendar2 = Calendar.getInstance()
+        calendar2.time = parsedDate2
+
+        val milliseconds1 = calendar1.timeInMillis
+        val milliseconds2 = calendar2.timeInMillis
+
+        val diff = abs(milliseconds2 - milliseconds1)
+
+
+        val days = floor(diff / (1000 * 60 * 60 * 24).toDouble()).toLong()
+
+        return "$days"
+    }
 }

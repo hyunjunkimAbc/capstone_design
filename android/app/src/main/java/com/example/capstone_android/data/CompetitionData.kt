@@ -1,6 +1,6 @@
 package com.example.capstone_android.data
 
-data class CompetitionData (var num_of_positive:Int?=null,
+data class CompetitionData (var num_of_positive:Int?=0,
                            var title:String?=null,
                             var max:String?=null,
                             var info_text:String?=null,
