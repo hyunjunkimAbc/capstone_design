@@ -63,7 +63,7 @@ class ReservationListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeViews()
-        binding.textView.text = "장소대여내역"
+        binding.textView.text = "장소승인내역"
     }
 
     private fun initializeViews() {

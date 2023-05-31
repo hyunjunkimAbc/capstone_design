@@ -271,7 +271,7 @@ class MeetingRoomInfoFragment : Fragment() {
         }
 
         fun addUserToRecyclerView(uid:String,nickname:String, profileMessage:String,editTime :Long){
-            var userProfileImage = rootRef.child("user_profile_image/${uid}.jpg")
+            var userProfileImage = rootRef.child("user_profile_image/${uid}")
             userProfileImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                 if(it.isSuccessful){
                     val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)

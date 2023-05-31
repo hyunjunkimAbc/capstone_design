@@ -124,12 +124,14 @@ class SetGoogleAccountActivity : AppCompatActivity()  {
                 signdata.interest_array=SingleTonData.userInfo?.interest_array!!
                 signdata.edit_time=System.currentTimeMillis()
 
+                db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).set(signdata)
+
                 // 프로필 이미지가 선택되었으면
                 if (selected_profile_img==1){
                     // Firebase Storage로 이미지 전송
                     imgName = "${user?.uid ?: String}"
                     var storageReference =
-                        st?.reference?.child(UPLOAD_FOLDER)?.child(imgName!!)
+                        st?.reference?.child("user_profile_image")?.child(imgName!!)
 
                     storageReference?.putFile(image!!)?.addOnSuccessListener {
                         println("이미지 업로드 성공")
