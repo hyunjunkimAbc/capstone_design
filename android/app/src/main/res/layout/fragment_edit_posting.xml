@@ -28,9 +28,11 @@
             android:id="@+id/scrollView4PostingEdit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline7PostingEdit">
+            app:layout_constraintTop_toBottomOf="@+id/scrollView3PostingEdit">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -53,6 +55,8 @@
             android:id="@+id/postingTitleEditTextPostingEdit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:minHeight="48dp"
@@ -69,6 +73,7 @@
             android:id="@+id/textViewTitleEditTextPostingEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="제목"
             app:layout_constraintBottom_toTopOf="@id/scrollView3PostingEdit"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,8 +105,11 @@
 
         <Button
             android:id="@+id/uploadPostingBtnPostingEdit"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
             android:backgroundTint="#36DA90"
             android:text="edit"
             app:layout_constraintBottom_toBottomOf="parent"

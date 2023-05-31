@@ -16,6 +16,7 @@ class MeetingRoomPostingsAdapter (private val viewModel: MeetingRoomPostingsView
                 if(this.icon!=null)
                     binding.profileImgPosting.setImageBitmap(this.icon)
                 //null들어가면 작동 안함 주의
+                binding.postTitle.text = this.title
                 binding.nicknamePosting.text = this.nickname
                 binding.timePosting.text = "${SimpleDateFormat("yyyy-MM-dd").format(this.timePosting)}"
                 binding.textPosting.text = this.postingText

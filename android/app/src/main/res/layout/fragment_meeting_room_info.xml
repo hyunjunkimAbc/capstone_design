@@ -150,6 +150,15 @@ android:layout_height="match_parent">
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/meetingRoomText" />
 
+            <TextView
+                android:id="@+id/editMeetingRoomInfoBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:text="수정"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/meetingRoomTitle" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
@@ -163,21 +172,6 @@ android:layout_height="match_parent">
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/editMeetingRoomInfoBtn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="1"
-        android:clickable="true"
-        android:contentDescription="editMeetingRoomInfo"
-        android:src="@android:drawable/ic_menu_edit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/enterMeetingRoomBtn"
         android:layout_width="0dp"
@@ -190,7 +184,7 @@ android:layout_height="match_parent">
         android:text="가입하기"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editMeetingRoomInfoBtn"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

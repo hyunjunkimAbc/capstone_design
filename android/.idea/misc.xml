@@ -19,11 +19,17 @@
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_login.xml" value="0.12132725430597771" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_meeting_room.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_profile.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_reset_pwactivity.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_resetpassword.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_set_google_account.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/activity_sign_up.xml" value="0.12132725430597771" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/competition_room_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_competition_user_application.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_create.xml" value="0.12132725430597771" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_edit_meeting_info.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_edit_posting.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_chatting.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_chatting2.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_info.xml" value="0.264" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_info2.xml" value="0.2" />
         <entry key="..\:/Users/ajwgk/captest/capstone_design/android/app/src/main/res/layout/fragment_meeting_room_posting_add.xml" value="0.24947916666666667" />
