@@ -34,6 +34,7 @@ class ListCompetitionMapAdapter(var itemlist: List<CompetitionData>): RecyclerVi
             .error(R.drawable.plusprofileimg)
             .dontAnimate()
             .into(competitionmapholder.competitionmapimg)
+        competitionmapholder.competitionmaptitle.text=itemlist[position].title.toString()
         competitionmapholder.competitionmapgoodcount.text=itemlist[position].num_of_positive.toString()
         competitionmapholder.competitionmapexpain.text=itemlist[position].info_text
         competitionmapholder.competitionmapstart.text="시작: "+itemlist[position].start_time
