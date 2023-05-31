@@ -85,10 +85,10 @@ class MeetingRoomPostingsFragment : Fragment() {
 
         val adapter = MeetingRoomPostingsAdapter(viewModel)
         //val meetingMembersRecyclerView = v.findViewById<RecyclerView>(R.id.meetingMembersRecyclerView)
-        //val meetingMembersRecyclerView = binding.postingRecyclerView
-        binding.postingRecyclerView.adapter = adapter
-        binding.postingRecyclerView.layoutManager = LinearLayoutManager(activity)
-        binding.postingRecyclerView.setHasFixedSize(true)
+        val meetingMembersRecyclerView = binding.postingRecyclerView
+        meetingMembersRecyclerView.adapter = adapter
+        meetingMembersRecyclerView.layoutManager = LinearLayoutManager(activity)
+        meetingMembersRecyclerView.setHasFixedSize(true)
         viewModel.itemsListData.observe(viewLifecycleOwner ){
             adapter.notifyDataSetChanged()
         }
@@ -99,7 +99,7 @@ class MeetingRoomPostingsFragment : Fragment() {
             findNavController().navigate(R.id.action_meetingRoomPostingsFragment_to_showPostingFragment,bundle)
         }
 
-        registerForContextMenu(binding.postingRecyclerView)
+        registerForContextMenu(meetingMembersRecyclerView)
         //viewModel.addItem(Posting(null,"asdf","asddfgdf",1000,"","adsf"))
         //viewModel.addItem(Posting(null,"asdf","fdsgfh",100002,"","asdf"))
         val colName = activity?.intent?.getStringExtra("collectionName")
@@ -121,12 +121,13 @@ class MeetingRoomPostingsFragment : Fragment() {
             numOfChatting = posting_id_list.size
             for (posting_id in posting_id_list){
                 postingCollection.document(posting_id).get().addOnSuccessListener {
+                    val title = it["title"]
                     val text =it["text"]
                     val upload_time = it["upload_time"]
                     val writer_uid = it["writer_uid"]
                     val document_id = it.id
 
-                    addPostingToRecyclerView(writer_uid as String, text as String, upload_time as Long,document_id)
+                    addPostingToRecyclerView(writer_uid as String, text as String, upload_time as Long,document_id,title as String)
                 }.addOnFailureListener {
                     println("recycler view 요소 한개 얻어오는 것 실패 변수 조정")
                     updateInitCnt(false)
@@ -183,23 +184,23 @@ class MeetingRoomPostingsFragment : Fragment() {
             var upload_time :Long
             var text = ""
             var document_id = ""
-
+            var title =""
+            title = "${it["title"]}"
             writer_uid = "${it["writer_uid"]}"
             upload_time = it["upload_time"] as Long
             text = "${it["text"]}"
             document_id = it.id
             userCollection.document(writer_uid).get().addOnSuccessListener {
-                addPostingToRecyclerView(writer_uid as String, text as String, upload_time as Long,document_id)
+                addPostingToRecyclerView(writer_uid as String, text as String, upload_time as Long,document_id,title)
             }
         }
     }
 
-    fun addPostingToRecyclerView(writer_uid:String, postingText:String,timePosting:Long,document_id:String){
+    fun addPostingToRecyclerView(writer_uid:String, postingText:String,timePosting:Long,document_id:String,title:String){
 
         userCollection.document(writer_uid).get().addOnSuccessListener {
             val nickname = it.data?.get("nickname")
             var userProfileImage = rootRef.child("user_profile_image/${writer_uid}.jpg")
-
             userProfileImage.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                 if(it.isSuccessful){
                     val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
@@ -209,7 +210,7 @@ class MeetingRoomPostingsFragment : Fragment() {
                         }
                     }
                     viewModel.addItem(Posting(bmp,
-                        nickname as String, postingText, timePosting,document_id,writer_uid))
+                        nickname as String, postingText, timePosting,document_id,writer_uid,title))
                     updateInitCnt(true)
                     addUserSnapShot(writer_uid)
                 }else{
@@ -223,7 +224,7 @@ class MeetingRoomPostingsFragment : Fragment() {
                                 }
                             }
                             viewModel.addItem(Posting(bmp,
-                                nickname as String, postingText, timePosting,document_id,writer_uid))
+                                nickname as String, postingText, timePosting,document_id,writer_uid,title))
                             updateInitCnt(true)
                             addUserSnapShot(writer_uid)
                         }else{
@@ -258,7 +259,7 @@ class MeetingRoomPostingsFragment : Fragment() {
                         if(posting.writer_uid == uid){
                             viewModel.updateItem(i,
                                 Posting(bmp,
-                                    nickname as String,posting.postingText,posting.timePosting,posting.document_id,posting.writer_uid)
+                                    nickname as String,posting.postingText,posting.timePosting,posting.document_id,posting.writer_uid,posting.title)
                             )
                         }
                         i++
@@ -275,7 +276,7 @@ class MeetingRoomPostingsFragment : Fragment() {
                                 if(posting.writer_uid == uid){
                                     viewModel.updateItem(i,
                                         Posting(bmp,
-                                            nickname as String,posting.postingText,posting.timePosting,posting.document_id,posting.writer_uid)
+                                            nickname as String,posting.postingText,posting.timePosting,posting.document_id,posting.writer_uid,posting.title)
                                     )
                                 }
                                 i++
