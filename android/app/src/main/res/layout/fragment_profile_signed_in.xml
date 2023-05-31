@@ -6,224 +6,293 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="409dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="15dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/introduce_comment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/userImage1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:scaleType="fitXY"
+                android:layout_below="@+id/textView"
 
-            <EditText
+              />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/gps2"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/userImage1"
+              android:layout_below="@+id/birth" />
+
+            <TextView
                 android:id="@+id/nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="2"
-                android:minHeight="48dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
                 android:text="김한성"
-                app:layout_constraintEnd_toStartOf="@+id/button_modifyProfile"
-                app:layout_constraintHorizontal_bias="0.103"
-                app:layout_constraintStart_toEndOf="@+id/userImage1"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_below="@+id/textView"
+                android:layout_toRightOf="@+id/userImage1"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/birth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:minHeight="48dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="30dp"
                 android:text="980505"
-                app:layout_constraintBottom_toTopOf="@+id/phone_number"
-                app:layout_constraintEnd_toStartOf="@+id/button_modifyProfile"
-                app:layout_constraintHorizontal_bias="0.447"
-                app:layout_constraintStart_toEndOf="@+id/nickname"
-                app:layout_constraintTop_toTopOf="@+id/nickname"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <ImageView
-                android:id="@+id/icon_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button_mylocation"
-                app:layout_constraintStart_toStartOf="@+id/nickname"
-                app:layout_constraintTop_toTopOf="@+id/button_mylocation"
-                app:srcCompat="@android:drawable/ic_menu_mapmode" />
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_toRightOf="@+id/nickname"
+                android:layout_below="@+id/textView"/>
 
             <Button
                 android:id="@+id/button_modifyProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="15dp"
                 android:layout_weight="1"
                 android:backgroundTint="#36DA90"
                 android:text="수정"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_below="@+id/textView"
+                android:layout_alignParentEnd="true" />
 
-            <Button
+            <TextView
                 android:id="@+id/button_mylocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="8"
-                android:backgroundTint="#36DA90"
+              android:textSize="16sp"
+                android:textColor="@color/black"
                 android:text="성북구"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/phone_number"
-                app:layout_constraintTop_toBottomOf="@+id/phone_number"
-                app:layout_constraintVertical_bias="0.0" />
+               android:layout_toRightOf="@+id/imageView5"
+                android:layout_below="@+id/birth"/>
 
             <TextView
+                android:layout_below="@+id/userImage1"
                 android:id="@+id/phone_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:minHeight="48dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
                 android:text="01012345678"
-                app:layout_constraintStart_toStartOf="@+id/birth"
-                app:layout_constraintTop_toBottomOf="@+id/button_modifyProfile" />
+                 />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_below="@+id/phone_number"
+                android:id="@+id/introduce_comment"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:text="잘 부탁드립니다."
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phone_number" />
 
-    </LinearLayout>
 
-    <EditText
-        android:id="@+id/introduce_comment"
+
+
+    <View
+        android:id="@+id/viewline2"
+        android:layout_below="@+id/introduce_comment"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="잘 부탁드립니다."
-        app:layout_constraintBottom_toTopOf="@+id/guideline17"
-        tools:layout_editor_absoluteX="10dp" />
-
-    <Button
-        android:id="@+id/button_myMeetingRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="#36DA90"
-        android:text="내 모임 관리"
-        app:layout_constraintBottom_toTopOf="@+id/button_logOut"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.181"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button_logOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#36DA90"
-        android:text="로그아웃"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.198"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8" />
-
-    <Button
-        android:id="@+id/button_myCompetition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#36DA90"
-        android:text="나의 개설 대회"
-        app:layout_constraintBottom_toTopOf="@+id/button_myPlaceRental"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline16"
-        app:layout_constraintTop_toTopOf="@+id/button_myApplyCompetition"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/button_myApplyCompetition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="5dp"
         android:layout_marginTop="10dp"
-        android:backgroundTint="#36DA90"
-        android:text="나의 신청 대회"
-        app:layout_constraintBottom_toTopOf="@+id/button_myMeetingRoom"
-        app:layout_constraintEnd_toStartOf="@+id/guideline16"
-        app:layout_constraintHorizontal_bias="0.506"
+        android:background="#f0f0f0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/introduce_comment"
-        app:layout_constraintVertical_bias="0.326" />
+       />
+
+    <TextView
+        android:id="@+id/textView79"
+        android:layout_below="@+id/viewline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="내 관심사"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewline2" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/setprofilecardview"
+        android:layout_below="@+id/textView79"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:cardCornerRadius="15dp"
+     >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/setprofilerecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:nestedScrollingEnabled="false"
+            android:orientation="horizontal"
+            android:overScrollMode="never" />
+    </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/button_myMeetingRoom"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/editinterest"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:cardCornerRadius="10dp"
+                android:foreground="?android:attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="가입한 모임"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center|left"
+                    android:layout_marginStart="10dp"
+                    android:textSize="20sp"/>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/button_myPlaceRental"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/button_myMeetingRoom"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:cardCornerRadius="10dp"
+                android:foreground="?android:attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="내 대여장소 목록"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center|left"
+                    android:layout_marginStart="10dp"
+                    android:textSize="20sp"/>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/allowPlaceBtn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/button_myPlaceRental"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:cardCornerRadius="10dp"
+                android:foreground="?android:attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="장소 승인 내역"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center|left"
+                    android:layout_marginStart="10dp"
+                    android:textSize="20sp"/>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/button_myCompetition"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/allowPlaceBtn"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:cardCornerRadius="10dp"
+                android:foreground="?android:attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="내가 개설한 대회"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center|left"
+                    android:layout_marginStart="10dp"
+                    android:textSize="20sp"/>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/button_myApplyCompetition"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/button_myCompetition"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:cardCornerRadius="10dp"
+                android:foreground="?android:attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="내가 신청한 대회"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center|left"
+                    android:layout_marginStart="10dp"
+                    android:textSize="20sp"/>
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/button_logOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/button_modifyProfile"
+                android:backgroundTint="#36DA90"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="10dp"
+                android:text="로그아웃"
+                android:layout_alignParentEnd="true"/>
+
+
+
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="나의 프로필"
-        app:layout_constraintBottom_toTopOf="@+id/guideline17"
-        app:layout_constraintEnd_toStartOf="@+id/guideline16"
-        app:layout_constraintHorizontal_bias="0.115"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.086" />
-
-    <Button
-        android:id="@+id/button_myPlaceRental"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"/>
+    <TextView
+        android:id="@+id/editinterest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#36DA90"
-        android:text="나의 대여 장소"
-        app:layout_constraintBottom_toTopOf="@+id/allowPlaceBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button_myCompetition"
-        app:layout_constraintTop_toTopOf="@+id/button_myMeetingRoom"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:text="편집"
+        android:layout_below="@+id/setprofilecardview"
+        android:layout_alignParentEnd="true"
+        android:textSize="16sp"
+         />
+            <View
+                android:id="@+id/viewline3"
+                android:layout_below="@+id/button_myApplyCompetition"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginTop="10dp"
+                android:background="#f0f0f0"
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.500684" />
-
-    <Button
-        android:id="@+id/allowPlaceBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:backgroundTint="#36DA90"
-        android:text="장소 승인 내역(관리자 용)"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.995"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.797" />
-
+                />
+        </RelativeLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

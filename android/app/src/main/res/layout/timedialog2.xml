@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <DatePicker
+        android:id="@+id/changeuserbirth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:layout_centerHorizontal="true"
+        />
+    <Button
+        android:id="@+id/timecancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="취소"
+        android:layout_below="@+id/changeuserbirth"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/round_button"/>
+    <Button
+        android:id="@+id/timecomfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="확인"
+        android:layout_below="@+id/changeuserbirth"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@+id/timecancel"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/round_button"/>
+</RelativeLayout>

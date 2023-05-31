@@ -13,4 +13,5 @@ data class SignUpData(var email:String?=null,
                       var reservation_list:ArrayList<String>?=ArrayList<String>(),
                       var competition_id_list:ArrayList<String>?=ArrayList<String>(),
                       var edit_time:Long?=null,
-                      var address:String?=null)
+                      var address:String?=null,
+                        var photoUri:String?=null)

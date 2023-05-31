@@ -32,6 +32,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import kotlinx.android.synthetic.main.item_main2.view.*
+import org.apache.log4j.chainsaw.Main
 
 
 class DetailViewFragment: Fragment() {
@@ -273,6 +274,7 @@ class DetailViewFragment: Fragment() {
             }
         }
 
+
     }
     fun gotoMeetingRoomActivity(colName:String,meetingRoomUid:String){
         println("5 21 collectionName ${colName} meeting_room_id ${meetingRoomUid}")
@@ -304,6 +306,14 @@ class DetailViewFragment: Fragment() {
     }
     fun updateCompetition(){
         viewModel.loadCompetitionData()
+    }
+    @SuppressLint("SetTextI18n")
+    fun updateaddress(){
+        view?.username?.text=SingleTonData.userInfo?.nickname+"님을"
+        if(openkey==MainMenuId.periodic) update()
+        else if(openkey==MainMenuId.light) updatelight()
+        else if(openkey==MainMenuId.place)updateplace()
+        else if(openkey==MainMenuId.competition)updateCompetition()
     }
     @SuppressLint("NotifyDataSetChanged", "ResourceAsColor", "SetTextI18n")
 
