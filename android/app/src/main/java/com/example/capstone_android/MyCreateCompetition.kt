@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.capstone_android.databinding.FragmentMyApplyBinding
+import com.example.capstone_android.databinding.FragmentMyCreateCompetitionBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -22,12 +22,13 @@ import okhttp3.internal.notify
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class MyApplyCompetitionFragment : Fragment(){
+class MyCreateCompetition : Fragment(){
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private val viewModel : MyApplyCompetitionViewModel by viewModels<MyApplyCompetitionViewModel>()
-    private var _binding: FragmentMyApplyBinding? = null
+    private val viewModel : MyCreateCompetitionViewModel by viewModels<MyCreateCompetitionViewModel>()
+    private var _binding: FragmentMyCreateCompetitionBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -67,7 +68,7 @@ class MyApplyCompetitionFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentMyApplyBinding.inflate(inflater,container,false)
+        _binding = FragmentMyCreateCompetitionBinding.inflate(inflater,container,false)
         return binding.root
     }
 
@@ -79,7 +80,7 @@ class MyApplyCompetitionFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         //비동기 처리시 기다리게 하는 등의 방법을 사용해서 게시판은 업로드한 순으로 보여준다.
 
-        val adapter = MyApplyCompetitionAdapter(viewModel)
+        val adapter = MyCreateCompetitionAdapter(viewModel)
 
 
         binding.applyRecyclerView.adapter = adapter
@@ -117,13 +118,13 @@ class MyApplyCompetitionFragment : Fragment(){
 
     private fun initDataAndUI(){
         //document_id = activity?.intent?.getStringExtra("document_id").toString()
-        //viewModel.addItem(Apply(null,"dasf","dafsd",1,"dasfasd"))
+        //viewModel.addItem(Creation(null,"dasf","dafsd",1,"dasfasd"))
         currentUserUid?.let {
             userCollection.document(it).get().addOnSuccessListener {
-                if(it["competition_id_list"] ==null){
+                if(it["competition_create_id_list"] ==null){
                     return@addOnSuccessListener
                 }
-                val competition_id_list = it["competition_id_list"] as List<String>
+                val competition_id_list = it["competition_create_id_list"] as List<String>
                 println("05 29 - competition_id_list ${competition_id_list}")
                 for (competition_id in competition_id_list){
                     competitionCollection.document(competition_id).get().addOnSuccessListener {
@@ -154,7 +155,7 @@ class MyApplyCompetitionFragment : Fragment(){
             if(it.isSuccessful){
                 val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
 
-                viewModel.addItem(Apply(bmp,
+                viewModel.addItem(Creation(bmp,
                     title, info_text, timePosting,document_id))
                 binding.applyRecyclerView.adapter?.notifyDataSetChanged()
                 println("05 29 성공")
@@ -165,7 +166,7 @@ class MyApplyCompetitionFragment : Fragment(){
                 ref.getBytes(Long.MAX_VALUE).addOnCompleteListener{
                     if(it.isSuccessful){
                         val bmp = BitmapFactory.decodeByteArray(it.result,0,it.result.size)
-                        viewModel.addItem(Apply(bmp,
+                        viewModel.addItem(Creation(bmp,
                             title, info_text, timePosting,document_id))
                         binding.applyRecyclerView.adapter?.notifyDataSetChanged()
                         println("05 29 실패")

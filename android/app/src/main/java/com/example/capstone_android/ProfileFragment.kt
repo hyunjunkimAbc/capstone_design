@@ -93,6 +93,9 @@ class ProfileFragment : Fragment() {
             binding.buttonMyApplyCompetition.setOnClickListener{
                 (activity as HomeActivity).gotoCompetitionFragment()
             }
+            binding.buttonMyCompetition.setOnClickListener {
+                (activity as HomeActivity).gotoCompetitionCreateFragment()
+            }
             binding.buttonMyPlaceRental.setOnClickListener{
                 (activity as HomeActivity).gotoReservationListFragment()
             }
@@ -166,22 +169,22 @@ class ProfileFragment : Fragment() {
         for(data in SingleTonData.userInfo?.interest_array!!){
             hobbydata.add(data)
         }
-       binding.setprofilerecycler.adapter?.notifyDataSetChanged()
+        binding.setprofilerecycler.adapter?.notifyDataSetChanged()
     }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-         if(requestCode==99){
+        if(requestCode==99){
             val activity =requireActivity() as HomeActivity
             activity.updateaddress()
-             inittext()
+            inittext()
         }
-         else if(requestCode==1&&resultCode==-1){
-             val activity =requireActivity() as HomeActivity
-             updateinterest()
-             activity.homeupdateinterest()
-         }
+        else if(requestCode==1&&resultCode==-1){
+            val activity =requireActivity() as HomeActivity
+            updateinterest()
+            activity.homeupdateinterest()
+        }
 
     }
     inner class HobbyImageIconAdapter2: RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -191,8 +194,8 @@ class ProfileFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-           val viewhold=(holder as HobbyImageIconAdapter2.CustomViewHolders).itemView
-         viewhold.hobbyiconimage.setImageResource(getImageResult(hobbydata[position]))
+            val viewhold=(holder as HobbyImageIconAdapter2.CustomViewHolders).itemView
+            viewhold.hobbyiconimage.setImageResource(getImageResult(hobbydata[position]))
             viewhold.iconimagetext.text=hobbydata[position]
 
         }
