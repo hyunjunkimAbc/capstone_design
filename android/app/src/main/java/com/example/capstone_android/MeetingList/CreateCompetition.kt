@@ -181,7 +181,7 @@ class CreateCompetition: AppCompatActivity() {
                 binding.competitionendtimehhmm.text=time2
             }
             dateTimePickerDialog.dismiss()
-            }
+        }
 
 
         dateTimePickerDialog.show()
@@ -235,7 +235,7 @@ class CreateCompetition: AppCompatActivity() {
                 db.collection("competition_room").document(makeuid).set(competitiondata).addOnSuccessListener{
                     db.collection("competition_room").document(makeuid).update("member_list",
                         FieldValue.arrayUnion(Firebase.auth.currentUser?.uid.toString())).addOnSuccessListener{
-                        db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).update("competition_id_list",
+                        db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).update("competition_create_id_list",
                             FieldValue.arrayUnion(makeuid)).addOnSuccessListener{
                             ClearData()
                             setResult(Activity.RESULT_OK)
