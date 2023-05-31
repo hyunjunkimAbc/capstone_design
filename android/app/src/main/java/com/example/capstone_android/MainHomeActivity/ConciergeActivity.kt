@@ -24,6 +24,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.capstone_android.*
 import com.example.capstone_android.SearchResult.MainSearchView
+import com.example.capstone_android.Util.MainMenuId
 import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.data.BannerItem
 import com.example.capstone_android.data.ClubData
@@ -75,22 +76,22 @@ class ConciergeActivity : AppCompatActivity() {
         binding.Mainmeetingbutton.setOnClickListener{
             var intent= Intent(this, HomeActivity::class.java)
             intent.putExtra("openkey","periodic")
-            startActivity(intent)
+            startActivityForResult(intent,1)
         }
         binding.Lightningmeetingbutton.setOnClickListener{
             var intent= Intent(this, HomeActivity::class.java)
             intent.putExtra("openkey","light")
-            startActivity(intent)
+            startActivityForResult(intent,1)
         }
         binding.locationbutton.setOnClickListener{
             var intent= Intent(this, HomeActivity::class.java)
             intent.putExtra("openkey","place")
-            startActivity(intent)
+            startActivityForResult(intent,1)
         }
         binding.Competitionbutton.setOnClickListener{
             var intent= Intent(this, HomeActivity::class.java)
             intent.putExtra("openkey","competition")
-            startActivity(intent)
+            startActivityForResult(intent,1)
         }
         binding.mainsearchview.clearFocus()
         binding.mainsearchview.setOnQueryTextFocusChangeListener { _, hasExpaned ->
@@ -271,5 +272,10 @@ class ConciergeActivity : AppCompatActivity() {
             //findNavController().navigate(R.id.action_meetingRoomPostingsFragment_to_showPostingFragment,bundle)
         }
         registerForContextMenu(MeetingRecyclerView)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        address=SingleTonData.userInfo?.address
+        viewModel.setuseraddress(address!!)
     }
 }

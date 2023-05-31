@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.capstone_android.SearchAddress.SharedPrefManager
 import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.data.*
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -32,7 +33,7 @@ class MeetingViewModel:ViewModel() {
     private val _SearchLightItemList: MutableLiveData<ArrayList<lightData>> = MutableLiveData()
     private val _SearchPlaceItemList: MutableLiveData<ArrayList<PlaceData>> = MutableLiveData()
     private val _SearchCompetitionItemList: MutableLiveData<ArrayList<CompetitionData>> = MutableLiveData()
-
+    private val _MyMeetingRoomItemList: MutableLiveData<ArrayList<ClubData>> = MutableLiveData()
     val db= Firebase.firestore
     val MeetingItemList: MutableLiveData<ArrayList<ClubData>>
         get() = _MeetingItemList
@@ -57,6 +58,8 @@ class MeetingViewModel:ViewModel() {
     val CompetitionMapItemList:MutableLiveData<ArrayList<CompetitionData>>
         get()=_CompetitionMapItemList
 
+    val MyMeetingRoomItemList:MutableLiveData<ArrayList<ClubData>>
+        get()=_MyMeetingRoomItemList
 
     val MainSearchpopular:MutableLiveData<ArrayList<SearchPopularData>>
         get()=_MainSearchpopular
@@ -232,6 +235,21 @@ class MeetingViewModel:ViewModel() {
                 }
             }
             _CompetitionMapItemList.value=SingleTonData.competitionmapdata
+        }
+    }
+
+    fun loadMyMeetingData(){
+        SingleTonData.mymeetingroomdata.clear()
+        viewModelScope.launch {
+            val meetingdata=db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).get().await()
+            val mdata=meetingdata.toObject(SignUpData::class.java)
+            SingleTonData.userInfo?.meeting_room_id_list=mdata?.meeting_room_id_list
+            val myroom=SingleTonData.userInfo?.meeting_room_id_list!!
+            for(data in myroom){
+                val roominfo=db.collection("periodic_meeting_room").document(data).get().await()
+                roominfo.toObject(ClubData::class.java)?.let { SingleTonData.mymeetingroomdata.add(it) }
+            }
+            _MyMeetingRoomItemList.value=SingleTonData.mymeetingroomdata
         }
     }
 

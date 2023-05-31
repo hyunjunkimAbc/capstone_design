@@ -163,6 +163,6 @@ fun getImageResult(value: String): Int {
         "건설"->R.drawable.job_constructor
         "법"->R.drawable.job_law
         "패션"->R.drawable.job_dress
-        else -> R.drawable.icon_art
+        else -> R.drawable.hobby
     }
 }

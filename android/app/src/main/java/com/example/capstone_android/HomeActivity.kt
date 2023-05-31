@@ -1,6 +1,7 @@
 package com.example.capstone_android
 import android.Manifest
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -168,8 +169,30 @@ class HomeActivity: AppCompatActivity() {
                 }
             }
         }
+
     }
+
     fun addremovemapmarker(){
+        if(mapFragment!=null) {
+            mapFragment?.removeAllMarkers()
+            mapFragment?.addAllMarkers()
+        }
+    }
+    fun updateaddress(){
+        binding.textview.text = SingleTonData.userInfo?.address
+        if(detailViewFragment!=null){
+            detailViewFragment?.updateaddress()
+        }
+        if(mapFragment!=null) {
+            mapFragment?.removeAllMarkers()
+            mapFragment?.addAllMarkers()
+        }
+    }
+    fun homeupdateinterest(){
+        if(detailViewFragment!=null){
+            detailViewFragment?.update_interest()
+            detailViewFragment?.updateaddress()
+        }
         if(mapFragment!=null) {
             mapFragment?.removeAllMarkers()
             mapFragment?.addAllMarkers()

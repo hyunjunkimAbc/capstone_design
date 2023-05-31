@@ -14,6 +14,7 @@ object SingleTonData{
     val searchhpopulardata : ArrayList<SearchPopularData> = arrayListOf()
     val searchhpopulardata2 : ArrayList<SearchPopularData> = arrayListOf()
     var userInfo :SignUpData ?=null
+    val mymeetingroomdata : ArrayList<ClubData> = arrayListOf()
 }
 
 object MainMenuId{
