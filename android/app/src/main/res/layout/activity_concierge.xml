@@ -51,7 +51,7 @@
                 android:id="@+id/mainsearchview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:iconifiedByDefault="false"
+                android:iconifiedByDefault="true"
                 android:queryBackground="@null"
                 android:queryHint="찾고싶은 모임을 검색해보세요"
                 />

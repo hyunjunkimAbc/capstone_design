@@ -1,5 +1,6 @@
 package com.example.capstone_android.SearchResult
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_android.MeetingList.ListperiodicAdapter
 import com.example.capstone_android.MeetingList.MeetingViewModel
+import com.example.capstone_android.MeetingRoomActivity
+import com.example.capstone_android.MeetingRoomDataManager
 import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.data.ClubData
 import com.example.capstone_android.databinding.FragmentSearchmeetingBinding
@@ -37,7 +40,9 @@ class SearchMeetingFragment(val searchdata:String): Fragment() {
         recyclerview.adapter = PeriodiclistAdapter
         PeriodiclistAdapter.setItemClickListener(object:ListperiodicAdapter.MeetingItemClickListener{
             override fun onClick(v: View, position: Int) {
-                println(SingleTonData.clubdata[position].Uid)
+                SingleTonData.clubdata[position].Uid?.let {
+                    gotoMeetingRoomActivity(MeetingRoomDataManager.collectionNameOfPeriodicMeetingRoom,it)
+                }
             }
         })
         viewModel.SearchMeetingItemList.observe(viewLifecycleOwner) { data ->
@@ -72,5 +77,13 @@ class SearchMeetingFragment(val searchdata:String): Fragment() {
         println("remove 성공")
         binding.pgbar.visibility=View.GONE
         activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
+    fun gotoMeetingRoomActivity(colName:String,meetingRoomUid:String){
+        println("5 21 collectionName ${colName} meeting_room_id ${meetingRoomUid}")
+        var intent= Intent(context, MeetingRoomActivity::class.java)
+        println("5-26-1 ${meetingRoomUid}")
+        intent.putExtra("collectionName",colName)
+        intent.putExtra("meeting_room_id", meetingRoomUid)
+        startActivity(intent)
     }
 }
