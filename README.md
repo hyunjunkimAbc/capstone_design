@@ -4,7 +4,7 @@
 <br/>
 [pdf 링크](https://github.com/hyunjunkimAbc/capstone_design/tree/main/android/app/debug)
 <br/>
-[apk파일 링크] capstone_design/android/app/debug/app-debug.apk
+[apk파일 링크](https://github.com/hyunjunkimAbc/capstone_design/tree/main/android/app/debug)
 <br/>
 
 팀 번호: 54팀
