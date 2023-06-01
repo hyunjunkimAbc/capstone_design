@@ -1,5 +1,6 @@
 package com.example.capstone_android.SearchResult
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,8 @@ import com.example.capstone_android.MainHomeActivity.LightingAdapter
 import com.example.capstone_android.MeetingList.ListLightAdapter
 import com.example.capstone_android.MeetingList.ListperiodicAdapter
 import com.example.capstone_android.MeetingList.MeetingViewModel
+import com.example.capstone_android.MeetingRoomActivity
+import com.example.capstone_android.MeetingRoomDataManager
 import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.data.ClubData
 import com.example.capstone_android.data.lightData
@@ -40,7 +43,12 @@ class SearchLightFragment(val searchdata:String): Fragment() {
         recyclerview.adapter = LightlistAdapter
         LightlistAdapter.setItemClickListener(object: ListLightAdapter.LightMeetingItemClickListener{
             override fun onClick(v: View, position: Int) {
-                println(SingleTonData.clubdata[position].Uid)
+                SingleTonData.lightdata[position].uid?.let {
+                    gotoMeetingRoomActivity(
+                        MeetingRoomDataManager.collectionNameOfLightingMeetingRoom,
+                        it
+                    )
+                }
             }
         })
         viewModel.SearchLightItemList.observe(viewLifecycleOwner) { data ->
@@ -75,5 +83,13 @@ class SearchLightFragment(val searchdata:String): Fragment() {
         println("remove 성공")
         binding.pgbar2.visibility= View.GONE
         activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
+    fun gotoMeetingRoomActivity(colName:String,meetingRoomUid:String){
+        println("5 21 collectionName ${colName} meeting_room_id ${meetingRoomUid}")
+        var intent= Intent(context, MeetingRoomActivity::class.java)
+        println("5-26-1 ${meetingRoomUid}")
+        intent.putExtra("collectionName",colName)
+        intent.putExtra("meeting_room_id", meetingRoomUid)
+        startActivity(intent)
     }
 }
