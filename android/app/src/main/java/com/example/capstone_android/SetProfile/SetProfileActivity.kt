@@ -184,7 +184,16 @@ class SetProfileActivity:AppCompatActivity() {
                                 SingleTonData.userInfo?.birthday=date
                                 SingleTonData.userInfo?.profile_message=binding.setprofileuserexplain.text.toString()
                                 SingleTonData.userInfo?.photoUri= uri.toString()
-                                finish()
+                                db.collection("userAlarm").whereEqualTo("RealUserUid", "${Firebase.auth.uid}").get().addOnSuccessListener { quert->
+                                    for (documentSnapshot in quert.documents) {
+                                        val documentId = documentSnapshot.id
+                                        val data = hashMapOf("username" to binding.setprofileusername.text.toString())
+                                        db.collection("userAlarm").document(documentId).set(data,SetOptions.merge()).addOnSuccessListener {
+                                        }
+                                    }
+                                    finish()
+                                }
+
                                 return@addOnSuccessListener
                             }
                         }
@@ -197,7 +206,16 @@ class SetProfileActivity:AppCompatActivity() {
                         SingleTonData.userInfo?.nickname=binding.setprofileusername.text.toString()
                          SingleTonData.userInfo?.birthday=date
                          SingleTonData.userInfo?.profile_message=binding.setprofileuserexplain.text.toString()
-                         finish()
+                         db.collection("userAlarm").whereEqualTo("RealUserUid", "${Firebase.auth.uid}").get().addOnSuccessListener { quert->
+                             for (documentSnapshot in quert.documents) {
+                                 val documentId = documentSnapshot.id
+                                 val data = hashMapOf("username" to binding.setprofileusername.text.toString())
+                                 db.collection("userAlarm").document(documentId).set(data,SetOptions.merge()).addOnSuccessListener {
+                                 }
+                             }
+                             finish()
+                         }
+
                          return@addOnSuccessListener
                      }
                 }
