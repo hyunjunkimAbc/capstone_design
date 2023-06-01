@@ -1,10 +1,10 @@
 # capstone_design
 
-상세내용(실행화면과 구조) pdf 링크를 참고
+상세내용(실행화면과 구조)은 pdf 링크를 참고
 <br/>
-pdf 링크 : capstone_design/doc/[UNITE]실행화면과_구조.pdf
+[pdf 링크](https://github.com/hyunjunkimAbc/capstone_design/tree/main/android/app/debug)
 <br/>
-apk : capstone_design/android/app/debug/app-debug.apk
+[apk파일 링크] capstone_design/android/app/debug/app-debug.apk
 <br/>
 
 팀 번호: 54팀
