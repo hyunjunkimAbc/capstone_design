@@ -1,6 +1,7 @@
 # capstone_design
 
 상세내용(실행화면과 구조) pdf 링크를 참고
+
 pdf 링크 : capstone_design/doc/[UNITE]실행화면과_구조.pdf
 apk : capstone_design/android/app/debug/app-debug.apk
 
