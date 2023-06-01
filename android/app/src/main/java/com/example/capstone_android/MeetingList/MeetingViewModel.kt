@@ -185,7 +185,7 @@ class MeetingViewModel:ViewModel() {
                 val roominfo = db.collection("place_rental_room").whereEqualTo("category", data).whereEqualTo("address", address).get().await()
                 for(data2 in roominfo){
                     SingleTonData.placedata.add(data2.toObject(PlaceData::class.java))
-                    SingleTonData.placedata.sortBy { it.num_of_positive.toString() }
+                    SingleTonData.placedata.sortByDescending { it.num_of_positive.toString() }
                 }
             }
             _PlaceItemList.value=SingleTonData.placedata
@@ -200,7 +200,7 @@ class MeetingViewModel:ViewModel() {
                 val roominfo = db.collection("place_rental_room").whereEqualTo("category", data).whereEqualTo("address", address).get().await()
                 for(data2 in roominfo){
                     SingleTonData.placemapdata.add(data2.toObject(PlaceData::class.java))
-                    SingleTonData.placemapdata.sortBy { it.num_of_positive.toString() }
+                    SingleTonData.placemapdata.sortByDescending { it.num_of_positive.toString() }
                 }
             }
             _PlaceMapItemList.value=SingleTonData.placemapdata
