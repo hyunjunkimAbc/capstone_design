@@ -13,10 +13,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.databinding.FragmentMeetingRoomInfoBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -67,6 +69,8 @@ class MeetingRoomInfoFragment : Fragment() {
     var numOfMaxUsers =0
     var meetingRoomMembers :List<String>? =null
     var max =""
+    var title=""
+    var imageUrl=""
     var meetingRoomGenerator:MeetingRoomViewGenerator? =null
     var meetingRoomFactory :AbstractMeetingRoomFactory? = null
     inner abstract class AbstractMeetingRoomFactory{
@@ -126,7 +130,18 @@ class MeetingRoomInfoFragment : Fragment() {
                             meetingRoomCollection.document("${meetingRoomId}").update("member_list" , FieldValue.arrayUnion(Firebase.auth.uid)).addOnSuccessListener {
                                 //Toast.makeText(activity?.applicationContext,"가입 성공",Toast.LENGTH_SHORT).show()
                                 userCollection.document("${Firebase.auth.uid}").update("meeting_room_id_list" , FieldValue.arrayUnion(meetingRoomId)).addOnSuccessListener {
-                                    Toast.makeText(activity?.applicationContext,"가입 성공",Toast.LENGTH_SHORT).show()
+                                   val text=SingleTonData.userInfo?.nickname+"님이 모임 ${title}에 가입되었습니다"
+                                    val timestamp=Date().time.toString()
+                                    val data=hashMapOf("UserUid" to writerUid,"message" to text,"timestamp" to timestamp,"isRead" to false,"imageUrl" to imageUrl)
+                                    db.collection("userAlarm").document().set(data, SetOptions.merge()).addOnSuccessListener {
+                                        val text=SingleTonData.userInfo?.nickname+"님이 모임 ${title}에 가입되었습니다"
+                                        val timestamp=Date().time.toString()
+                                        val data=hashMapOf("UserUid" to Firebase.auth.uid,"message" to text,"timestamp" to timestamp,"isRead" to false,"imageUrl" to imageUrl)
+                                        db.collection("userAlarm").document().set(data,SetOptions.merge()).addOnSuccessListener {
+                                            Toast.makeText(activity?.applicationContext,"가입 성공",Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+
                                 }
                             }
                         }
@@ -393,7 +408,8 @@ class MeetingRoomInfoFragment : Fragment() {
                 binding.meetingRoomTitle.text = "모임 명: ${it["title"]}"
                 binding.category.text = "카테고리: ${it["category"]}"
                 binding.affiliatedArea.text = "${it["address"]}"
-
+                title= "${it["title"]}"
+                imageUrl="${it["imageUrl"]}"
                 writerUid = it.data?.get("writer_uid") as String
 
                 val colName = activity?.intent?.getStringExtra("collectionName")

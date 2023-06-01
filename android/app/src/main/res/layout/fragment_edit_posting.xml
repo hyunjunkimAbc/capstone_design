@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="1dp"
             android:text="모임 게시물 수정"
+            android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/postingTitleEditTextPostingEdit"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,6 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="제목"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@id/scrollView3PostingEdit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPostingEdit" />

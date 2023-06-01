@@ -106,6 +106,10 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
+            android:name=".Alarm.UserAlarm"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
             android:name=".MeetingList.CreateLightMeeting"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

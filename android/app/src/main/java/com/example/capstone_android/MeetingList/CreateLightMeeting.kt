@@ -278,6 +278,7 @@ class CreateLightMeeting:AppCompatActivity() {
                             ClearData()
                             setResult(Activity.RESULT_OK)
                             finish()
+                            Log.d(TAG, lightdata.toString())
                         }
                     }
                 }

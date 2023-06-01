@@ -22,9 +22,9 @@ open class ConciergeAdapter (private val viewModel: ConciergeViewModel): Recycle
                     binding.conciergeImageView.setImageBitmap(this.icon)*/
                 //null들어가면 작동 안함 주의
                 binding.conciergeTextView.text =this.title
-                binding.conciergeInfoText.text = this.info_text
+                binding.conciergeInfoText.text = this.address
                 binding.conciergecategory.text = this.category
-
+                binding.conciergeInfoText2.text=this.info_text
                 val roundedCornersTransformation = RoundedCornersTransformation(20, 5)
                 Glide.with(this.context)
                     .load(this.imageUrl)

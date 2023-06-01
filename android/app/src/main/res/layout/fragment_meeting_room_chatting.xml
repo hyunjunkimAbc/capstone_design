@@ -55,6 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="모임 채팅방"
+        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"

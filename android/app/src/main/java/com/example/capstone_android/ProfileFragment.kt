@@ -104,7 +104,7 @@ class ProfileFragment : Fragment() {
             }
             binding.buttonMyMeetingRoom.setOnClickListener{
                 val intent = Intent(activity, MyMeetingRoomActivity::class.java)
-                startActivityForResult(intent, 99)
+                startActivityForResult(intent, 101)
             }
         } else { // 로그인 하지 않은 경우
             initData_NotSigned(view)

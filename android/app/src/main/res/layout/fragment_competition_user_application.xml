@@ -13,6 +13,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="64dp"
         android:text="대회 장소 :"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/competition_time" />
 
@@ -48,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="8dp"
+        android:textColor="@color/black"
         android:text="생년월일 :"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_competition_userNickName" />
@@ -58,6 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:text="닉네임 :"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -69,6 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="12dp"
+        android:textColor="@color/black"
         android:text="내 위치 :"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_competition_userBirth" />
@@ -79,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="8dp"
+        android:textColor="@color/black"
         android:text="이메일 :"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_competition_userLocation" />
@@ -129,6 +134,7 @@
         app:layout_constraintBottom_toTopOf="@+id/button_apply"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.147"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_competition_location"
         app:layout_constraintVertical_bias="0.079" />
@@ -140,6 +146,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:text="신청 대회명 :"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_competition_userEmail" />
 
@@ -150,6 +157,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="28dp"
         android:text="대회 날짜 :"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_competition_title" />
 

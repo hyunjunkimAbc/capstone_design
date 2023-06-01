@@ -124,10 +124,7 @@ class HomeActivity: AppCompatActivity() {
                         supportFragmentManager.beginTransaction().hide(myApplyCompetitionFragment!!).commit()
                     return@setOnItemSelectedListener true
                 }
-                R.id.action_more ->{
 
-                    return@setOnItemSelectedListener true
-                }
             }
             false
         }

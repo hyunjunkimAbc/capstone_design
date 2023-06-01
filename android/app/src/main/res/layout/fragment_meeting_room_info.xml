@@ -40,6 +40,7 @@ android:layout_height="match_parent">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="category"
+                    android:textColor="@color/black"
                     android:minHeight="25dp" />
 
             </LinearLayout>
@@ -84,6 +85,7 @@ android:layout_height="match_parent">
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="9"
+                    android:textColor="@color/black"
                     android:text="TextView" />
 
                 <TextView
@@ -105,6 +107,7 @@ android:layout_height="match_parent">
                 android:layout_weight="1"
                 android:background="#FFFAFA"
                 android:hint="meetingRoomText"
+                android:textColor="@color/black"
                 android:minHeight="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -136,6 +139,7 @@ android:layout_height="match_parent">
                 android:layout_marginTop="16dp"
                 android:text="TextView"
                 android:textSize="20dp"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/meetingInfoImage" />

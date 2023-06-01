@@ -21,7 +21,6 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_collapseMode="pin"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-            app:menu="@menu/main_home_top_menu"
             app:title="@null"
             app:titleTextColor="@color/white">
 
@@ -51,7 +50,7 @@
                 android:id="@+id/mainsearchview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:iconifiedByDefault="false"
+                android:iconifiedByDefault="true"
                 android:queryBackground="@null"
                 android:queryHint="찾고싶은 모임을 검색해보세요"
                 />
@@ -380,7 +379,7 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="15dp"
 
-                        android:text="우리 동네 모임"
+                        android:text="최근 생성된 모임"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />

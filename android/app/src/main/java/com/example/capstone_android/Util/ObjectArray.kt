@@ -1,5 +1,6 @@
 package com.example.capstone_android.Util
 
+import com.example.capstone_android.Alarm.Alarmdata
 import com.example.capstone_android.data.*
 
 object SingleTonData{
@@ -15,6 +16,7 @@ object SingleTonData{
     val searchhpopulardata2 : ArrayList<SearchPopularData> = arrayListOf()
     var userInfo :SignUpData ?=null
     val mymeetingroomdata : ArrayList<ClubData> = arrayListOf()
+    val Alarmdata:ArrayList<Alarmdata> = arrayListOf()
 }
 
 object MainMenuId{

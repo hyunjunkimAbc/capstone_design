@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-data class MeetingRoom(val title: String,val document_id:String,val col_name:String,val info_text:String,val imageUrl :String,val context: Context,val category:String)
+data class MeetingRoom(val title: String,val document_id:String,val col_name:String,val info_text:String,val imageUrl :String,val context: Context,val category:String,val address:String)
 open class ConciergeViewModel : ViewModel(){
     val itemsListData = MutableLiveData<ArrayList<MeetingRoom>>()
     val items = ArrayList<MeetingRoom>()
