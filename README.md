@@ -1,12 +1,15 @@
 # capstone_design
 
-상세내용(실행화면과 구조)은 pdf 링크를 참고
-<br/>
+[앱 다운 링크-apk파일](https://github.com/hyunjunkimAbc/capstone_design/tree/main/android/app/debug/app-debug.apk)
+---
+상세내용(실행화면과 구조)은 아래 링크를 참고해주세요.
+---
 [pdf 링크](https://github.com/hyunjunkimAbc/capstone_design/blob/main/doc/%5BUNITE%5D%EC%8B%A4%ED%96%89%ED%99%94%EB%A9%B4%EA%B3%BC_%EA%B5%AC%EC%A1%B0.pdf)
-<br/>
-[apk파일 링크](https://github.com/hyunjunkimAbc/capstone_design/tree/main/android/app/debug/app-debug.apk)
-<br/>
-
+<br/><br/>
+[작품구조](https://github.com/hyunjunkimAbc/capstone_design/blob/main/doc/%EC%9E%91%ED%92%88%EA%B5%AC%EC%A1%B0.png)
+<br/><br/>
+[요구사항 명세서](https://github.com/hyunjunkimAbc/capstone_design/blob/main/doc/%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD_%EB%AA%85%EC%84%B8%EC%84%9C_ver2.pdf)
+***
 팀 번호: 54팀
 팀 명:UNITE
 프로젝트 명: 번개모임(AI Meeting Concierge)
