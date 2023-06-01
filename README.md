@@ -2,9 +2,9 @@
 
 상세내용(실행화면과 구조)은 pdf 링크를 참고
 <br/>
-[pdf 링크](https://github.com/hyunjunkimAbc/capstone_design/tree/main/android/app/debug)
+[pdf 링크](https://github.com/hyunjunkimAbc/capstone_design/blob/main/doc/%5BUNITE%5D%EC%8B%A4%ED%96%89%ED%99%94%EB%A9%B4%EA%B3%BC_%EA%B5%AC%EC%A1%B0.pdf)
 <br/>
-[apk파일 링크](https://github.com/hyunjunkimAbc/capstone_design/tree/main/android/app/debug)
+[apk파일 링크](https://github.com/hyunjunkimAbc/capstone_design/tree/main/android/app/debug/app-debug.apk)
 <br/>
 
 팀 번호: 54팀
