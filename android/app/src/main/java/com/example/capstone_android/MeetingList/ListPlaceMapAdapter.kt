@@ -35,6 +35,8 @@ class ListPlaceMapAdapter(var itemlist : List<PlaceData>): RecyclerView.Adapter<
             .dontAnimate()
             .into(placemapholder.recycleritemmapimg)
         placemapholder.recycleritemmaptitle.text=itemlist[position].title
+        placemapholder.placemapaddress.text=itemlist[position].addressdetail
+        placemapholder.placemapcategory.text=itemlist[position].category
         placemapholder.recycleritemmapgoodcount.text=itemlist[position].num_of_positive.toString()
         placemapholder.placemapitemclick.setOnClickListener{
             placemapitemClickListener.onClick(it, position)
@@ -42,7 +44,7 @@ class ListPlaceMapAdapter(var itemlist : List<PlaceData>): RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int {
-      return itemlist.size
+        return itemlist.size
     }
     @SuppressLint("NotifyDataSetChanged")
     fun subplacemap(list: List<PlaceData>) {

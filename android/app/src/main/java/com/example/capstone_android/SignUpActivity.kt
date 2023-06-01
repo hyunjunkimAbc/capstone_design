@@ -182,7 +182,7 @@ class SignUpActivity : AppCompatActivity() { // 회원가입 화면
                         // 프로필 이미지가 선택되었으면
                         if (selected_profile_img==1){
                             // Firebase Storage로 이미지 전송
-                            imgName = "${user?.uid ?: String}"
+                            imgName = "${user?.uid ?: String}.jpg"
                             var storageReference =
                                 st?.reference?.child("user_profile_image")?.child(imgName!!)
 

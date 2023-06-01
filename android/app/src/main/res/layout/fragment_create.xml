@@ -144,18 +144,18 @@
     </androidx.cardview.widget.CardView>
 
 
-
-    <Button
-        android:id="@+id/CreateBtn"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_button"
-        android:layout_below="@+id/which"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"
-        android:text="모임 만들기"
-        android:textSize="20dp" />
+        <Button
+            android:id="@+id/CreateBtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/which"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/round_button"
+            android:text="모임 만들기"
+            android:textSize="20dp"
+            app:backgroundTint="#36DA90" />
 
 
     <androidx.cardview.widget.CardView
