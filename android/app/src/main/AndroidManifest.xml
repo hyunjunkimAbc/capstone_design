@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Capstone_android">
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="${NaverMapApiKey}" />
@@ -73,7 +73,8 @@
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".MeetingRoomActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
