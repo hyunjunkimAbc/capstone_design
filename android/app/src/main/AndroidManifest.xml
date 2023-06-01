@@ -21,7 +21,8 @@
             android:value="${NaverMapApiKey}" />
         <activity
             android:name=".MainHomeActivity.ConciergeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".ClickiconActivity"
             android:exported="false"
@@ -44,7 +45,8 @@
             />
         <activity
             android:name=".ProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".SetGoogleAccountActivity"
             android:exported="false"
