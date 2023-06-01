@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:backgroundTint="@color/colorLightgray"
+    android:background="@color/colorLightgray"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+  >
+
+    <ImageView
+        android:id="@+id/alarmimg"
+        android:layout_width="51dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="7dp"
+        android:src="@drawable/userprofile"/>
+
+    <TextView
+        android:id="@+id/alarmtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="한성대학교님이 모임에 참가되었습니다"
+        android:layout_toRightOf="@+id/alarmimg"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/alarmtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:text="yyyymmddhhmm"
+            android:layout_below="@id/alarmtext"
+            android:layout_toRightOf="@+id/alarmimg"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"/>
+
+    <View
+        android:id="@+id/viewline54"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/transparent"
+        android:layout_below="@+id/alarmtime"/>
+</RelativeLayout>

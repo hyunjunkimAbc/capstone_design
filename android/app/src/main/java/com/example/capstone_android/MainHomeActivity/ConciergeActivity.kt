@@ -1,11 +1,14 @@
 package com.example.capstone_android.MainHomeActivity
 
+import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.viewModels
@@ -23,13 +26,17 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.capstone_android.*
+import com.example.capstone_android.Alarm.UserAlarm
 import com.example.capstone_android.SearchResult.MainSearchView
+import com.example.capstone_android.SetProfile.SetProfileActivity
 import com.example.capstone_android.Util.MainMenuId
 import com.example.capstone_android.Util.SingleTonData
 import com.example.capstone_android.data.BannerItem
 import com.example.capstone_android.data.ClubData
 import com.example.capstone_android.data.SignUpData
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -68,6 +75,9 @@ class ConciergeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.mainhomeprogressbar.visibility= View.GONE
+        val toolbar=binding.mainhomeToolbar
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.homeUserAddress.setOnClickListener{
             val intent=Intent(this, AddressActivity::class.java)
             intent.putExtra("key","createuser")
@@ -93,6 +103,7 @@ class ConciergeActivity : AppCompatActivity() {
             intent.putExtra("openkey","competition")
             startActivityForResult(intent,1)
         }
+        /*
         binding.mainsearchview.clearFocus()
         binding.mainsearchview.setOnQueryTextFocusChangeListener { _, hasExpaned ->
             when(hasExpaned) {
@@ -105,6 +116,18 @@ class ConciergeActivity : AppCompatActivity() {
 
                 }
             }
+        }
+
+         */
+        binding.cardView.setOnClickListener {
+            binding.mainsearchview.clearFocus()
+            var intent= Intent(this, MainSearchView::class.java)
+            startActivity(intent)
+        }
+        binding.mainsearchview.setOnClickListener {
+            binding.mainsearchview.clearFocus()
+            var intent= Intent(this, MainSearchView::class.java)
+            startActivity(intent)
         }
         setRecyclerView(LightingAdapter(viewModelLightingMeetingRoom),viewModelLightingMeetingRoom,binding.Lightningmeetingrecyclerview)
         setRecyclerView(PeriodicAdapter(viewModelPeriodicMeetingRoom),viewModelPeriodicMeetingRoom,binding.mainhomemeetingrecyclerview )
@@ -215,13 +238,13 @@ class ConciergeActivity : AppCompatActivity() {
         var meetingRoomCollection=db.collection(collectionName)
         println("test-----------------------")
         println(collectionName)
-        meetingRoomCollection.limit(10).get().addOnSuccessListener {
+        meetingRoomCollection.orderBy("upload_time", Query.Direction.DESCENDING).limit(10).get().addOnSuccessListener {
             for (meetingRoom in it){
                 println(meetingRoom)
                 viewModel.addItem(
                     MeetingRoom(
                         meetingRoom.data["title"] as String,meetingRoom.id,collectionName,meetingRoom.data["info_text"] as String,meetingRoom.data["imageUrl"] as String, applicationContext,
-                        meetingRoom.data["category"] as String)
+                        meetingRoom.data["category"] as String,meetingRoom.data["address"] as String)
                 )
                 /*
 
@@ -272,6 +295,29 @@ class ConciergeActivity : AppCompatActivity() {
             //findNavController().navigate(R.id.action_meetingRoomPostingsFragment_to_showPostingFragment,bundle)
         }
         registerForContextMenu(MeetingRecyclerView)
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_home_top_menu,menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            R.id.mainhome_setting->{
+                val intent = Intent(this, SetProfileActivity::class.java)
+                intent.putExtra("create", "hello")
+                startActivityForResult(intent, 99)
+                return true
+            }
+            R.id.mainhome_notification->{
+                val intent = Intent(this, UserAlarm::class.java)
+                intent.putExtra("create", "hello")
+                startActivityForResult(intent, 112)
+                return true
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
