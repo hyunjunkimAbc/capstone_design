@@ -4,7 +4,7 @@
 ---
 상세내용(실행화면과 구조)은 아래 링크를 참고해주세요.
 ---
-[pdf 링크](https://github.com/hyunjunkimAbc/capstone_design/blob/main/doc/%5BUNITE%5D%EC%8B%A4%ED%96%89%ED%99%94%EB%A9%B4%EA%B3%BC_%EA%B5%AC%EC%A1%B0.pdf)
+[결과보고서.pdf](https://github.com/hyunjunkimAbc/capstone_design/blob/main/doc/%5BUNITE%5D%EC%8B%A4%ED%96%89%ED%99%94%EB%A9%B4%EA%B3%BC_%EA%B5%AC%EC%A1%B0.pdf)
 <br/><br/>
 [작품구조](https://github.com/hyunjunkimAbc/capstone_design/blob/main/doc/%EC%9E%91%ED%92%88%EA%B5%AC%EC%A1%B0.png)
 <br/><br/>
