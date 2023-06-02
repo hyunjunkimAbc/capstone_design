@@ -149,6 +149,7 @@ class SetGoogleAccountActivity : AppCompatActivity()  {
                 db.collection("user").document(Firebase.auth.currentUser?.uid.toString()).set(signdata).addOnSuccessListener {
                     SingleTonData.userInfo=signdata
                     val intent = Intent(this, ConciergeActivity::class.java)
+                    intent.putExtra("token","notsession")
                     startActivity(intent)
                 }
             }

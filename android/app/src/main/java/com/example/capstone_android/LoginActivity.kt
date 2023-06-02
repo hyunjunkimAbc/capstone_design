@@ -45,6 +45,7 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
     lateinit var listView2: LinearLayout
 
     // 구글 로그인을 위한 객체
+    private lateinit var firebaseAuth: FirebaseAuth
     private var googleSignInClient : GoogleSignInClient?=null
     // FireBase에서 계정 정보를 가져오는 객체
     lateinit var auth : FirebaseAuth
@@ -67,6 +68,13 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+        firebaseAuth = FirebaseAuth.getInstance()
+        val currentUser = firebaseAuth.currentUser
+        if (currentUser != null) {
+            // 이미 로그인된 상태라면 로그아웃 수행
+            firebaseAuth.signOut()
+            googleSignInClient?.signOut()
+        }
 //        auth = FirebaseAuth.getInstance()
         auth = Firebase.auth
 
@@ -116,7 +124,7 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
                                 // 홈화면으로 이동
                                 val intent = Intent(this, ConciergeActivity::class.java)
                                 intent.putExtra("userNickName", myNickName)
-                               startActivity(intent)
+                                startActivity(intent)
 
                             }
                         } else {
@@ -253,6 +261,7 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
 
     private fun firebaseAuthSignOut() { // 로그아웃 시키기
         Firebase.auth.signOut()
+        googleSignInClient?.signOut()
     }
 
     // editText 아래에 입력요청 text를 동적으로 생성

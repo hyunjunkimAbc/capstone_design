@@ -2,6 +2,7 @@ package com.example.capstone_android.MainHomeActivity
 
 import android.app.Activity
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
@@ -74,13 +75,22 @@ class ConciergeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var token=intent.getStringExtra("token")
+        if(token!=null) Log.d(TAG,token+"토큰ㅋㅋ")
         binding.mainhomeprogressbar.visibility= View.GONE
         val toolbar=binding.mainhomeToolbar
         setSupportActionBar(toolbar)
+
+
+        viewModel = ViewModelProvider(this)[BannerViewModel::class.java]
+
+
+
+
         supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.homeUserAddress.setOnClickListener{
             val intent=Intent(this, AddressActivity::class.java)
-            intent.putExtra("key","createuser")
+            intent.putExtra("key","hello")
             startActivityForResult(intent,10)
         }
         binding.Mainmeetingbutton.setOnClickListener{
@@ -165,7 +175,7 @@ class ConciergeActivity : AppCompatActivity() {
                 viewModelCompetitionRoom)
             binding.mainhomeRefreshLayout.isRefreshing = false
         }
-        viewModel = ViewModelProvider(this)[BannerViewModel::class.java]
+
         viewModel.setBannerItems(
             listOf(BannerItem(R.drawable.banner1), BannerItem(R.drawable.banner2), BannerItem(R.drawable.banner3), BannerItem(
                 R.drawable.banner4
@@ -174,7 +184,7 @@ class ConciergeActivity : AppCompatActivity() {
         subscribeObservers()
         autoScrollViewPager()
         address=SingleTonData.userInfo?.address
-        viewModel.setuseraddress(address!!)
+       viewModel.setuseraddress(address!!)
 
     }
     private fun initViewPager2() {

@@ -73,6 +73,7 @@ class SetProfileActivity:AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(true)
         supportActionBar?.title="내 프로필"
+        binding.useremail.text=SingleTonData.userInfo?.email
         binding.setprofileusername.setText(SingleTonData.userInfo?.nickname)
         binding.setprofileuserbirth.text=SingleTonData.userInfo?.birthday
         binding.setprofileuseraddress.text=SingleTonData.userInfo?.address
