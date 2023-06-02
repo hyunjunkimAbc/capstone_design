@@ -150,6 +150,19 @@ class ConciergeActivity : AppCompatActivity() {
             viewModelCompetitionRoom)
         setContentView(binding.root)
         binding.mainhomeRefreshLayout.setOnRefreshListener{
+            addToRecyclerView(
+                MeetingRoomDataManager.collectionNameOfLightingMeetingRoom,
+                viewModelLightingMeetingRoom)
+
+            addToRecyclerView(
+                MeetingRoomDataManager.collectionNameOfPeriodicMeetingRoom,
+                viewModelPeriodicMeetingRoom)
+            addToRecyclerView(
+                MeetingRoomDataManager.collectionNameOfPlaceRental,
+                viewModelPlaceRentalRoom)
+            addToRecyclerView(
+                MeetingRoomDataManager.collectionNameOfCompetition,
+                viewModelCompetitionRoom)
             binding.mainhomeRefreshLayout.isRefreshing = false
         }
         viewModel = ViewModelProvider(this)[BannerViewModel::class.java]
@@ -238,6 +251,7 @@ class ConciergeActivity : AppCompatActivity() {
         var meetingRoomCollection=db.collection(collectionName)
         println("test-----------------------")
         println(collectionName)
+        viewModel.removeItem()
         meetingRoomCollection.orderBy("upload_time", Query.Direction.DESCENDING).limit(10).get().addOnSuccessListener {
             for (meetingRoom in it){
                 println(meetingRoom)

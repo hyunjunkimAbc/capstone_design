@@ -20,6 +20,9 @@ open class ConciergeViewModel : ViewModel(){
         items.add(item)
         itemsListData.value = items
     }
+    fun removeItem(){
+        items.clear()
+    }
     fun updateItem(pos : Int ,item : MeetingRoom){
         items[pos] = item
         itemsListData.value = items
