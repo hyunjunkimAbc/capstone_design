@@ -1,6 +1,8 @@
 # capstone_design
 
-[앱 다운 링크-apk파일](https://github.com/hyunjunkimAbc/capstone_design/tree/main/android/app/debug/app-debug.apk)
+[앱 다운 링크-release.apk파일](https://github.com/hyunjunkimAbc/capstone_design/blob/main/android/app/release/app-release.apk)
+---
+[앱 다운 링크-debug.apk파일](https://github.com/hyunjunkimAbc/capstone_design/blob/main/android/app/debug/app-debug.apk)
 ---
 상세내용(실행화면과 구조)은 아래 링크를 참고해주세요.
 ---
