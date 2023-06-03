@@ -38,17 +38,21 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
     //var timeCnt = 0
 
     // email과 비밀번호의 동적 TextView를 구분하기위함
-    var textView_num:Int? = null
+    var textView_num: Int? = null
 
     // 동적 TextView를 띄우기 위한 공간
     lateinit var listView1: LinearLayout
     lateinit var listView2: LinearLayout
 
+    var googleLoginSig: Boolean = false
+
     // 구글 로그인을 위한 객체
     private lateinit var firebaseAuth: FirebaseAuth
-    private var googleSignInClient : GoogleSignInClient?=null
+    private var googleSignInClient: GoogleSignInClient? = null
+
     // FireBase에서 계정 정보를 가져오는 객체
-    lateinit var auth : FirebaseAuth
+    lateinit var auth: FirebaseAuth
+
     // 구글 로그인에 필요한 변수 설정 onActivityResultCode 를 위한것임
     private val RC_SIGN_IN = 9001
 
@@ -60,7 +64,7 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
         listView2 = binding.container2
 
         // 구글 로그인 버튼 텍스트 세팅
-        setGoogleButtonText(binding.googleSignInButton,"Google 계정으로 로그인")
+        setGoogleButtonText(binding.googleSignInButton, "Google 계정으로 로그인")
 
         // GoogleSigninOptional
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -78,8 +82,8 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
 //        auth = FirebaseAuth.getInstance()
         auth = Firebase.auth
 
-        if(SingleTonData.userInfo==null){
-            SingleTonData.userInfo=SignUpData()
+        if (SingleTonData.userInfo == null) {
+            SingleTonData.userInfo = SignUpData()
         }
         //val signInGoogleBtn : SignInButton = binding.googleSignInButton
         binding.googleSignInButton.setOnClickListener {
@@ -87,13 +91,12 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
             googleLogin() // 로그인 처리
         }
 
-        binding.LoginButton.setOnClickListener(){
+        binding.LoginButton.setOnClickListener() {
             println("로그인 버튼 클릭")
-            if(binding.LoginEmailEditText.getText().toString()=="") {    // 이메일을 입력하지않음
+            if (binding.LoginEmailEditText.getText().toString() == "") {    // 이메일을 입력하지않음
                 // email_editText 아래 입력요청 문구를 동적으로 생성
                 dynamicText(0)
-            }
-            else if(binding.LoginPWEditText.getText().toString()=="") {    // 비밀번호를 입력하지않음
+            } else if (binding.LoginPWEditText.getText().toString() == "") {    // 비밀번호를 입력하지않음
                 // PW_editText 아래 입력요청 문구를 동적으로 생성
                 dynamicText(1)
             } else {
@@ -110,7 +113,8 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
                                     if ("${user["email"]}" == binding.LoginEmailEditText.getText()
                                             .toString()
                                     ) {
-                                        SingleTonData.userInfo=user.toObject(SignUpData::class.java)
+                                        SingleTonData.userInfo =
+                                            user.toObject(SignUpData::class.java)
                                         myNickName = "${user["nickname"]}"
                                         Toast.makeText(
                                             this,
@@ -142,14 +146,14 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
             }
         }
 
-        binding.SignupTextView.setOnClickListener(){
+        binding.SignupTextView.setOnClickListener() {
             println("회원가입 클릭")
             // 회원가입 화면으로 이동
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
 
-        binding.SetPWTextView.setOnClickListener(){
+        binding.SetPWTextView.setOnClickListener() {
             // 비밀번호 재설정 화면으로 이동
             val intent = Intent(this, ResetPWActivity::class.java)
             startActivity(intent)
@@ -157,9 +161,9 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
     }
 
     // 구글 로그인 버튼 텍스트 세팅
-    private fun setGoogleButtonText(loginButton: SignInButton, buttonText: String){
+    private fun setGoogleButtonText(loginButton: SignInButton, buttonText: String) {
         var i = 0
-        while (i < loginButton.childCount){
+        while (i < loginButton.childCount) {
             var v = loginButton.getChildAt(i)
             if (v is TextView) {
                 var tv = v
@@ -185,13 +189,12 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
 
     // 구글에 인증하는 부분
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == RC_SIGN_IN){
+        if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account)
-            }
-            catch (e: ApiException){
+            } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w("LoginActivity", "Google sign in failed", e)
             }
@@ -206,7 +209,7 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
         firebaseAuthWithGoogle(account)*/
 
 
-    fun googleLogin(){
+    fun googleLogin() {
         val signInIntent = googleSignInClient?.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
@@ -221,8 +224,18 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
 
                     // 구글 로그인 : user DB 정보 설정
                     val user = auth.currentUser
+                    db.collection("user").document(user?.uid.toString())
+                        .get().addOnSuccessListener {
+                            if (it.exists()) {
+                                SingleTonData.userInfo = it.toObject(SignUpData::class.java)
+                                myNickName = it["nickname"] as String
+                                googleLoginSig = true
+                            } else {
+                                googleLoginSig = false
+                            }
+                            moveSetPage(user)
+                        }
 //                    setUserInfo(user) // 구글 계정의 개인정보를 DB에 세팅
-                    moveSetPage(user) // 구글 계정의 개인정보 설정화면으로 이동 (추가적인 개인정보 설정을 위함)
                 } else { // 구글 로그인 실패
                     println("구글 로그인 인증 실패")
                     Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
@@ -233,7 +246,7 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
     // 구글 로그인 : 정보 설정
     fun setUserInfo(user: FirebaseUser?) {
         val col = db.collection("user").document("${user?.uid}")
-        user?.let{
+        user?.let {
             val itemMap = hashMapOf(
                 "email" to user.email,
                 "nickname" to user.displayName,
@@ -247,8 +260,12 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
         }
     }
 
-    fun moveSetPage(user: FirebaseUser?){ // 구글로그인 시 개인정보 설정 화면으로 이동
-        if(user!=null){
+    fun moveSetPage(user: FirebaseUser?) { // 구글로그인 시 개인정보 설정 화면으로 이동
+        if (googleLoginSig) {
+            val intent = Intent(this, ConciergeActivity::class.java)
+            intent.putExtra("userNickName", myNickName)
+            startActivity(intent)
+        } else {
             val intent = Intent(this, SetGoogleAccountActivity::class.java)
             startActivity(intent)
         }
@@ -259,14 +276,14 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
         firebaseAuthSignOut()
     }
 
-    private fun firebaseAuthSignOut() { // 로그아웃 시키기
+    fun firebaseAuthSignOut() { // 로그아웃 시키기
         Firebase.auth.signOut()
         googleSignInClient?.signOut()
     }
 
     // editText 아래에 입력요청 text를 동적으로 생성
-    private fun dynamicText(textView_num:Int) {
-        val dynamicTextView : TextView = TextView(applicationContext)
+    private fun dynamicText(textView_num: Int) {
+        val dynamicTextView: TextView = TextView(applicationContext)
         listView1.removeAllViews()
         listView2.removeAllViews()
         dynamicTextView.textSize = 16f
@@ -274,16 +291,17 @@ class LoginActivity : AppCompatActivity() { // 로그인 화면
         dynamicTextView.setTypeface(null, Typeface.BOLD)
         dynamicTextView.id = 0
         val param: LinearLayout.LayoutParams =
-            LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT)
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
         param.marginStart = 30
         dynamicTextView.layoutParams = param
 //        dynamicTextView.setBackgroundColor(Color.rgb(184, 236, 184))
-        if(textView_num==0) {
+        if (textView_num == 0) {
             dynamicTextView.setText("Email을 입력해주세요!")
             listView1.addView(dynamicTextView)
-        }
-        else if(textView_num==1){
+        } else if (textView_num == 1) {
             dynamicTextView.setText("비밀번호를 입력해주세요!")
             listView2.addView(dynamicTextView)
         }
